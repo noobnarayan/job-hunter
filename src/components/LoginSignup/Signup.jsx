@@ -1,5 +1,6 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
+import Login from "./Login";
 function Signup() {
   return (
     <div className="flex flex-col sm:flex-row">
@@ -76,7 +77,6 @@ function Signup() {
               <p className=" text-gray-400 text-sm">or Login with Email</p>
               <div className="bg-gray-400 h-px w-1/4"></div>
             </div>
-
             <button className="px-10 items-center justify-center gap-2 flex h-11 rounded-md text-black text-sm w-full border-x border-y border-gray-400">
               <img
                 className="w-10 p-1"
@@ -88,11 +88,12 @@ function Signup() {
               </span>
             </button>
           </div>
-
           <div className="mt-3">
             <p className=" cursor-pointer text-center">
               Already have an account?
-              <span className="underline"> Login here </span>
+              <Link to="/login" className="underline pl-1">
+                Login here
+              </Link>
             </p>
           </div>
         </div>

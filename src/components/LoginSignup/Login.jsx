@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import Signup from "./Signup";
 
 function Login() {
   return (
@@ -49,21 +51,21 @@ function Login() {
               <p className="text-gray-400 text-sm">or Login with Email</p>
               <div className="bg-gray-400 h-px w-1/4"></div>
             </div>
-
-            <button className="px-10 items-center justify-center gap-2 flex h-11 rounded-md text-black text-sm w-full border-x border-y border-gray-400">
-              <img
-                className="w-10 p-1"
-                src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
-                alt="Google Sign-In"
-              />
-              <span className="text-black font-normal">
-                Sign in with Google
-              </span>
-            </button>
           </form>
+          <button className="px-10 items-center justify-center gap-2 flex h-11 rounded-md text-black text-sm w-full border-x border-y border-gray-400">
+            <img
+              className="w-10 p-1"
+              src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"
+              alt="Google Sign-In"
+            />
+            <span className="text-black font-normal">Sign in with Google</span>
+          </button>
           <div className="mt-5">
             <p className="cursor-pointer text-center">
-              Don't have an account? <span className="underline">Sign up</span>
+              Don't have an account?{" "}
+              <Link to="/signup" className="underline">
+                Sign up
+              </Link>
             </p>
           </div>
         </div>
