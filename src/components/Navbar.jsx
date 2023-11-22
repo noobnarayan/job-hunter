@@ -1,7 +1,80 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import logo from "./assets/media/JobHunter.png";
 
 function Navbar() {
-  return <div>Navbar</div>;
+  const navLinks = [
+    {
+      title: "Home",
+      path: "/",
+    },
+    {
+      title: "Find Jobs",
+      path: "/",
+    },
+    {
+      title: "Companies",
+      path: "/",
+    },
+  ];
+
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="shadow-md w-full fixed top-0 left-0">
+      <div className="md:flex items-center justify-between bg-white py-2.5 md:px-10 px-7">
+        <div className=" font-extrabold text-2xl cursor-pointer flex items-center text-gray-800">
+          <span className="flex items-center">
+            <img src={logo} className="w-10 rounded-lg mr-3" />
+            JobHunter
+          </span>
+        </div>
+        <div
+          onClick={() => setOpen((pre) => !pre)}
+          className="text-3xl absolute right-8 top-3 cursor-pointer md:hidden"
+        >
+          <i
+            className={open ? "fa-solid fa-x" : "fa-solid fa-bars"}
+            style={{ color: "#3fb337" }}
+          ></i>
+        </div>
+        <ul
+          className={`md:flex md:items-center md:pb-0 pb-12 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-500 ease-in ${
+            open ? "top-20 " : "top-[-490px]"
+          }`}
+        >
+          {navLinks.map((link, index) => {
+            return (
+              <li
+                key={index}
+                className="md:ml-8 text-normal font-bold md:my-0 my-7"
+              >
+                <Link
+                  to={link.path}
+                  className="text-gray-500 hover:text-green-700 hover:pb-4 md:hover:border-b-2 hover:border-green-700 "
+                >
+                  {link.title}
+                </Link>
+              </li>
+            );
+          })}
+          <div className="md:flex block">
+            <button className="bg-green-700  text-white font-bold py-1.5 px-5 rounded-md lg:ml-32 md:ml-7 xl:ml-36 hover:bg-black duration-500 mr-5 md:hover:scale-105">
+              Login
+            </button>
+            <button className="bg-black text-white  font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105">
+              Signup
+            </button>
+            <div className="md:pl-2 md:ml-2 md:mr-3 flex items-center gap-1 md:border-l md:border-gray-300  lg:h-5 mt-4 md:mt-1.5 font-bold md:font-normal text-gray-500 hover:text-green-700 cursor-pointer">
+              <span className=" hover:pb-px md:hover:border-b-2 hover:border-green-700">
+                For employers
+              </span>
+              <i class="fa-solid fa-angle-down mt-1"></i>
+            </div>
+          </div>
+        </ul>
+      </div>
+    </div>
+  );
 }
 
 export default Navbar;

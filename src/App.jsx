@@ -14,7 +14,8 @@ import AllRoutes from "./Routes/AllRoutes";
 function App() {
   return (
     <>
-      <div className="font-Poppins">
+      <div className="font-Nunito">
+        <Navbar />
         <AllRoutes />
       </div>
     </>

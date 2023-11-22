@@ -5,7 +5,9 @@ export default {
   ],
   theme: {
     fontFamily: {
-      'Poppins': ['Poppins', 'sans-serif']
+      'Poppins': ['Poppins', 'sans-serif'],
+      'Nunito': ['Nunito', 'sans-serif']
+
     },
     extend: {},
   },
