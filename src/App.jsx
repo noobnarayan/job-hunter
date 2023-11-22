@@ -11,11 +11,16 @@ import Login from "./components/LoginSignup/Login";
 import UserOnboarding from "./Pages/UserOnboarding";
 import JobListing from "./Pages/JobListing";
 import AllRoutes from "./Routes/AllRoutes";
+import { useLocation } from "react-router-dom";
+
 function App() {
+  const location = useLocation();
+  const hideOnRoutes = ["/login", "/signup"];
+
   return (
     <>
-      <div className="font-Nunito">
-        <Navbar />
+      <div className="font-Poppins">
+        {!hideOnRoutes.includes(location.pathname) && <Navbar />}
         <AllRoutes />
       </div>
     </>

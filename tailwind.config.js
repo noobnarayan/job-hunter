@@ -9,7 +9,13 @@ export default {
       'Nunito': ['Nunito', 'sans-serif']
 
     },
-    extend: {},
+    extend: {
+      boxShadow: {
+        'heroButton': '8px 8px 0px #000000',
+        'heroBox': '5px 4px 0px #000000',
+      },
+
+    },
   },
   plugins: [],
 }
