@@ -50,8 +50,8 @@ function Home() {
             </div>
           </div>
         </div>
-        <div className=" hidden md:w-1/2 bg-green-500 h-screen md:flex items-center justify-center">
-          <img src={heroImage} className="w-4/6 ml-10 md:pt-24" />
+        <div className=" hidden md:w-1/2 bg-green-500 h-screen md:flex items-center justify-center overflow-hidden">
+          <img src={heroImage} className="w-5/6 ml-16 md:pt-24 " />
         </div>
       </div>
     </div>
