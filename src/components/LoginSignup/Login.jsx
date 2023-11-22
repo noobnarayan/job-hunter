@@ -21,6 +21,8 @@ function Login() {
           <p className="mt-3">Find the job made for you!</p>
           <form className="mt-6">
             <div className="flex flex-col">
+              <label className=" font-semibold">Email:</label>
+
               <input
                 type="text"
                 name="email"
@@ -28,6 +30,8 @@ function Login() {
                 className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
                 placeholder="Email"
               />
+              <label className=" font-semibold">Password:</label>
+
               <input
                 type="text"
                 name="password"
