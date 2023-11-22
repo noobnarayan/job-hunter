@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function Home() {
   return (
-    <div>
-      <div className=" md:flex font-Poppins">
+    <div className="font-Poppins">
+      <div className=" md:flex ">
         <div className=" md:w-1/2 bg-gray-200 ">
           <div className="flex flex-col pt-28 pl-8 md:pl-20 gap-6">
             <p className=" font-semibold">_/ Get Hired</p>
@@ -54,6 +54,7 @@ function Home() {
           <img src={heroImage} className="w-5/6 ml-16 md:pt-24 " />
         </div>
       </div>
+      <div className="">Hi</div>
     </div>
   );
 }

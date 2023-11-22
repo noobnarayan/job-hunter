@@ -57,15 +57,9 @@ function Signup() {
                 placeholder="confirm password"
               />
 
-              <a
-                href="#"
-                className="text-right font-light text-black cursor-pointer mb-3 underline text-sm	"
-              >
-                Forget Password?
-              </a>
               <button
                 type="submit"
-                className="bg-black rounded-md text-white font-normal text-sm h-11"
+                className="bg-black rounded-md text-white font-normal text-sm h-11 mt-3"
               >
                 Create Account
               </button>
