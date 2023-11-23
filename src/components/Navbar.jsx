@@ -22,10 +22,9 @@ function Navbar() {
   return (
     <div className="shadow w-full fixed top-0 left-0 font-Nunito">
       <div className="md:flex items-center justify-between bg-white py-2.5 md:px-10 px-7">
-        <div className=" font-extrabold text-2xl cursor-pointer flex items-center text-gray-800">
-          <span className="flex items-center">
-            <img src={logo} className="w-10 rounded-lg mr-3" />
-            JobHunter
+        <div className=" font-semibold text-xl cursor-pointer flex items-center text-gray-800">
+          <span className="flex items-center font-Poppins">
+            <img src={logo} className="w-10 rounded-lg mr-3" />/ jobhunter
           </span>
         </div>
         <div
@@ -61,12 +60,12 @@ function Navbar() {
           {/* Temperory Hidden */}
           <div className="md:flex block">
             <Link to="/login">
-              <button className="bg-green-700 text-white font-bold py-1.5 px-5 rounded-sm lg:ml-32 md:ml-7 xl:ml-36 hover:bg-black duration-500 mr-5 md:hover:scale-105">
+              <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 md:ml-7 md:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 md:hover:scale-105">
                 Login
               </button>
             </Link>
 
-            <button className="bg-black text-white font-bold py-1.5 px-5 rounded-sm md:ml hover:bg-green-700 duration-500 md:hover:scale-105">
+            <button className="bg-black text-white font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105 md:shadow">
               <Link to="/signup">Signup</Link>
             </button>
             <div className="md:pl-2 md:ml-2 md:mr-3 flex items-center gap-1 md:border-l md:border-gray-300  lg:h-5 mt-4 md:mt-1.5 font-bold md:font-normal text-gray-500 hover:text-green-700 cursor-pointer">

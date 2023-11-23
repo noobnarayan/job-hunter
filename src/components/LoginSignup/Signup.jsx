@@ -21,13 +21,13 @@ function Signup() {
           <p className="mt-3">Find your next opportunity!</p>
           <form className="mt-3">
             <div className="flex flex-col">
-              <label className=" font-semibold">Email:</label>
+              <label className=" font-semibold">Full Name:</label>
               <input
                 type="text"
-                name="email"
+                name="name"
                 required
                 className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
-                placeholder="Enter text"
+                placeholder="enter name"
               />
 
               <label className=" font-semibold">Email Address:</label>

@@ -25,9 +25,9 @@ function Home() {
           <div className="flex flex-col md:flex-row gap-9 md:gap-14 items-center mt-10 md:mt-8 md:pl-20 pl-0">
             <Link to={"/signup"}>
               {
-                <button className="py-3 px-5 border-2 border-black font-semibold text-gray-900 hover:scale-105 shadow-heroButton">
+                <button className="py-3 px-5 border-2 border-black font-semibold text-gray-900 hover:scale-105 shadow-heroButton duration-150">
                   Join Our Platform{" "}
-                  <span>
+                  <span className="ml-6">
                     <i className="fa-solid fa-arrow-right"></i>
                   </span>
                 </button>
@@ -54,7 +54,20 @@ function Home() {
           <img src={heroImage} className="w-11/12 ml-16 md:pt-44 " />
         </div>
       </div>
-      <div className="">Hi</div>
+      <div className="bg-black">
+        <div className=" flex px-3 gap-10 py-16 justify-center items-center">
+          <div className="w-1/4 bg-white rounded-lg py-36">
+            <div>
+              <div className="cardLogo">
+                <i className="fa-brands fa-google text-black text-4xl"></i>
+              </div>
+              <div className="cardImage"></div>
+            </div>
+          </div>
+          <div className="w-1/4 bg-green-600 rounded-lg py-36">b</div>
+          <div className="w-1/4 bg-white rounded-lg py-36">c</div>
+        </div>
+      </div>
     </div>
   );
 }
