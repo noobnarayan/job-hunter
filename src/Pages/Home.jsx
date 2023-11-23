@@ -1,6 +1,7 @@
 import React from "react";
 import heroImage from "./assets/media/heroImage.png";
 import { Link } from "react-router-dom";
+import LogoSlider from "../components/Home/LogoSlider";
 
 function Home() {
   return (
@@ -21,7 +22,6 @@ function Home() {
               , Receive your top new job matches directly in your inbox.
             </p>
           </div>
-
           <div className="flex flex-col md:flex-row gap-9 md:gap-14 items-center mt-10 md:mt-8 md:pl-20 pl-0">
             <Link to={"/signup"}>
               {
@@ -33,7 +33,6 @@ function Home() {
                 </button>
               }
             </Link>
-
             <p className="underline font-semibold text-gray-900">
               <a href="#">Download App</a>
             </p>
@@ -54,20 +53,32 @@ function Home() {
           <img src={heroImage} className="w-11/12 ml-16 md:pt-44 " />
         </div>
       </div>
-      <div className="bg-black">
-        <div className=" flex px-3 gap-10 py-16 justify-center items-center">
-          <div className="w-1/4 bg-white rounded-lg py-36">
-            <div>
-              <div className="cardLogo">
-                <i className="fa-brands fa-google text-black text-4xl"></i>
-              </div>
-              <div className="cardImage"></div>
-            </div>
+      <div className="px-10 py-10">
+        <div className="grid md:grid-cols-3">
+          <div className="flex flex-col gap-1 md:border border-gray-300 border-l-transparent justify-center items-center text-red-500 font-semibold text-3xl md:text-4xl py-10 md:py-16">
+            130K +<span className="text-base">Tech Jobs</span>
           </div>
-          <div className="w-1/4 bg-green-600 rounded-lg py-36">b</div>
-          <div className="w-1/4 bg-white rounded-lg py-36">c</div>
+
+          <div className="flex flex-col gap-1 md:border border-gray-300 border-l-transparent border-r-transparent justify-center items-center text-pink-600 font-semibold text-3xl md:text-4xl py-10 md:py-16">
+            6,000,000 <span className="text-base">Matches Made </span>
+          </div>
+          <div className="flex flex-col gap-1 md:border border-gray-300 border-r-transparent justify-center items-center text-purple-800 font-semibold text-3xl md:text-4xl py-16">
+            8M + <span className="text-base">Startup-ready candidates</span>
+          </div>
+        </div>
+        <div className="grid md:grid-cols-2">
+          <div className="flex flex-col gap-1 md:border border-gray-300 border-l-transparent border-b-transparent justify-center items-center text-yellow-600 font-semibold text-3xl md:text-4xl py-10 md:py-16">
+            27K +<span className="text-base">Companies</span>
+          </div>
+          <div className="flex flex-col gap-1 md:border border-gray-300 border-r-transparent border-b-transparent   justify-center items-center text-orange-500 font-semibold text-3xl md:text-4xl py-10 md:py-16">
+            6,000,000 <span className="text-base">Matches Made </span>
+          </div>
         </div>
       </div>
+
+      {/* slider */}
+
+      <LogoSlider />
     </div>
   );
 }
