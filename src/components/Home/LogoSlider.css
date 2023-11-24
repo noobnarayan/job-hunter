@@ -1,5 +1,5 @@
 :root {
-  --total-brand: 10;
+  --total-brand: 20;
   --logo-width: 12rem;
   --total-logo-width: calc(
     var(var(--total-brand) * var(var(--logo-width) * 2))
@@ -26,7 +26,10 @@ body {
   display: flex;
   align-items: center;
   overflow: hidden;
+  border-top: 1px solid rgb(209, 213, 219);
+  border-bottom: 1px solid rgb(209, 213, 219);
 }
+
 .silder::before,
 .silder::after {
   position: absolute;
@@ -50,7 +53,7 @@ body {
 }
 @keyframes slideLeft {
   100% {
-    transform: translateX(calc(-50% / 2));
+    transform: translateX(calc(-20% / 2));
   }
 }
 ul.brands li.brand-logo {
