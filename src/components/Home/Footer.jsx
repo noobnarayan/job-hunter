@@ -6,14 +6,14 @@ function Footer() {
       <div className="w-2/5 ml-20 flex flex-col gap-2">
         <img src={logo} className="w-3/6" />
         <div className=" flex gap-3 text-2xl ml-3.5 text-gray-800">
-          <i class="fa-brands fa-twitter"></i>
-          <i class="fa-brands fa-instagram"></i>
-          <i class="fa-brands fa-linkedin-in"></i>
+          <i class="fa-brands fa-twitter cursor-pointer hover:text-green-500"></i>
+          <i class="fa-brands fa-instagram cursor-pointer hover:text-green-500"></i>
+          <i class="fa-brands fa-linkedin-in cursor-pointer hover:text-green-500"></i>
         </div>
       </div>
       <div className="flex justify-between w-3/5 ">
         <div className="flex flex-col gap-2.5">
-          <h3 className="font-semibold text-base    ">For Candidates</h3>
+          <h3 className="font-semibold text-base">For Candidates</h3>
           <p className=" cursor-pointer hover:underline hover:text-green-600">
             Overview
           </p>
@@ -58,12 +58,22 @@ function Footer() {
           </p>
         </div>
         <div className="flex flex-col gap-2.5">
-          <h3 className="font-semibold text-base    ">Company</h3>
-          <p className="">About</p>
-          <p className="">AngelList Venture</p>
-          <p className="">Blog</p>
-          <p className="">Terms & Risks</p>
-          <p className="">Privacy & Cookies</p>
+          <h3 className="font-semibold text-base">Company</h3>
+          <p className="cursor-pointer hover:underline hover:text-green-600">
+            About
+          </p>
+          <p className="cursor-pointer hover:underline hover:text-green-600">
+            AngelList Venture
+          </p>
+          <p className="cursor-pointer hover:underline hover:text-green-600">
+            Blog
+          </p>
+          <p className="cursor-pointer hover:underline hover:text-green-600">
+            Terms & Risks
+          </p>
+          <p className="cursor-pointer hover:underline hover:text-green-600">
+            Privacy & Cookies
+          </p>
         </div>
         <div></div>
       </div>
