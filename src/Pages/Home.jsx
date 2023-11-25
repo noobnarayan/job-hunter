@@ -4,6 +4,7 @@ import JobSeekers from "../components/Home/JobSeekers";
 import Hero from "../components/Home/Hero";
 import HomeStats from "../components/Home/HomeStats";
 import HomeRecruiters from "../components/Home/HomeRecruiters";
+import Footer from "../components/Home/Footer";
 
 function Home() {
   return (
@@ -13,6 +14,7 @@ function Home() {
       <LogoSlider />
       <JobSeekers />
       <HomeRecruiters />
+      <Footer />
     </div>
   );
 }
