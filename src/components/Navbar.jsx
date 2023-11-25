@@ -64,10 +64,11 @@ function Navbar() {
                 Login
               </button>
             </Link>
-
-            <button className="bg-black text-white font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105 md:shadow">
-              <Link to="/signup">Signup</Link>
-            </button>
+            <Link to="/signup">
+              <button className="bg-black text-white font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105 md:shadow">
+                Sign Up
+              </button>
+            </Link>
             <div className="md:pl-2 md:ml-2 md:mr-3 flex items-center gap-1 md:border-l md:border-gray-300  lg:h-5 mt-4 md:mt-1.5 font-bold md:font-normal text-gray-500 hover:text-green-700 cursor-pointer">
               <span className=" hover:pb-px md:hover:border-b-2 hover:border-green-700">
                 For employers
