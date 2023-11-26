@@ -4,20 +4,20 @@ import { Link } from "react-router-dom";
 
 function JobSeekers() {
   return (
-    <div className="flex px-10 py-32 font-Poppins">
-      <div className="w-1/2">
+    <div className="md:flex px-5 md:px-10 py-20 md:py-32 font-Poppins">
+      <div className="md:w-1/2">
         <div>
-          <img src={happyPeople} className="w-11/12" />
+          <img src={happyPeople} className="md:w-11/12" />
         </div>
       </div>
 
       {/* Right */}
-      <div className="w-1/2 px-16">
+      <div className="md:w-1/2 px-5 md:px-16">
         <div>
-          <p className="text-xl font-medium">GOT TALENT?</p>
+          <p className="text-xl font-medium my-10">GOT TALENT?</p>
         </div>
         <div>
-          <h3 className="text-4xl font-semibold mr-20 my-7">
+          <h3 className="text-4xl font-semibold mr-4 md:mr-20 my-7 ">
             Why job seekers love us
           </h3>
         </div>

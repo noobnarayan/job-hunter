@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Test from "./Test";
 import Navbar from "./components/Navbar";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db } from "../firebase.config";

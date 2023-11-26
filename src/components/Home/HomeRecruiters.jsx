@@ -4,13 +4,13 @@ import { Link } from "react-router-dom";
 
 function HomeRecruiters() {
   return (
-    <div className="flex px-10 py-8 font-Poppins">
-      <div className="w-1/2 px-16">
+    <div className="md:flex px-7 md:px-10 py-8 font-Poppins">
+      <div className="md:w-1/2 px-3 md:px-16">
         <div>
           <p className="text-xl font-medium">NEED TALENT?</p>
         </div>
         <div>
-          <h3 className="text-4xl font-semibold mr-28 my-7">
+          <h3 className="text-4xl font-semibold md:mr-28 my-7">
             Why recruiters love us
           </h3>
         </div>
@@ -67,9 +67,9 @@ function HomeRecruiters() {
       </div>
       {/* Right */}
 
-      <div className="w-1/2">
+      <div className="md:w-1/2">
         <div>
-          <img src={happyPeople} className="w-11/12" />
+          <img src={happyPeople} className="md:w-11/12" />
         </div>
       </div>
     </div>
