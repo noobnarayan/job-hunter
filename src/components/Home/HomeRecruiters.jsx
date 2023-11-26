@@ -68,7 +68,7 @@ function HomeRecruiters() {
       {/* Right */}
 
       <div className="md:w-1/2">
-        <div>
+        <div className="sm:p-20 md:p-0">
           <img src={happyPeople} className="md:w-11/12" />
         </div>
       </div>
