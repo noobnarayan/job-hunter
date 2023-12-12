@@ -6,8 +6,8 @@ function JobListing() {
   return (
     <div>
       <Navbar />
-      <TopBanner />
-      {/* <MainJobSection />   */}
+      {/* <TopBanner /> */}
+      <MainJobSection />
     </div>
   );
 }

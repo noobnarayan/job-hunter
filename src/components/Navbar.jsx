@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from "./assets/media/JobHunter.png";
 
 function Navbar() {
@@ -10,23 +10,30 @@ function Navbar() {
     },
     {
       title: "Find Jobs",
-      path: "/",
+      path: "/jobs",
     },
     {
       title: "Companies",
-      path: "/",
+      path: "/companies",
     },
   ];
 
   const [open, setOpen] = useState(false);
+  const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
   return (
     <div className="shadow w-full fixed top-0 left-0 font-Nunito">
       <div className="md:flex items-center justify-between bg-white py-2.5 md:px-10 px-7">
-        <div className=" font-semibold text-xl cursor-pointer flex items-center text-gray-800">
-          <span className="flex items-center font-Poppins">
-            <img src={logo} className="w-10 rounded-lg mr-3" />/ jobhunter
-          </span>
+        <div className="font-semibold text-xl cursor-pointer flex items-center text-gray-800">
+          <Link to="/" className="flex items-center font-Poppins">
+            <img
+              src={logo}
+              className="w-10 rounded-lg mr-3"
+              alt="JobHunter Logo"
+            />
+            / jobhunter
+          </Link>
         </div>
+
         <div
           onClick={() => setOpen((pre) => !pre)}
           className="text-3xl absolute right-8 top-3 cursor-pointer md:hidden"
@@ -47,16 +54,19 @@ function Navbar() {
                 key={index}
                 className="md:ml-8 text-base font-semibold md:my-0 my-7"
               >
-                <Link
+                <NavLink
                   to={link.path}
-                  className="text-gray-500 hover:text-green-700 hover:pb-4 md:hover:border-b-2 hover:border-green-700 "
+                  className={({ isActive }) =>
+                    isActive
+                      ? activeStyle
+                      : "text-gray-500 hover:text-green-700"
+                  }
                 >
                   {link.title}
-                </Link>
+                </NavLink>
               </li>
             );
           })}
-
           {/* Temperory Hidden */}
           <div className="md:flex block">
             <Link to="/login">
