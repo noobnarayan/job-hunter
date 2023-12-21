@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import { collection, query, where, getDocs } from "firebase/firestore";
-import { db } from "../firebase.config";
 import JobCard from "./CardTest";
 import Searchbar from "./components/JobListing/Searchbar";
 import LoginSignUp from "./Pages/LoginSignUp";
