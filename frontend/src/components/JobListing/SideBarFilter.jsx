@@ -6,13 +6,16 @@ function SideBarFilter() {
   const handleExperienceChange = (e) => {
     setYOE(e.target.value);
   };
+
   return (
     <div>
       <div className="text-sm">
         <div className="border-b px-4">
           <div className="flex justify-between py-4 ">
             <span className=" font-bold">Filter</span>
-            <span className=" font-bold text-red-400">Clear all</span>
+            <span className=" font-bold text-red-400 hover:cursor-pointer">
+              Clear all
+            </span>
           </div>
         </div>
 
