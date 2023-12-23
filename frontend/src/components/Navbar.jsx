@@ -21,7 +21,7 @@ function Navbar() {
   const [open, setOpen] = useState(false);
   const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
   return (
-    <div className="shadow w-full fixed top-0 left-0 font-Nunito">
+    <div className="border-b w-full fixed top-0 left-0 font-Nunito">
       <div className="md:flex items-center justify-between bg-white py-2.5 md:px-10 px-7">
         <div className="font-semibold text-xl cursor-pointer flex items-center text-gray-800">
           <Link to="/" className="flex items-center font-Poppins">
