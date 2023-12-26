@@ -2,7 +2,7 @@ import React from "react";
 
 function JobCard() {
   return (
-    <div className="my-4">
+    <div className="my-4 hover:cursor-pointer">
       <div className="border p-3.5 shadow rounded-lg">
         {/* Top */}
         <div className="mb-5 flex justify-between ">
