@@ -19,6 +19,10 @@ function Navbar() {
   ];
 
   const [open, setOpen] = useState(false);
+  const [loggedIn, setLoggedin] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => setIsOpen(!isOpen);
   const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
   return (
     <div className="border-b w-full fixed top-0 left-0 font-Nunito">
@@ -68,24 +72,74 @@ function Navbar() {
             );
           })}
           {/* Temperory Hidden */}
-          <div className="md:flex block">
-            <Link to="/login">
-              <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 md:ml-7 md:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 md:hover:scale-105">
-                Login
-              </button>
-            </Link>
-            <Link to="/signup">
-              <button className="bg-black text-white font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105 md:shadow">
-                Sign Up
-              </button>
-            </Link>
-            <div className="md:pl-2 md:ml-2 md:mr-3 flex items-center gap-1 md:border-l md:border-gray-300  lg:h-5 mt-4 md:mt-1.5 font-bold md:font-normal text-gray-500 hover:text-green-700 cursor-pointer">
-              <span className=" hover:pb-px md:hover:border-b-2 hover:border-green-700">
-                For employers
-              </span>
-              <i className="fa-solid fa-angle-down mt-1"></i>
+          {!loggedIn ? (
+            <div className=" md:flex ">
+              <Link to="/login">
+                <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 md:ml-7 md:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 md:hover:scale-105">
+                  Login
+                </button>
+              </Link>
+              <Link to="/signup">
+                <button className="bg-black text-white font-bold py-1.5 px-5 rounded-md md:ml hover:bg-green-700 duration-500 md:hover:scale-105 md:shadow">
+                  Sign Up
+                </button>
+              </Link>
+              <div className="md:pl-2 md:ml-2 md:mr-3 flex items-center gap-1 md:border-l md:border-gray-300  lg:h-5 mt-4 md:mt-1.5 font-bold md:font-normal text-gray-500 hover:text-green-700 cursor-pointer">
+                <span className=" hover:pb-px md:hover:border-b-2 hover:border-green-700">
+                  For employers
+                </span>
+                <i className="fa-solid fa-angle-down mt-1"></i>
+              </div>
             </div>
-          </div>
+          ) : (
+            <>
+              <div className="px-20 flex gap-8 items-center justify-center">
+                <div>
+                  <span>
+                    <i className="fa-solid fa-bell text-xl text-gray-600"></i>
+                  </span>
+                </div>
+                <div className="relative shado">
+                  <div
+                    className="bg-green-300 rounded-full h-9 w-9 hover:cursor-pointer overflow-hidden flex justify-center items-center"
+                    onClick={toggleDropdown}
+                  >
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg"
+                      className="object-cover"
+                    />
+                  </div>
+
+                  {isOpen && (
+                    <div className=" absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                      <div
+                        className="py-1"
+                        role="menu"
+                        aria-orientation="vertical"
+                        aria-labelledby="options-menu"
+                      >
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          role="menuitem"
+                        >
+                          Edit Profile
+                        </a>
+                        <a
+                          href="#"
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                          role="menuitem"
+                        >
+                          Logout
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+
           {/* Temperory Hidden */}
         </ul>
       </div>
