@@ -5,6 +5,9 @@ import Login from "../components/LoginSignup/Login";
 import Signup from "../components/LoginSignup/Signup";
 import JobListing from "../Pages/JobListing";
 import JobDetails from "../Pages/JobDetails";
+import CompaniesPage from "../Pages/CompaniesPage";
+import CompanyDashboard from "../Pages/CompanyDashboard";
+import UserProfile from "../Pages/UserProfile";
 function AllRoutes() {
   return (
     <Routes>
@@ -13,6 +16,9 @@ function AllRoutes() {
       <Route path="/signup" element={<Signup />} />
       <Route path="/jobs" element={<JobListing />} />
       <Route path="/job-description" element={<JobDetails />} />
+      <Route path="/companies" element={<CompaniesPage />} />
+      <Route path="/dashboard" element={<CompanyDashboard />} />
+      <Route path="/profile" element={<UserProfile />} />
     </Routes>
   );
 }
