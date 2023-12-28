@@ -11,7 +11,7 @@ import logo from "../assets/media/JobHunter.png";
 const sidebarLinks = [
   {
     name: "Dashboard",
-    href: "/",
+    href: "/dashboard",
     icon: HomeIcon,
   },
   {
