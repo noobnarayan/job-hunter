@@ -8,6 +8,8 @@ import JobDetails from "../Pages/JobDetails";
 import CompaniesPage from "../Pages/CompaniesPage";
 import CompanyDashboard from "../Pages/CompanyDashboard";
 import UserProfile from "../Pages/UserProfile";
+import JobPosting from "../Pages/JobPosting";
+import ApplicantInformation from "../Pages/ApplicantInformation";
 function AllRoutes() {
   return (
     <Routes>
@@ -19,6 +21,8 @@ function AllRoutes() {
       <Route path="/companies" element={<CompaniesPage />} />
       <Route path="/dashboard" element={<CompanyDashboard />} />
       <Route path="/profile" element={<UserProfile />} />
+      <Route path="/post-new-job" element={<JobPosting />} />
+      <Route path="/applicant" element={<ApplicantInformation />} />
     </Routes>
   );
 }
