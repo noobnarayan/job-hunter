@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 const socialProfilesSchema = new mongoose.Schema({
     linkedIn: String,
     github: String,

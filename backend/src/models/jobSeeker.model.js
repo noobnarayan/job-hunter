@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 import { socialProfilesSchema } from './social-profiles.schema.js';
 const certificationSchema = new mongoose.Schema({
     name: String,
