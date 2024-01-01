@@ -13,14 +13,8 @@ app.use(express.static("public"))
 app.use(cookieParser())
 
 // routes import
-// import userRouter from "./routes/user.routes.js"
+import userRouter from "./routes/user.routes.js"
 
 // routes declearation
 
-// app.use("/api/v1/users", userRouter)
-
-
-
-app.get("/ping", async (req, res) => {
-    res.send(`API is working`)
-})
+app.use("/api/v1/users", userRouter)

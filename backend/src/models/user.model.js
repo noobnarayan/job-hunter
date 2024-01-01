@@ -9,6 +9,7 @@ const userSchema = new Schema(
         password: { type: String, required: true },
         email: { type: String, required: true, unique: true },
         role: { type: String, required: true },
+        refreshToken: String,
         userProfile: { type: Schema.Types.Mixed }
     },
     {
