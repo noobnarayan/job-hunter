@@ -1,22 +1,24 @@
-import mongoose from "mongoose";
-import { socialProfilesSchema } from './social-profiles.schema.js';
-const certificationSchema = new mongoose.Schema({
+import mongoose, { Schema } from "mongoose";
+import { socialProfilesSchema } from './socialProfiles.schema.js';
+
+const certificationSchema = new Schema({
     name: String,
     issuingOrganization: String,
-    dateObtained: Date
+    dateObtained: Date,
+    link: String
 });
-const languageSchema = new mongoose.Schema({
+const languageSchema = new Schema({
     language: String,
     proficiency: String
 });
-const educationSchema = new mongoose.Schema({
+const educationSchema = new Schema({
     institution: String,
     degree: String,
     fieldOfStudy: String,
     startYear: Number,
     endYear: Number
 });
-const workExperienceSchema = new mongoose.Schema({
+const workExperienceSchema = new Schema({
     jobTitle: String,
     company: String,
     location: String,
@@ -27,35 +29,30 @@ const workExperienceSchema = new mongoose.Schema({
     currentJob: Boolean,
     description: String
 });
-const projectExperienceSchema = new mongoose.Schema({
+const projectExperienceSchema = new Schema({
     projectName: String,
     description: String,
     role: String
 });
 
-const jobPreferencesSchema = new mongoose.Schema({
+const jobPreferencesSchema = new Schema({
     types: [String],
     industries: [String],
     locations: [String]
 });
-const jobSeekerSchema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+const jobSeekerProfileSchema = new Schema({
     contactNumber: String,
-    address: String,
+    address: {
+        city: String,
+        state: String,
+        country: String
+    },
     dateOfBirth: Date,
     gender: String,
     nationality: String,
-    savedJobs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
-    resume: {
-        data: Buffer,
-        contentType: String
-    },
-    profilePicture: {
-        data: Buffer,
-        contentType: String
-    },
+    savedJobs: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
+    resume: String,
+    profilePicture: String,
     portfolioWebsite: String,
     certifications: [certificationSchema],
     languages: [languageSchema],
@@ -67,8 +64,10 @@ const jobSeekerSchema = new mongoose.Schema({
     skills: [String],
     education: [educationSchema],
     workExperience: [workExperienceSchema],
-    applications: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
+    applications: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
     socialProfiles: socialProfilesSchema,
     publicProfile: Boolean,
     jobPreferences: jobPreferencesSchema
 });
+
+export const JobSeekerProfile = mongoose.model("JobSeekerProfile", jobSeekerProfileSchema);

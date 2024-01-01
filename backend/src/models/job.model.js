@@ -1,5 +1,7 @@
-import mongoose from "mongoose";
-const jobSchema = new mongoose.Schema({
+import mongoose, { Schema } from "mongoose";
+import { User } from './user.model.js';
+
+const jobSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
     responsibilities: [String],
@@ -14,16 +16,15 @@ const jobSchema = new mongoose.Schema({
     type: String,
     location: String,
     datePosted: { type: Date, default: Date.now },
-    employer: { type: mongoose.Schema.Types.ObjectId, ref: 'EmployerProfile', required: true },
-    applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'jobSeeker' }],
-    shortlistedCandidates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'jobSeeker' }],
-    companyLogo: {
-        data: Buffer,
-        contentType: String
-    },
+    employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    applicants: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    shortlistedCandidates: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+    companyLogo: String,
     benefits: [String],
     applicationDeadline: Date,
     remoteWork: Boolean,
     travelRequirements: String,
     additionalRequirements: [String],
 });
+
+export const Job = mongoose.model("Job", jobSchema);

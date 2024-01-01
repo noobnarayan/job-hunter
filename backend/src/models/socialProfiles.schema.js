@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-const socialProfilesSchema = new mongoose.Schema({
+import mongoose, { Schema } from "mongoose";
+const socialProfilesSchema = new Schema({
     linkedIn: String,
     github: String,
     twitter: String
