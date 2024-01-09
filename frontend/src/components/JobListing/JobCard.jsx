@@ -5,33 +5,35 @@ function JobCard() {
     <div className="my-4 hover:cursor-pointer">
       <div className="border p-3.5 shadow rounded-lg">
         {/* Top */}
-        <div className="mb-5 flex justify-between ">
+        <div className="mb-5 flex flex-col md:flex-row justify-between gap-5 md:gap-1">
           {/* right */}
-          <div className="flex gap-3">
+          <div className="flex  gap-3">
             <div className="imgdiv h-11 w-11 rounded-lg overflow-hidden flex justify-center items-center border">
               <img src="http://localhost:5173/src/components/assets/media/JobHunter.png" />
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-2 md:gap-1 mb-2 md:mb-0">
               <div className="title">
                 <p className="font-bold">Product Designer</p>
               </div>
-              <div className="flex gap-3 text-[.9rem]">
+              <div className="flex flex-col md:flex-row gap-3 text-[.9rem]">
                 <div className="company">
                   <p className="text-gray-400 font-medium">Gojek</p>
                 </div>
-                <div className="tag bg-[#feefe0] py-px px-2.5 rounded-xl ">
-                  <span className="text-orange-500">Full-time</span>
-                </div>
-                <div className="strippend">
-                  <span className="text-gray-400">$100-$2,OOO USD</span>
+                <div className="flex gap-3 items-center  md:flex-row">
+                  <div className="tag bg-[#feefe0] py-px px-2.5 rounded-xl ">
+                    <span className="text-orange-500">Full-time</span>
+                  </div>
+                  <div className="strippend">
+                    <span className="text-gray-400">$100-$2,OOO USD</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           {/* left */}
           <div className="">
-            <div className="flex flex-col text-right gap-1">
-              <div className="flex gap-3 justify-center items-center">
+            <div className="flex flex-col text-left md:text-right gap-1">
+              <div className="flex gap-3 justify-start md:justify-center items-center">
                 <i className="fa-solid fa-location-dot"></i>
                 <p className="font-medium">Marina East, Singapore</p>
               </div>
@@ -42,7 +44,7 @@ function JobCard() {
           </div>
         </div>
         {/* Bottom */}
-        <div className="ml-10 text-gray-500 text-[.9rem]">
+        <div className="ml-5 md:ml-10 text-gray-500 text-[.9rem]">
           <ul className="list-disc">
             <li>
               Within this role, you will be creating content for a wide range of

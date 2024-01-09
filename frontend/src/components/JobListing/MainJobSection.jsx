@@ -4,11 +4,11 @@ import SideBarFilter from "./SideBarFilter";
 import JobCard from "./JobCard";
 function MainJobSection() {
   return (
-    <div className="flex px-5 gap-5 mt-20">
-      <div className="filters border rounded-xl w-[30%]">
+    <div className="flex flex-col px-5 gap-5 mt-20 md:flex-row">
+      <div className="border rounded-xl w-full md:w-[30%]">
         <SideBarFilter />
       </div>
-      <div className="jobs w-[70%]">
+      <div className=" w-full md:w-[70%]">
         <div>
           <Searchbar />
         </div>

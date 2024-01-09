@@ -45,7 +45,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="full-time"
                     name="full-time"
-                    className="form-checkbox h-4 w-4 accent-green-600"
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded "
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -59,7 +59,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="part-time"
                     name="part-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 "
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -75,7 +75,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="internship"
                     name="internship"
-                    className="form-checkbox h-4 w-4 accent-green-600 "
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -89,7 +89,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="freelance"
                     name="freelance"
-                    className="form-checkbox h-4 w-4 accent-green-600 "
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -107,7 +107,7 @@ function SideBarFilter() {
             <div className="py-4">
               <span className="font-bold">Experience</span>
             </div>
-            <div className="relative">
+            <div className=" ">
               <input
                 type="range"
                 min="0"
@@ -134,7 +134,7 @@ function SideBarFilter() {
                     type="radio"
                     id="full-time"
                     name="job-type"
-                    className="form-radio h-4 w-4 accent-green-600"
+                    className="form-radio h-4 w-4 accent-green-600 "
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -202,7 +202,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="full-time"
                     name="full-time"
-                    className="form-checkbox h-4 w-4 accent-green-600"
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -216,7 +216,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="part-time"
                     name="part-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 "
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded "
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
@@ -232,7 +232,7 @@ function SideBarFilter() {
                     type="checkbox"
                     id="internship"
                     name="internship"
-                    className="form-checkbox h-4 w-4 accent-green-600 "
+                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"
