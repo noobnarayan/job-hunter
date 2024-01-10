@@ -45,7 +45,8 @@ function SideBarFilter() {
                     type="checkbox"
                     id="full-time"
                     name="full-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded "
+                    className="form-checkbox h-4 w-4  rounded"
+                    style={{ color: "green", outline: "none" }}
                   />
                   <label
                     className="text-gray-500 text-sm font-medium"

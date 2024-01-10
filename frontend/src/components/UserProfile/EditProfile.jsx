@@ -1,5 +1,6 @@
 import AboutForm from "./AboutForm";
 import SocialProfileForm from "./SocialProfileForm";
+import WorkExperienceForm from "./WorkExperienceForm";
 
 function EditProfile() {
   return (
@@ -34,7 +35,7 @@ function EditProfile() {
           </p>
         </div>
         <div className="w-3/5 ">
-          <SocialProfileForm />
+          <WorkExperienceForm />
         </div>
       </div>
     </div>
