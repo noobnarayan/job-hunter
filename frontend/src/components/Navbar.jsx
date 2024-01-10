@@ -101,11 +101,11 @@ function Navbar() {
                 </div>
                 <div className="relative shado">
                   <div
-                    className="bg-green-300 rounded-full h-9 w-9 hover:cursor-pointer overflow-hidden flex justify-center items-center"
+                    className="bg-green-300 rounded-full h-9 w-9 hover:cursor-pointer overflow-hidden flex justify-center items-center border"
                     onClick={toggleDropdown}
                   >
                     <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/5/59/User-avatar.svg"
+                      src="https://photos.wellfound.com/users/16814996-medium_jpg?1699424460"
                       className="object-cover"
                     />
                   </div>

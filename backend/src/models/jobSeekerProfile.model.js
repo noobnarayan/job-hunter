@@ -53,7 +53,6 @@ const jobSeekerProfileSchema = new Schema({
     savedJobs: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
     resume: String,
     profilePicture: String,
-    portfolioWebsite: String,
     certifications: [certificationSchema],
     languages: [languageSchema],
     interests: [String],

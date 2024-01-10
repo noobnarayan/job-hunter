@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function AboutForm() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
     location: "india",
     role: "software_engineer",
     experience: "0",
     bio: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
+  const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    setIsChanged(JSON.stringify(formData) !== JSON.stringify(initialFormData));
+  }, [formData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -17,6 +24,12 @@ function AboutForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Form submitted:", formData);
+
+    setFormData(initialFormData);
+  };
+
+  const handleCancel = () => {
+    setFormData(initialFormData);
   };
   return (
     <div>
@@ -134,17 +147,29 @@ function AboutForm() {
             name="bio"
             value={formData.bio}
             onChange={handleInputChange}
-            rows="4"
+            placeholder="Stanford CS, Full stack generalist; launched a successful Android app, worked at Google"
+            rows="5"
             cols="50"
             className="w-full p-2 rounded-lg border border-gray-400 my-2"
-            required
           ></textarea>
         </div>
-        <input
-          type="submit"
-          value="Save"
-          className="w-full p-2 rounded-lg bg-gray-600 text-white hover:cursor-pointer font-medium text-lg"
-        />
+        {isChanged && (
+          <div className="flex gap-6 my-4 justify-end">
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="font-medium text-sm"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="p-2 px-4 bg-black hover:bg-green-500 hover:text-black text-white font-medium text-sm rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );
