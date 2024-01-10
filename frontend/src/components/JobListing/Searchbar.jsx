@@ -30,7 +30,7 @@ function Searchbar() {
                 type="text"
                 name="search"
                 placeholder="Preferred location"
-                className="w-full h-8 px-1 focus:outline-none focus:ring-1 focus:ring-gray-200 rounded"
+                className="w-full h-8 px-1 focus:outline-none focus:ring-1  rounded"
               />
             </div>
           </div>

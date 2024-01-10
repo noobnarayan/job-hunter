@@ -11,7 +11,7 @@ function JobCard() {
             <div className="imgdiv h-11 w-11 rounded-lg overflow-hidden flex justify-center items-center border">
               <img src="http://localhost:5173/src/components/assets/media/JobHunter.png" />
             </div>
-            <div className="flex flex-col gap-2 md:gap-1 mb-2 md:mb-0">
+            <div className="flex flex-col mb-2 md:mb-0">
               <div className="title">
                 <p className="font-bold">Product Designer</p>
               </div>
