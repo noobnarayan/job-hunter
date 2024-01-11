@@ -1,8 +1,52 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
+import axios from "axios";
+import { api_url } from "../../../config";
 
 function Login() {
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const resetErrorMessage = () => {
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 5000);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
+    makeLoginRequest(formData);
+  };
+
+  const makeLoginRequest = async (userData) => {
+    try {
+      const res = await axios.post(`${api_url}/users/login`, userData);
+      if (res.status === 200) {
+        navigate("/");
+      }
+    } catch (error) {
+      if (
+        error.response.status === 401 &&
+        error.response.data.includes("Invalid user credentials")
+      ) {
+        setErrorMessage("Invalid user credentials");
+        resetErrorMessage();
+      }
+    }
+  };
   return (
     <div>
       <div className="hidden font-semibold text-xl cursor-pointer md:flex items-center text-gray-800 px-16 mt-3">
@@ -31,7 +75,7 @@ function Login() {
           <div className="p-3 sm:p-10">
             <h2 className="text-3xl font-bold">Login</h2>
             <p className="mt-3">Find the job made for you!</p>
-            <form className="mt-6">
+            <form className="mt-6" onSubmit={handleFormSubmission}>
               <div className="flex flex-col">
                 <label className=" font-semibold">Email:</label>
 
@@ -39,24 +83,34 @@ function Login() {
                   type="text"
                   name="email"
                   required
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
                   placeholder="Email"
                 />
                 <label className=" font-semibold">Password:</label>
 
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   required
+                  value={formData.password}
+                  onChange={handleInputChange}
                   className="rounded h-10 pl-5 text-base mb-3 border-x border-y border-gray-400"
                   placeholder="Password"
                 />
-                <a
-                  href="#"
-                  className="text-right font-light text-black cursor-pointer mb-3 underline"
-                >
-                  Forget Password?
-                </a>
+                <div className="flex justify-between">
+                  <span className="text-red-600 text-sm ml-2">
+                    {errorMessage}
+                  </span>
+                  <a
+                    href="#"
+                    className="text-right font-light text-black cursor-pointer mb-3 underline"
+                  >
+                    Forget Password?
+                  </a>
+                </div>
+
                 <button className="bg-black rounded-md text-white font-normal text-sm h-11">
                   Login
                 </button>
