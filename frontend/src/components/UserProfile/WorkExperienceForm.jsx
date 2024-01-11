@@ -24,7 +24,7 @@ function WorkExperienceForm() {
         } else {
           setData([]);
         }
-      }, 500);
+      }, 300);
 
       return () => clearTimeout(timeoutId);
     }
@@ -32,23 +32,24 @@ function WorkExperienceForm() {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
-    setIsSearching(false);
+    setIsSearching(true);
   };
 
   const handleCancel = () => {
     console.log("isAdd");
   };
+
   return (
     <div className="bg-gray-100 p-5">
-      <form className=" flex flex-col gap-2.5">
+      <form className="flex flex-col gap-2.5">
         <div>
-          <label htmlFor="company" className="font-medium">
-            Company<span className="text-gray-500 ">*</span>
+          <label htmlFor="name" className="font-medium">
+            Company<span className="text-gray-500">*</span>
           </label>
           <input
             type="text"
-            id="company"
-            name="company"
+            id="name"
+            name="name"
             className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-200 mt-2"
             onChange={handleSearch}
           />
@@ -64,12 +65,7 @@ function WorkExperienceForm() {
                       alt={item.name}
                       className="w-10 h-10 rounded-full mr-3"
                     />
-                    <div className="flex flex-col">
-                      <span className="font-semibold">{item.name}</span>
-                      <span className="font-light text-sm text-gray-400">
-                        {item.domain}
-                      </span>
-                    </div>
+                    <span className="font-semibold">{item.name}</span>
                   </li>
                 ))
               : searchTerm && (

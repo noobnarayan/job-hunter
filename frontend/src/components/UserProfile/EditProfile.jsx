@@ -1,5 +1,6 @@
 import AboutForm from "./AboutForm";
 import SocialProfileForm from "./SocialProfileForm";
+import WorkExperienceCard from "./WorkExperienceCard";
 import WorkExperienceForm from "./WorkExperienceForm";
 
 function EditProfile() {
@@ -34,7 +35,12 @@ function EditProfile() {
             What other positions have you held?
           </p>
         </div>
-        <div className="w-3/5 ">
+        <div className="w-3/5 flex flex-col gap-3.5">
+          <div className="flex flex-col gap-3">
+            <WorkExperienceCard />
+            <WorkExperienceCard />
+          </div>
+
           <WorkExperienceForm />
         </div>
       </div>
