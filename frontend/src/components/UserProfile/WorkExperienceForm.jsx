@@ -65,7 +65,12 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
                       alt={item.name}
                       className="w-10 h-10 rounded-full mr-3"
                     />
-                    <span className="font-semibold">{item.name}</span>
+                    <div className="flex flex-col">
+                      <span className="font-semibold">{item.name}</span>
+                      <span className="text-sm text-gray-500">
+                        {`https://${item.domain}`}
+                      </span>
+                    </div>
                   </li>
                 ))
               : searchTerm && (
