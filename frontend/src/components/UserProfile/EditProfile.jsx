@@ -3,6 +3,8 @@ import AboutForm from "./AboutForm";
 import SocialProfileForm from "./SocialProfileForm";
 import WorkExperienceCard from "./WorkExperienceCard";
 import WorkExperienceForm from "./WorkExperienceForm";
+import EducationCard from "./EducationCard";
+import EducationForm from "./EducationForm";
 
 function EditProfile() {
   const [showAddWorkExperience, setShowAddWorkExperience] = useState(false);
@@ -52,8 +54,33 @@ function EditProfile() {
               className="text-sm text-green-600 flex gap-1 items-center hover:cursor-pointer"
               onClick={() => setShowAddWorkExperience(true)}
             >
-              <i class="fa-solid fa-plus"></i>
+              <i className="fa-solid fa-plus"></i>
               <span>Add work experience</span>
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
+        <div className="w-full md:w-2/5 flex flex-col gap-2.5">
+          <p className="font-medium">Your work experience</p>
+          <p className="text-gray-400 text-sm">
+            What other positions have you held?
+          </p>
+        </div>
+        <div className="w-full md:w-3/5 flex flex-col gap-3.5">
+          <div className="flex flex-col gap-3">
+            <EducationCard />
+            <EducationCard />
+          </div>
+          {showAddWorkExperience ? (
+            <EducationForm />
+          ) : (
+            <div
+              className="text-sm text-green-600 flex gap-1 items-center hover:cursor-pointer"
+              onClick={() => setShowAddWorkExperience(true)}
+            >
+              <i className="fa-solid fa-plus"></i>
+              <span>Add education</span>
             </div>
           )}
         </div>

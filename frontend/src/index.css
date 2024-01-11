@@ -3,3 +3,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.scrollable-list {
+  @apply max-h-60 overflow-y-auto;
+}
