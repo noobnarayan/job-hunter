@@ -1,8 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
+import { api_url } from "../../../config";
 
 function Signup() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleFormSubmission = (event) => {
+    event.preventDefault();
+
+    const passwordPattern =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{6,}$/;
+
+    if (!passwordPattern.test(formData.password)) {
+      setErrorMessage(
+        "Password must include at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 6 characters long."
+      );
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+    } else if (formData.password !== formData.confirmPassword) {
+      setErrorMessage("Passwords do not match.");
+
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+    } else {
+      console.log("Form data:", formData);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
   return (
     <div>
       <div className="hidden font-semibold text-xl cursor-pointer md:flex items-center text-gray-800 px-16 mt-3">
@@ -31,13 +74,15 @@ function Signup() {
           <div className="p-3 sm:p-10 ">
             <h2 className=" text-3xl font-bold ">Create Account</h2>
             <p className="mt-3">Find your next opportunity!</p>
-            <form className="mt-3">
+            <form className="mt-3" onSubmit={handleFormSubmission}>
               <div className="flex flex-col">
                 <label className=" font-semibold">Full Name:</label>
                 <input
                   type="text"
                   name="name"
                   required
+                  value={formData.name}
+                  onChange={handleInputChange}
                   className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
                   placeholder="enter name"
                 />
@@ -47,28 +92,36 @@ function Signup() {
                   type="text"
                   name="email"
                   required
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
                   placeholder="user@mail.com"
                 />
 
                 <label className=" font-semibold ">Password:</label>
                 <input
-                  type="text"
+                  type="password"
                   name="password"
                   required
+                  value={formData.password}
+                  onChange={handleInputChange}
                   className="rounded h-10 pl-5 text-base mb-3 border-x border-y border-gray-400"
                   placeholder="min 8 characters"
                 />
 
                 <label className=" font-semibold">Confirm Password:</label>
                 <input
-                  type="text"
-                  name="password"
+                  type="password"
+                  name="confirmPassword"
                   required
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
                   className="rounded h-10 pl-5 text-base mb-3 border-x border-y border-gray-400"
                   placeholder="confirm password"
                 />
-
+                <span className="text-red-600 text-sm ml-2">
+                  {errorMessage}
+                </span>
                 <button
                   type="submit"
                   className="bg-black rounded-md text-white font-normal text-sm h-11 mt-3"
