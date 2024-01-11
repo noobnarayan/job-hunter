@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
 import { api_url } from "../../../config";
+import axios from "axios";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,11 @@ function Signup() {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  const resetErrorMessage = () => {
+    setTimeout(() => {
+      setErrorMessage("");
+    }, 5000);
+  };
 
   const handleFormSubmission = (event) => {
     event.preventDefault();
@@ -24,17 +30,41 @@ function Signup() {
         "Password must include at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 6 characters long."
       );
 
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 5000);
+      resetErrorMessage();
     } else if (formData.password !== formData.confirmPassword) {
       setErrorMessage("Passwords do not match.");
-
-      setTimeout(() => {
-        setErrorMessage("");
-      }, 5000);
+      resetErrorMessage();
     } else {
-      console.log("Form data:", formData);
+      postUserData(formData);
+    }
+  };
+
+  const navigate = useNavigate();
+
+  const postUserData = async (data) => {
+    const { name, email, password } = data;
+    const userData = {
+      name,
+      email,
+      password,
+      role: "jobSeeker",
+      userProfile: { name },
+    };
+
+    try {
+      const res = await axios.post(`${api_url}/users/signup`, userData);
+      console.log(res);
+      if (res.data.statusCode === 201) {
+        navigate("/login");
+      }
+    } catch (error) {
+      if (
+        error.response.status === 409 &&
+        error.response.data.includes("User already exists")
+      ) {
+        setErrorMessage("User already exists");
+        resetErrorMessage();
+      }
     }
   };
 
