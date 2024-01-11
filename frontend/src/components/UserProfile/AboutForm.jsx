@@ -85,8 +85,8 @@ function AboutForm() {
             <option value="south_africa">South Africa</option>
           </select>
         </div>
-        <div className="flex">
-          <div className="w-3/5 pr-2">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-3/5 pr-2">
             <label htmlFor="role" className="block font-medium">
               Select your primary role
               <span className="text-gray-500">*</span>
@@ -116,7 +116,7 @@ function AboutForm() {
               </optgroup>
             </select>
           </div>
-          <div className="w-2/5 pr-2">
+          <div className="w-full md:w-2/5 pr-2">
             <label htmlFor="experience" className="block font-medium">
               Years of experience<span className="text-gray-500">*</span>
             </label>

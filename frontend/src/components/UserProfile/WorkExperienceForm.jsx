@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-function WorkExperienceForm() {
+function WorkExperienceForm({ setShowAddWorkExperience }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -36,7 +36,7 @@ function WorkExperienceForm() {
   };
 
   const handleCancel = () => {
-    console.log("isAdd");
+    setShowAddWorkExperience(false);
   };
 
   return (
