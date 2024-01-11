@@ -3,7 +3,7 @@ import EditProfile from "../components/UserProfile/EditProfile";
 
 function UserProfile() {
   return (
-    <div className="mt-20 md:px-28 px-5">
+    <div className="mt-20 xl:px-28 px-5">
       <div>
         <div>
           <h2 className="font-medium text-4xl">Edit your Jobhunter profile</h2>
