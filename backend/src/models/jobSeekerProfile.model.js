@@ -20,7 +20,13 @@ const educationSchema = new Schema({
 });
 const workExperienceSchema = new Schema({
     jobTitle: String,
-    company: String,
+    company: {
+        name: String,
+        logoUrl: {
+            type: String,
+            default: 'https://photos.wellfound.com/startups/i/267839-22e9550a168c9834c67a3e55e2577688-medium_jpg.jpg?buster=1677467708'
+        }
+    },
     location: String,
     startMonth: String,
     startYear: Number,
@@ -29,6 +35,7 @@ const workExperienceSchema = new Schema({
     currentJob: Boolean,
     description: String
 });
+
 const projectExperienceSchema = new Schema({
     projectName: String,
     description: String,
