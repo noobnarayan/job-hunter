@@ -33,7 +33,9 @@ function Login() {
 
   const makeLoginRequest = async (userData) => {
     try {
-      const res = await axios.post(`${api_url}/users/login`, userData);
+      const res = await axios.post(`${api_url}/users/login`, userData, {
+        withCredentials: true,
+      });
       if (res.status === 200) {
         navigate("/");
       }
@@ -47,6 +49,7 @@ function Login() {
       }
     }
   };
+
   return (
     <div>
       <div className="hidden font-semibold text-xl cursor-pointer md:flex items-center text-gray-800 px-16 mt-3">

@@ -6,9 +6,9 @@ function Footer() {
       <div className="md:w-2/5 ml-6 md:ml-20 flex flex-col gap-2 py-4 md:py-0">
         <img src={logo} className="w-3/5 md:w-3/6" />
         <div className=" flex gap-3 text-2xl ml-3.5 text-gray-800">
-          <i class="fa-brands fa-twitter cursor-pointer hover:text-green-500"></i>
-          <i class="fa-brands fa-instagram cursor-pointer hover:text-green-500"></i>
-          <i class="fa-brands fa-linkedin-in cursor-pointer hover:text-green-500"></i>
+          <i className="fa-brands fa-twitter cursor-pointer hover:text-green-500"></i>
+          <i className="fa-brands fa-instagram cursor-pointer hover:text-green-500"></i>
+          <i className="fa-brands fa-linkedin-in cursor-pointer hover:text-green-500"></i>
         </div>
       </div>
       <div className="md:flex justify-between md:w-3/5 px-10 md:px-0">

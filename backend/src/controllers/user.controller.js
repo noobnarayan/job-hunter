@@ -76,16 +76,21 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const options = {
         httpOnly: true,
-        secure: true
-    }
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+        domain: process.env.NODE_ENV === 'production' ? 'your-production-url' : 'localhost'
+    };
 
-    return res
+    res
         .status(200)
         .cookie("accessToken", accessToken, options)
         .cookie("refreshToken", refreshToken, options)
-        .json(new ApiResponse(200, { accessToken, refreshToken }, "User login successful"))
+        .json(new ApiResponse(200, { accessToken, refreshToken }, "User login successful"));
 
 })
+
+
 
 export {
     registerUser,
