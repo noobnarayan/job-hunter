@@ -3,6 +3,15 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 
+// Testing endpoints
+const ping = (req, res) => {
+    res.send("API is working")
+}
+const authPing = (req, res) => {
+    res.send("Auth is working")
+}
+
+
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
         const user = await User.findById(userId)
@@ -93,6 +102,8 @@ const loginUser = asyncHandler(async (req, res) => {
 
 
 export {
+    ping,
+    authPing,
     registerUser,
     loginUser
 }
