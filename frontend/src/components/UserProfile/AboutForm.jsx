@@ -7,6 +7,8 @@ function AboutForm() {
     role: "software_engineer",
     experience: "0",
     bio: "",
+    profilePicture:
+      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -19,6 +21,21 @@ function AboutForm() {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setFormData({ ...formData, profilePicture: reader.result });
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      setFormData({ ...formData, profilePicture: null });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -49,13 +66,22 @@ function AboutForm() {
         </div>
         <div className="py-5 flex gap-5 items-center">
           <div className="rounded-full h-[4.5rem] w-[4.5rem] overflow-hidden border">
-            <img
-              src="https://photos.wellfound.com/users/16814996-medium_jpg?1699424460"
-              alt="User"
-            />
+            <img src={formData.profilePicture} alt="User" />
           </div>
           <div>
-            <button className="border border-black py-2 px-3 rounded-md font-medium text-sm">
+            <input
+              type="file"
+              id="profilePicture"
+              name="profilePicture"
+              onChange={handleFileChange}
+              hidden
+            />
+
+            <button
+              type="button"
+              className="border border-black py-2 px-3 rounded-md font-medium text-sm"
+              onClick={() => document.getElementById("profilePicture").click()}
+            >
               Upload a new photo
             </button>
           </div>
