@@ -59,7 +59,7 @@ const jobSeekerProfileSchema = new Schema({
     nationality: String,
     savedJobs: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
     resume: String,
-    profilePicture: String,
+    profilePicture: { type: String, default: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" },
     certifications: [certificationSchema],
     languages: [languageSchema],
     interests: [String],
