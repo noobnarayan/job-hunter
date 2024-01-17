@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 
 function AboutForm() {
   const initialFormData = {
-    name: "",
-    location: "india",
-    role: "software_engineer",
-    experience: "0",
+    name: "Narayan Das",
+    location: "",
+    role: "",
+    experience: "",
     bio: "",
     profilePicture:
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",

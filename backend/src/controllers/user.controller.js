@@ -11,6 +11,13 @@ const authPing = (req, res) => {
     res.send("Auth is working")
 }
 
+const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+    domain: process.env.NODE_ENV === 'production' ? 'your-production-url' : 'localhost'
+};
 
 const generateAccessAndRefereshTokens = async (userId) => {
     try {
@@ -83,27 +90,39 @@ const loginUser = asyncHandler(async (req, res) => {
 
     const { refreshToken, accessToken } = await generateAccessAndRefereshTokens(user._id)
 
-    const options = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-        domain: process.env.NODE_ENV === 'production' ? 'your-production-url' : 'localhost'
-    };
 
     res
         .status(200)
-        .cookie("accessToken", accessToken, options)
-        .cookie("refreshToken", refreshToken, options)
+        .cookie("accessToken", accessToken, cookieOptions)
+        .cookie("refreshToken", refreshToken, cookieOptions)
         .json(new ApiResponse(200, { accessToken, refreshToken }, "User login successful"));
 
 })
 
+const logoutUser = asyncHandler(async (req, res) => {
+    await User.findByIdAndUpdate(req.user._id,
+        {
+            $unset:
+            {
+                refreshToken: 1
+            }
+        },
+        {
+            new: true
+        }
+    )
 
+    return res
+        .status(200)
+        .clearCookie("accessToken", cookieOptions)
+        .clearCookie("refreshToken", cookieOptions)
+        .json(new ApiResponse(200, {}, "User logged out"))
+})
 
 export {
     ping,
     authPing,
     registerUser,
-    loginUser
+    loginUser,
+    logoutUser
 }
