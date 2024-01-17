@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 function AboutForm() {
@@ -33,8 +34,29 @@ function AboutForm() {
 
     if (file) {
       reader.readAsDataURL(file);
+      updateProfilePicture(file);
     } else {
       setFormData({ ...formData, profilePicture: null });
+    }
+  };
+
+  const updateProfilePicture = async (file) => {
+    const formPayload = new FormData();
+    formPayload.append("profilePicture", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/users/profile-picture",
+        formPayload,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error updating profile picture:", error.response);
     }
   };
 

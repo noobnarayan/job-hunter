@@ -2,6 +2,8 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
+import { uploadOnCloudinary } from "../utils/cloudinary.service.js"
+import { error } from "console"
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -91,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
     const { refreshToken, accessToken } = await generateAccessAndRefereshTokens(user._id)
 
 
-    res
+    return res
         .status(200)
         .cookie("accessToken", accessToken, cookieOptions)
         .cookie("refreshToken", refreshToken, cookieOptions)
@@ -125,11 +127,50 @@ const getUserProfile = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, req.user, "User profile fetch successful"))
 })
 
+const updateUserProfile = asyncHandler(async (req, res) => {
+
+})
+
+const updateProfilePicture = asyncHandler(async (req, res) => {
+    const profilePictureLocalPath = req.file?.path
+
+    if (!profilePictureLocalPath) {
+        throw new ApiError(400, "Profile Picture file is missing")
+    }
+
+    const profilePicture = await uploadOnCloudinary(profilePictureLocalPath)
+    if (!profilePicture?.url) {
+        throw new ApiError(400, "Error while uploading profile picture")
+    }
+
+    let user = await User.findById(req.user._id);
+
+    if (user.role === 'jobSeeker') {
+        user = await User.findByIdAndUpdate(req.user._id, {
+            $set: {
+                "userProfile.profilePicture": profilePicture.url
+            }
+        }, { new: true }).select("-password");
+    } else if (user.role === 'employer') {
+        user = await User.findByIdAndUpdate(req.user._id, {
+            $set: {
+                "userProfile.companyLogo": profilePicture.url
+            }
+        }, { new: true }).select("-password");
+    }
+
+    return res
+        .status(200)
+        .json(new ApiResponse(200, user, "User profile picture updated successfully"))
+})
+
 export {
     ping,
     authPing,
     registerUser,
     loginUser,
     logoutUser,
-    getUserProfile
+    getUserProfile,
+    updateUserProfile,
+    updateProfilePicture
 }

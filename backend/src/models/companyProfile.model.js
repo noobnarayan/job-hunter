@@ -15,7 +15,7 @@ const companyProfileSchema = new Schema({
         from: Number,
         to: Number
     },
-    companyLogo: String,
+    companyLogo: { type: String, default: "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" },
     companyWebsite: String,
     jobListings: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Job' }],
     companySocialProfiles: socialProfilesSchema,
