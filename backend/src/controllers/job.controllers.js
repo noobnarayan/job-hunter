@@ -27,7 +27,13 @@ const getJobs = asyncHandler(async (req, res) => {
 })
 
 const postJob = asyncHandler(async (req, res, next) => {
-    const { title, description, employer } = req.body
+
+    const { role, _id } = req.user
+    if (role !== "employer") {
+        throw new ApiError(403, "Only employers are authorized to post a job")
+    }
+
+    const { title, description } = req.body
 
     if (!title) {
         throw new ApiError(400, "Title input is required.");
@@ -37,12 +43,8 @@ const postJob = asyncHandler(async (req, res, next) => {
         throw new ApiError(400, "Description input is required.");
     }
 
-    if (!employer) {
-        throw new ApiError(400, "Employer input is required.");
-    }
-
     try {
-        const job = new Job(req.body);
+        const job = new Job({ ...req.body, employer: _id });
         await job.save();
 
         return res
