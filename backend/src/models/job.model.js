@@ -14,7 +14,11 @@ const jobSchema = new Schema(
             from: Number,
             to: Number
         },
-        type: String,
+        type: {
+            type: String,
+            enum: ['Full-time', 'Part-time', 'Contract', 'Internship', 'Freelance'],
+            default: "Full-time"
+        },
         location: String,
         datePosted: { type: Date, default: Date.now },
         employer: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -25,6 +29,7 @@ const jobSchema = new Schema(
         remoteWork: Boolean,
         travelRequirements: String,
         additionalRequirements: [String],
+        urgent: Boolean
     },
     {
         timestamps: true
