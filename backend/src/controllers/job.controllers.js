@@ -26,8 +26,39 @@ const getJobs = asyncHandler(async (req, res) => {
     }
 })
 
-const postJobs = asyncHandler(async (req, res) => { })
+const postJob = asyncHandler(async (req, res, next) => {
+    const { title, description, employer } = req.body
+
+    if (!title) {
+        throw new ApiError(400, "Title input is required.");
+    }
+
+    if (!description) {
+        throw new ApiError(400, "Description input is required.");
+    }
+
+    if (!employer) {
+        throw new ApiError(400, "Employer input is required.");
+    }
+
+    try {
+        const job = new Job(req.body);
+        await job.save();
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, job, "Job posted successfully"))
+    } catch (error) {
+        throw new ApiError(500, "An error occurred while creating the job");
+    }
+});
 
 
 
-export { ping, authPing }
+
+export {
+    ping,
+    authPing,
+    getJobs,
+    postJob
+}

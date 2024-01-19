@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { ping } from "../controllers/job.controllers.js";
+import { getJobs, ping, postJob } from "../controllers/job.controllers.js";
 import { authPing } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -9,6 +9,7 @@ router.route("/ping").get(ping)
 router.route("/auth-ping").get(verifyJWT, authPing)
 
 //
-router.route("/jobs").get()
+router.route("/jobs").get(getJobs)
+router.route("/jobs").post(verifyJWT, postJob)
 
 export default router;
