@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-function EducationForm() {
+function EducationForm({ setShowAddEducation }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [data, setData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -35,7 +35,7 @@ function EducationForm() {
   };
 
   const handleCancel = () => {
-    setShowAddWorkExperience(false);
+    setShowAddEducation(false);
   };
 
   return (

@@ -19,7 +19,7 @@ function Navbar() {
   ];
 
   const [open, setOpen] = useState(false);
-  const [loggedIn, setLoggedin] = useState(true);
+  const [loggedIn, setLoggedin] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);

@@ -1,13 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AboutForm from "./AboutForm";
 import SocialProfileForm from "./SocialProfileForm";
 import WorkExperienceCard from "./WorkExperienceCard";
 import WorkExperienceForm from "./WorkExperienceForm";
 import EducationCard from "./EducationCard";
 import EducationForm from "./EducationForm";
+import axios from "axios";
+import { api_url } from "../../../config";
 
 function EditProfile() {
   const [showAddWorkExperience, setShowAddWorkExperience] = useState(false);
+  const [showAddEducation, setShowAddEducation] = useState(false);
+
+  const getUserData = async () => {
+    try {
+      const res = await axios.get(`${api_url}/users/profile`, {
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.log(`Error while fetching user`);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   return (
     <div className="px-4">
@@ -72,12 +90,12 @@ function EditProfile() {
             <EducationCard />
             <EducationCard />
           </div>
-          {showAddWorkExperience ? (
-            <EducationForm />
+          {showAddEducation ? (
+            <EducationForm setShowAddEducation={setShowAddEducation} />
           ) : (
             <div
               className="text-sm text-green-600 flex gap-1 items-center hover:cursor-pointer"
-              onClick={() => setShowAddWorkExperience(true)}
+              onClick={() => setShowAddEducation(true)}
             >
               <i className="fa-solid fa-plus"></i>
               <span>Add education</span>

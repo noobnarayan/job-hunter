@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-
+import { api_url } from "../../../config.js";
 function AboutForm() {
   const initialFormData = {
     name: "Narayan Das",
@@ -46,7 +46,7 @@ function AboutForm() {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/users/profile-picture",
+        `${api_url}/users/profile-picture`,
         formPayload,
         {
           withCredentials: true,

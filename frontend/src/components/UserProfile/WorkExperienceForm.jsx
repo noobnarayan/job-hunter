@@ -2,9 +2,37 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 function WorkExperienceForm({ setShowAddWorkExperience }) {
+  const initialFormData = {
+    companyName: "",
+    companyLogo: "",
+    companyDomain: "",
+    title: "",
+    startDate: "",
+    endDate: "",
+    current: null,
+    description: "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
   const [searchTerm, setSearchTerm] = useState("");
-  const [data, setData] = useState([]);
+  const [companyApiData, setCompanyApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleCompanyInput = (commpany) => {
+    const { name, logo, domain } = commpany;
+
+    setFormData({
+      ...formData,
+      companyName: name,
+      companyLogo: logo,
+      companyDomain: domain,
+    });
+  };
 
   useEffect(() => {
     if (isSearching) {
@@ -15,14 +43,14 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
               `https://autocomplete.clearbit.com/v1/companies/suggest?query=${searchTerm}`
             )
             .then((response) => {
-              setData(response.data);
+              setCompanyApiData(response.data);
             })
             .catch((error) => {
               console.error("Error fetching data: ", error);
-              setData([]);
+              setCompanyApiData([]);
             });
         } else {
-          setData([]);
+          setCompanyApiData([]);
         }
       }, 300);
 
@@ -39,9 +67,14 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
     setShowAddWorkExperience(false);
   };
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <div className="bg-gray-100 p-5">
-      <form className="flex flex-col gap-2.5">
+      <form className="flex flex-col gap-2.5" onSubmit={handleFormSubmit}>
         <div>
           <label htmlFor="name" className="font-medium">
             Company<span className="text-gray-500">*</span>
@@ -54,11 +87,12 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             onChange={handleSearch}
           />
           <ul className="list-none p-0 m-0">
-            {searchTerm && data.length > 0
-              ? data.map((item, index) => (
+            {searchTerm && companyApiData.length > 0
+              ? companyApiData.map((item, index) => (
                   <li
                     key={index}
                     className="flex items-center my-1 p-2 bg-white rounded-md shadow-sm border"
+                    onClick={() => handleCompanyInput(item)}
                   >
                     <img
                       src={item.logo}
@@ -74,7 +108,16 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
                   </li>
                 ))
               : searchTerm && (
-                  <li className="flex items-center my-2 p-2 bg-white rounded-md shadow-sm border border-black hover:cursor-pointer">
+                  <li
+                    className="flex items-center my-2 p-2 bg-white rounded-md shadow-sm border border-black hover:cursor-pointer"
+                    onClick={() =>
+                      handleCompanyInput({
+                        name: searchTerm,
+                        logo: null,
+                        domain: null,
+                      })
+                    }
+                  >
                     No results found for "{searchTerm}". Create "{searchTerm}".
                   </li>
                 )}
@@ -88,29 +131,35 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             type="text"
             id="title"
             name="title"
+            value={formData.jobtitle}
+            onChange={handleInputChange}
             className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
           />
         </div>
         <div>
-          <label htmlFor="start" className="font-medium">
+          <label htmlFor="startDate" className="font-medium">
             Start Date (Month/Year)<span className="text-gray-500">*</span>
           </label>
           <input
             type="month"
-            id="start"
-            name="start"
+            id="startDate"
+            name="startDate"
+            value={formData.startDate}
+            onChange={handleInputChange}
             className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
           />
         </div>
 
         <div>
-          <label htmlFor="end" className="font-medium">
+          <label htmlFor="endDate" className="font-medium">
             End Date (Month/Year)<span className="text-gray-500">*</span>
           </label>
           <input
             type="month"
-            id="end"
-            name="end"
+            id="endDate"
+            name="endDate"
+            value={formData.endDate}
+            onChange={handleInputChange}
             className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
           />
         </div>
@@ -133,6 +182,8 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             id="description"
             name="description"
             placeholder="Description"
+            value={formData.description}
+            onChange={handleInputChange}
             rows="5"
             cols="50"
             className="w-full p-2 rounded-lg border border-gray-400 my-2"
