@@ -3,14 +3,13 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { uploadOnCloudinary } from "../utils/cloudinary.service.js"
-import { error } from "console"
 
 // Testing endpoints
 const ping = (req, res) => {
-    res.send("API is working")
+    res.send("User API is working")
 }
 const authPing = (req, res) => {
-    res.send("Auth is working")
+    res.send("User Auth is working")
 }
 
 const cookieOptions = {
