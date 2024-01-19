@@ -14,17 +14,47 @@ const authPing = (req, res) => {
 
 const getJobs = asyncHandler(async (req, res) => {
     try {
-        const allJobs = await Job.find({})
-        if (!allJobs) {
-            return next(new ApiError(404, "No jobs found in the database"))
+        let query = {};
+        let sort = {};
+
+        // Search functionality
+        if (req.query.search) {
+            query.title = { $regex: req.query.search, $options: 'i' };
+        }
+
+        // Sort functionality
+        if (req.query.sortBy) {
+            const sortKey = req.query.sortBy.split(':').map(item => item.trim());
+            sort[sortKey[0]] = sortKey[1] === 'desc' ? -1 : 1;
+        }
+
+        const jobs = await Job.find(query).sort(sort);
+        if (!jobs.length) {
+            return next(new ApiError(404, "No jobs found in the database"));
+        }
+
+        return res
+            .status(200)
+            .json(new ApiResponse(200, jobs, "Jobs fetched successfully"));
+    } catch (error) {
+        throw new ApiError(500, "Something went wrong while fetching jobs from MongoDB");
+    }
+});
+
+const getJobById = asyncHandler(async (req, res, next) => {
+    try {
+        const job = await Job.findById(req.params.id);
+        if (!job) {
+            return next(new ApiError(404, "Job not found in the database"));
         }
         return res
             .status(200)
-            .json(new ApiResponse(200, allJobs, "Jobs fetched successfully"))
+            .json(new ApiResponse(200, job, "Job fetched successfully"));
     } catch (error) {
-        throw new ApiError(500, "Something wrong while fetching jobs from mongoDB")
+        throw new ApiError(500, "Something went wrong while fetching the job from MongoDB");
     }
-})
+});
+
 
 const postJob = asyncHandler(async (req, res, next) => {
 
@@ -62,5 +92,6 @@ export {
     ping,
     authPing,
     getJobs,
+    getJobById,
     postJob
 }
