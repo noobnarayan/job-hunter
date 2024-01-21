@@ -30,14 +30,14 @@ const getJobs = asyncHandler(async (req, res) => {
 
         const jobs = await Job.find(query).sort(sort);
         if (!jobs.length) {
-            return next(new ApiError(404, "No jobs found in the database"));
+            throw new ApiError(404, "No jobs found in the database");
         }
 
         return res
             .status(200)
             .json(new ApiResponse(200, jobs, "Jobs fetched successfully"));
     } catch (error) {
-        throw new ApiError(500, "Something went wrong while fetching jobs from MongoDB");
+        throw new ApiError(500, `Something went wrong while fetching jobs from MongoDB:: ${error}`);
     }
 });
 
@@ -51,7 +51,7 @@ const getJobById = asyncHandler(async (req, res, next) => {
             .status(200)
             .json(new ApiResponse(200, job, "Job fetched successfully"));
     } catch (error) {
-        throw new ApiError(500, "Something went wrong while fetching the job from MongoDB");
+        throw new ApiError(500, `Something went wrong while fetching the job from MongoDB:: Error: ${error}`);
     }
 });
 

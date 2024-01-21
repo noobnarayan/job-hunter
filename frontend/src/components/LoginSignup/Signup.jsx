@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
-import { api_url } from "../../../config";
-import axios from "axios";
+import { userService } from "../../services/authService";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -42,22 +41,20 @@ function Signup() {
   const navigate = useNavigate();
 
   const postUserData = async (data) => {
-    const { name, email, password } = data;
+    const { name } = data;
     const userData = {
-      name,
-      email,
-      password,
+      ...data,
       role: "jobSeeker",
       userProfile: { name },
     };
 
     try {
-      const res = await axios.post(`${api_url}/users/signup`, userData);
-      console.log(res);
+      const res = await userService.signup(userData);
       if (res.data.statusCode === 201) {
         navigate("/login");
       }
     } catch (error) {
+      console.log(error);
       if (
         error.response.status === 409 &&
         error.response.data.includes("User already exists")

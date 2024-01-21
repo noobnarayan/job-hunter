@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
-import axios from "axios";
-import { api_url } from "../../../config";
+import { userService } from "../../services/authService";
 
 function Login() {
   const navigate = useNavigate();
@@ -33,9 +32,7 @@ function Login() {
 
   const makeLoginRequest = async (userData) => {
     try {
-      const res = await axios.post(`${api_url}/users/login`, userData, {
-        withCredentials: true,
-      });
+      const res = await userService.login(userData);
       if (res.status === 200) {
         navigate("/");
       }
