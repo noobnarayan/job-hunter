@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import AllRoutes from "./Routes/AllRoutes";
 import { useLocation } from "react-router-dom";
-import { userService } from "./services/authService";
 
 function App() {
   const location = useLocation();

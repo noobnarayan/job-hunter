@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
-import { userService } from "../../services/authService";
+import { userService } from "../../services/userService";
 
 function Signup() {
   const [formData, setFormData] = useState({

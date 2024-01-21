@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { userService } from "../../services/authService.js";
+import { userService } from "../../services/userService.js";
 function AboutForm() {
   const initialFormData = {
     name: "Narayan Das",
