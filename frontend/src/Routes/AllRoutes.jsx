@@ -1,15 +1,15 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/Home";
+import Home from "../Pages/Home";
 import Login from "../components/LoginSignup/Login";
 import Signup from "../components/LoginSignup/Signup";
-import JobListing from "../pages/JobListing";
-import JobDetails from "../pages/JobDetails";
-import CompaniesPage from "../pages/CompaniesPage";
-import CompanyDashboard from "../pages/CompanyDashboard";
-import UserProfile from "../pages/UserProfile";
-import JobPosting from "../pages/JobPosting";
-import ApplicantInformation from "../pages/ApplicantInformation";
+import JobListing from "../Pages/JobListing";
+import JobDetails from "../Pages/JobDetails";
+import CompaniesPage from "../Pages/CompaniesPage";
+import CompanyDashboard from "../Pages/CompanyDashboard";
+import UserProfile from "../Pages/UserProfile";
+import JobPosting from "../Pages/JobPosting";
+import ApplicantInformation from "../Pages/ApplicantInformation";
 function AllRoutes() {
   return (
     <Routes>
