@@ -1,6 +1,4 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { api_url } from "../../../config.js";
 import { userService } from "../../services/authService.js";
 function AboutForm() {
   const initialFormData = {

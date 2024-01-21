@@ -4,6 +4,8 @@ import { api_url } from "../../config";
 export const userService = {
     login,
     signup,
+    logout,
+    getCurrentUser,
     updateProfilePicture,
 };
 
@@ -45,5 +47,23 @@ async function updateProfilePicture(file) {
         return response;
     } catch (error) {
         throw error;
+    }
+}
+
+async function logout() {
+    try {
+        await axios.get(`${api_url}/users/logout`, { withCredentials: true })
+    } catch (error) {
+        throw error
+    }
+}
+
+async function getCurrentUser() {
+    try {
+        const res = await axios.get(`${api_url}/users/profile`, { withCredentials: true })
+        const userData = res.data.data
+        return userData
+    } catch (error) {
+        throw error
     }
 }
