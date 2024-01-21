@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "./assets/media/JobHunter.png";
+import { useDispatch, useSelector } from "react-redux";
+import { userService } from "../services/userService";
+import { logout } from "../store/authSlice";
 
 function Navbar() {
   const navLinks = [
@@ -17,12 +20,24 @@ function Navbar() {
       path: "/companies",
     },
   ];
-
+  const dispatch = useDispatch();
+  const { status } = useSelector((store) => store.auth);
   const [open, setOpen] = useState(false);
-  const [loggedIn, setLoggedin] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const handleLogout = () => {
+    userService
+      .logout()
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
   return (
     <div className="border-b w-full fixed top-0 left-0 font-Nunito z-50">
@@ -71,8 +86,8 @@ function Navbar() {
               </li>
             );
           })}
-          {/* Temperory Hidden */}
-          {!loggedIn ? (
+
+          {!status ? (
             <div className=" md:flex ">
               <Link to="/login">
                 <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 md:ml-7 md:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 md:hover:scale-105">
@@ -109,36 +124,35 @@ function Navbar() {
                       className="object-cover"
                     />
                   </div>
-
                   {isOpen && (
-                    <div className=" absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                    <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
                       <div
                         className="py-1"
                         role="menu"
                         aria-orientation="vertical"
                         aria-labelledby="options-menu"
                       >
-                        <a
-                          href="profile"
+                        <Link
+                          to="/profile"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
                         >
                           Edit Profile
-                        </a>
-                        <a
-                          href="#"
+                        </Link>
+                        <Link
+                          to="/settings"
                           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                           role="menuitem"
                         >
                           Settings
-                        </a>
-                        <a
-                          href="#"
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        </Link>
+                        <p
+                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:cursor-pointer"
                           role="menuitem"
+                          onClick={handleLogout}
                         >
                           Logout
-                        </a>
+                        </p>
                       </div>
                     </div>
                   )}
@@ -146,8 +160,6 @@ function Navbar() {
               </div>
             </>
           )}
-
-          {/* Temperory Hidden */}
         </ul>
       </div>
     </div>
