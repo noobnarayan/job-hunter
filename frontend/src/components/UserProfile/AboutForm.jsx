@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { api_url } from "../../../config.js";
+import { userService } from "../../services/authService.js";
 function AboutForm() {
   const initialFormData = {
     name: "Narayan Das",
@@ -24,7 +25,7 @@ function AboutForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
 
@@ -34,29 +35,13 @@ function AboutForm() {
 
     if (file) {
       reader.readAsDataURL(file);
-      updateProfilePicture(file);
+      try {
+        await userService.updateProfilePicture(file);
+      } catch (error) {
+        console.error("Error updating profile picture:", error.response);
+      }
     } else {
       setFormData({ ...formData, profilePicture: null });
-    }
-  };
-
-  const updateProfilePicture = async (file) => {
-    const formPayload = new FormData();
-    formPayload.append("profilePicture", file);
-
-    try {
-      const response = await axios.post(
-        `${api_url}/users/profile-picture`,
-        formPayload,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-    } catch (error) {
-      console.error("Error updating profile picture:", error.response);
     }
   };
 
