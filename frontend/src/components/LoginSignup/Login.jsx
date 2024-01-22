@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
 import { userService } from "../../services/userService";
+import { login, logout } from "../../store/authSlice";
+import { useDispatch } from "react-redux";
 
 function Login() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -34,9 +37,16 @@ function Login() {
     try {
       const res = await userService.login(userData);
       if (res.status === 200) {
+        const userData = await userService.getCurrentUser();
+        if (userData) {
+          dispatch(login({ userData }));
+        } else {
+          dispatch(logout());
+        }
         navigate("/");
       }
     } catch (error) {
+      console.log(error);
       if (
         error.response.status === 401 &&
         error.response.data.includes("Invalid user credentials")
