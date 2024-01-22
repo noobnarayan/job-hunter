@@ -2,7 +2,7 @@ import { asyncHandler } from "../utils/asyncHandler.js"
 import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
-import { uploadOnCloudinary } from "../utils/cloudinary.service.js"
+import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.service.js"
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -137,12 +137,14 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Profile Picture file is missing")
     }
 
+    let user = await User.findById(req.user._id);
+
+    let oldProfilePictureUrl = user?.userProfile?.profilePicture;
+
     const profilePicture = await uploadOnCloudinary(profilePictureLocalPath)
     if (!profilePicture?.url) {
         throw new ApiError(400, "Error while uploading profile picture")
     }
-
-    let user = await User.findById(req.user._id);
 
     if (user.role === 'jobSeeker') {
         user = await User.findByIdAndUpdate(req.user._id, {
@@ -158,10 +160,23 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
         }, { new: true }).select("-password");
     }
 
+    if (oldProfilePictureUrl && oldProfilePictureUrl != "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg") {
+        try {
+            const splitUrl = oldProfilePictureUrl.split("/");
+            const filenameWithExtension = splitUrl[splitUrl.length - 1];
+            const imageId = filenameWithExtension.split(".")[0];
+            const res = await deleteFromCloudinary(imageId);
+            console.log(res);
+        } catch (error) {
+            throw new ApiError(304, `Error deleting profile picture: ${error.message}`);
+        }
+    }
+
     return res
         .status(200)
         .json(new ApiResponse(200, user, "User profile picture updated successfully"))
 })
+
 
 export {
     ping,
