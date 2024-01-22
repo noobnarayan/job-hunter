@@ -9,6 +9,8 @@ function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [loading, setLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -34,19 +36,18 @@ function Login() {
   };
 
   const makeLoginRequest = async (userData) => {
+    setLoading(true);
     try {
       const res = await userService.login(userData);
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
           dispatch(login({ userData }));
-        } else {
-          dispatch(logout());
         }
+        setLoading(false);
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
       if (
         error.response.status === 401 &&
         error.response.data.includes("Invalid user credentials")
@@ -54,6 +55,7 @@ function Login() {
         setErrorMessage("Invalid user credentials");
         resetErrorMessage();
       }
+      setLoading(false);
     }
   };
 
@@ -122,7 +124,7 @@ function Login() {
                 </div>
 
                 <button className="bg-black rounded-md text-white font-normal text-sm h-11">
-                  Login
+                  {loading ? "Logging in..." : "Login"}
                 </button>
               </div>
               <div className="flex items-center justify-center gap-5 my-6">

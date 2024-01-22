@@ -11,6 +11,7 @@ function Signup() {
     confirmPassword: "",
   });
 
+  const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const resetErrorMessage = () => {
     setTimeout(() => {
@@ -41,6 +42,7 @@ function Signup() {
   const navigate = useNavigate();
 
   const postUserData = async (data) => {
+    setLoading(true);
     const { name } = data;
     const userData = {
       ...data,
@@ -51,6 +53,7 @@ function Signup() {
     try {
       const res = await userService.signup(userData);
       if (res.data.statusCode === 201) {
+        setLoading(false);
         navigate("/login");
       }
     } catch (error) {
@@ -62,6 +65,7 @@ function Signup() {
         setErrorMessage("User already exists");
         resetErrorMessage();
       }
+      setLoading(false);
     }
   };
 
@@ -153,7 +157,7 @@ function Signup() {
                   type="submit"
                   className="bg-black rounded-md text-white font-normal text-sm h-11 mt-3"
                 >
-                  Create Account
+                  {loading ? "Creating Account..." : "Create Account"}
                 </button>
               </div>
             </form>
