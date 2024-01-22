@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { userService } from "../../services/userService.js";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../store/authSlice.js";
 function AboutForm() {
   const initialFormData = {
     name: "Narayan Das",
@@ -10,9 +12,10 @@ function AboutForm() {
     profilePicture:
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
   };
-
+  const dispath = useDispatch();
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(false);
 
   useEffect(() => {
     setIsChanged(JSON.stringify(formData) !== JSON.stringify(initialFormData));
@@ -34,7 +37,15 @@ function AboutForm() {
     if (file) {
       reader.readAsDataURL(file);
       try {
-        await userService.updateProfilePicture(file);
+        setUploadProgress(true);
+        const res = await userService.updateProfilePicture(file);
+        if (res.status === 200) {
+          const userData = await userService.getCurrentUser();
+          if (userData) {
+            dispath(updateUser({ userData }));
+          }
+        }
+        setUploadProgress(false);
       } catch (error) {
         console.error("Error updating profile picture:", error.response);
       }
@@ -87,7 +98,7 @@ function AboutForm() {
               className="border border-black py-2 px-3 rounded-md font-medium text-sm"
               onClick={() => document.getElementById("profilePicture").click()}
             >
-              Upload a new photo
+              {uploadProgress ? "Uploading..." : "Upload a new photo"}
             </button>
           </div>
         </div>

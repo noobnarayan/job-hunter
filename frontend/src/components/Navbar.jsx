@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "./assets/media/JobHunter.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,10 +21,16 @@ function Navbar() {
     },
   ];
   const dispatch = useDispatch();
-  const { status } = useSelector((store) => store.auth);
+  const { status, userData } = useSelector((store) => store.auth);
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [profilePicture, setProfilePicture] = useState(
+    "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+  );
+  useEffect(() => {
+    const profilePicture = userData?.userProfile?.profilePicture;
+    setProfilePicture(profilePicture);
+  }, [userData]);
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleLogout = () => {
@@ -119,10 +125,7 @@ function Navbar() {
                     className="rounded-full h-9 w-9 hover:cursor-pointer overflow-hidden flex justify-center items-center border"
                     onClick={toggleDropdown}
                   >
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
-                      className="object-cover"
-                    />
+                    <img src={profilePicture} className="object-cover" />
                   </div>
                   {isOpen && (
                     <div className="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
