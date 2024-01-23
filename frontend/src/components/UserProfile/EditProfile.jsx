@@ -7,25 +7,14 @@ import EducationCard from "./EducationCard";
 import EducationForm from "./EducationForm";
 import axios from "axios";
 import { api_url } from "../../../config";
+import { useSelector } from "react-redux";
 
 function EditProfile() {
   const [showAddWorkExperience, setShowAddWorkExperience] = useState(false);
   const [showAddEducation, setShowAddEducation] = useState(false);
 
-  const getUserData = async () => {
-    try {
-      const res = await axios.get(`${api_url}/users/profile`, {
-        withCredentials: true,
-      });
-    } catch (error) {
-      console.log(`Error while fetching user`);
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getUserData();
-  }, []);
+  const {userData} = useSelector(store => store.auth)
+  console.log(userData);
 
   return (
     <div className="px-4">
@@ -37,7 +26,7 @@ function EditProfile() {
           </p>
         </div>
         <div className="w-full md:w-3/5 ">
-          <AboutForm />
+          <AboutForm userData={userData} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">

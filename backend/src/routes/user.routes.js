@@ -11,7 +11,7 @@ router.route("/signup").post(registerUser)
 router.route("/login").post(loginUser)
 router.route("/logout").get(verifyJWT, logoutUser)
 router.route("/profile").get(verifyJWT, getUserProfile);
-router.route("/profile").put(verifyJWT, updateUserProfile);
+router.route("/profile/jobseeker").patch(verifyJWT, updateUserProfile);
 router.route("/profile-picture").post(verifyJWT, upload.single("profilePicture"), updateProfilePicture);
 
 

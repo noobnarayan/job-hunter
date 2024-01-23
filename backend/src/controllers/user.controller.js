@@ -3,6 +3,7 @@ import { User } from "../models/user.model.js"
 import { ApiError } from "../utils/ApiError.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.service.js"
+import { JobSeekerProfile } from "../models/jobSeekerProfile.model.js"
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -126,9 +127,34 @@ const getUserProfile = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, req.user, "User profile fetch successful"))
 })
 
-const updateUserProfile = asyncHandler(async (req, res) => {
 
-})
+const updateUserProfile = asyncHandler(async (req, res) => {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ['contactNumber', 'address', 'dateOfBirth', 'gender', 'nationality', 'savedJobs', 'profilePicture', 'resume', 'certifications', 'languages', 'interests', 'projectExperience', 'name', 'location', 'bio', 'skills', 'education', 'workExperience', 'applications', 'socialProfiles', 'publicProfile', 'jobPreferences'];
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
+    
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' });
+    }
+
+    try {
+        const userProfileUpdates = {};
+        updates.forEach((update) => userProfileUpdates[`userProfile.${update}`] = req.body[update]);
+
+        const user = await User.findByIdAndUpdate(req.user._id, userProfileUpdates, { new: true, runValidators: true });
+
+        if (!user) {
+            return res.status(404).send();
+        }
+
+        res.send(user);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+});
+
+
+
 
 const updateProfilePicture = asyncHandler(async (req, res) => {
     const profilePictureLocalPath = req.file?.path
@@ -166,7 +192,6 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
             const filenameWithExtension = splitUrl[splitUrl.length - 1];
             const imageId = filenameWithExtension.split(".")[0];
             const res = await deleteFromCloudinary(imageId);
-            console.log(res);
         } catch (error) {
             throw new ApiError(304, `Error deleting profile picture: ${error.message}`);
         }

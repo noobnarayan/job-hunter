@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { userService } from "../../services/userService.js";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/authSlice.js";
-function AboutForm() {
+function AboutForm({userData}) {
   const initialFormData = {
-    name: "Narayan Das",
+    name: "",
     location: "",
     role: "",
     experience: "",
@@ -12,11 +12,27 @@ function AboutForm() {
     profilePicture:
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
   };
+  
   const dispath = useDispatch();
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(false);
 
+  useEffect(()=>{
+    if (userData) {
+      setFormData({
+        ...formData,
+        name: userData.userProfile.name,
+        location: userData.userProfile.location,
+        role: userData.userProfile.role,
+        experience: userData.userProfile.experience,
+        bio: userData.userProfile.bio,
+        profilePicture: userData.userProfile.profilePicture
+      });
+    }
+  },[userData])
+
+  
   useEffect(() => {
     setIsChanged(JSON.stringify(formData) !== JSON.stringify(initialFormData));
   }, [formData]);
