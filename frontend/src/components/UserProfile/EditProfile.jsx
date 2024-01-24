@@ -5,8 +5,6 @@ import WorkExperienceCard from "./WorkExperienceCard";
 import WorkExperienceForm from "./WorkExperienceForm";
 import EducationCard from "./EducationCard";
 import EducationForm from "./EducationForm";
-import axios from "axios";
-import { api_url } from "../../../config";
 import { useSelector } from "react-redux";
 
 function EditProfile() {
@@ -14,7 +12,6 @@ function EditProfile() {
   const [showAddEducation, setShowAddEducation] = useState(false);
 
   const {userData} = useSelector(store => store.auth)
-  console.log(userData);
 
   return (
     <div className="px-4">

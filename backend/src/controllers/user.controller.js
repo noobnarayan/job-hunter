@@ -130,7 +130,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
 
 const updateUserProfile = asyncHandler(async (req, res) => {
     const updates = Object.keys(req.body);
-    const allowedUpdates = ['contactNumber', 'address', 'dateOfBirth', 'gender', 'nationality', 'savedJobs', 'profilePicture', 'resume', 'certifications', 'languages', 'interests', 'projectExperience', 'name', 'location', 'bio', 'skills', 'education', 'workExperience', 'applications', 'socialProfiles', 'publicProfile', 'jobPreferences'];
+    const allowedUpdates = ['contactNumber', 'address', 'dateOfBirth', 'gender', 'nationality', 'savedJobs', 'profilePicture', 'resume', 'certifications', 'languages', 'interests', 'projectExperience', 'name', 'location', 'primaryRole', 'YearsOfExperience','bio', 'skills', 'education', 'workExperience', 'applications', 'socialProfiles', 'publicProfile', 'jobPreferences'];
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
     
     if (!isValidOperation) {

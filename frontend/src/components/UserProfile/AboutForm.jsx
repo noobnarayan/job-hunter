@@ -2,37 +2,39 @@ import React, { useEffect, useState } from "react";
 import { userService } from "../../services/userService.js";
 import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/authSlice.js";
-function AboutForm({userData}) {
+import TextInput from "../Common/FormComponents/TextInput.jsx";
+import SelectInput from "../Common/FormComponents/SelectInput.jsx";
+import SubmissionButton from "../Common/Buttons/SubmissionButton.jsx";
+function AboutForm({ userData }) {
   const initialFormData = {
     name: "",
     location: "",
-    role: "",
-    experience: "",
+    primaryRole: "",
+    YearsOfExperience: "",
     bio: "",
     profilePicture:
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
   };
-  
+
   const dispath = useDispatch();
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (userData) {
       setFormData({
         ...formData,
         name: userData.userProfile.name,
         location: userData.userProfile.location,
-        role: userData.userProfile.role,
-        experience: userData.userProfile.experience,
+        primaryRole: userData.userProfile.primaryRole,
+        YearsOfExperience: userData.userProfile.YearsOfExperience,
         bio: userData.userProfile.bio,
-        profilePicture: userData.userProfile.profilePicture
+        profilePicture: userData.userProfile.profilePicture,
       });
     }
-  },[userData])
+  }, [userData]);
 
-  
   useEffect(() => {
     setIsChanged(JSON.stringify(formData) !== JSON.stringify(initialFormData));
   }, [formData]);
@@ -70,9 +72,13 @@ function AboutForm({userData}) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    try {
+      const res = await userService.updateUserProfile(formData);
+    } catch (error) {
+      console.log(error);
+    }
 
     setFormData(initialFormData);
   };
@@ -80,22 +86,68 @@ function AboutForm({userData}) {
   const handleCancel = () => {
     setFormData(initialFormData);
   };
+
+  const locationOptions = [
+    { value: "india", label: "India" },
+    { value: "united_states", label: "United States" },
+    { value: "united_kingdom", label: "United Kingdom" },
+    { value: "australia", label: "Australia" },
+    { value: "canada", label: "Canada" },
+    { value: "germany", label: "Germany" },
+    { value: "france", label: "France" },
+    { value: "japan", label: "Japan" },
+    { value: "china", label: "China" },
+    { value: "brazil", label: "Brazil" },
+    { value: "south_africa", label: "South Africa" },
+  ];
+
+  const roleOptions = [
+    {
+      label: "Technical Roles",
+      options: [
+        { value: "software_engineer", label: "Software Engineer" },
+        { value: "data_scientist", label: "Data Scientist" },
+        { value: "system_admin", label: "System Administrator" },
+      ],
+    },
+    {
+      label: "Management Roles",
+      options: [
+        { value: "project_manager", label: "Project Manager" },
+        { value: "product_manager", label: "Product Manager" },
+        { value: "team_lead", label: "Team Lead" },
+      ],
+    },
+    {
+      label: "Design Roles",
+      options: [
+        { value: "ui_designer", label: "UI Designer" },
+        { value: "ux_designer", label: "UX Designer" },
+        { value: "graphic_designer", label: "Graphic Designer" },
+      ],
+    },
+  ];
+
+  const experienceOptions = [
+    { value: "0", label: "Less than 1 year" },
+    { value: "1", label: "1 year" },
+    { value: "2", label: "2 years" },
+    { value: "3", label: "3 years" },
+    { value: "4", label: "4 years" },
+    { value: "5", label: "5 years" },
+    { value: "6", label: "More than 5 years" },
+  ];
+
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name" className="font-medium">
-            Your Name<span className="text-gray-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
-          />
-        </div>
+        <TextInput
+          label="Your Name"
+          id="name"
+          value={formData.name}
+          onChange={handleInputChange}
+          isRequired={true}
+        />
         <div className="py-5 flex gap-5 items-center">
           <div className="rounded-full h-[4.5rem] w-[4.5rem] overflow-hidden border">
             <img src={formData.profilePicture} alt="User" />
@@ -108,7 +160,6 @@ function AboutForm({userData}) {
               onChange={handleFileChange}
               hidden
             />
-
             <button
               type="button"
               className="border border-black py-2 px-3 rounded-md font-medium text-sm"
@@ -118,82 +169,35 @@ function AboutForm({userData}) {
             </button>
           </div>
         </div>
-        <div>
-          <label htmlFor="location" className="block font-medium">
-            Where are you based?<span className="text-gray-500">*</span>
-          </label>
-          <select
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleInputChange}
-            className="w-full p-2 rounded-lg border border-gray-400 my-2 overflow-auto"
-            required
-          >
-            <option value="india">India</option>
-            <option value="united_states">United States</option>
-            <option value="united_kingdom">United Kingdom</option>
-            <option value="australia">Australia</option>
-            <option value="canada">Canada</option>
-            <option value="germany">Germany</option>
-            <option value="france">France</option>
-            <option value="japan">Japan</option>
-            <option value="china">China</option>
-            <option value="brazil">Brazil</option>
-            <option value="south_africa">South Africa</option>
-          </select>
-        </div>
+        <SelectInput
+          label="Where are you based?"
+          id="location"
+          value={formData.location}
+          onChange={handleInputChange}
+          options={locationOptions}
+          isRequired={true}
+        />
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-3/5 pr-2">
-            <label htmlFor="role" className="block font-medium">
-              Select your primary role
-              <span className="text-gray-500">*</span>
-            </label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
+            <SelectInput
+              label="Select your primary role"
+              id="primaryRole"
+              value={formData.primaryRole}
               onChange={handleInputChange}
-              className="w-full p-2 rounded-lg border border-gray-400 my-2 overflow-auto"
-              required
-            >
-              <optgroup label="Technical Roles">
-                <option value="software_engineer">Software Engineer</option>
-                <option value="data_scientist">Data Scientist</option>
-                <option value="system_admin">System Administrator</option>
-              </optgroup>
-              <optgroup label="Management Roles">
-                <option value="project_manager">Project Manager</option>
-                <option value="product_manager">Product Manager</option>
-                <option value="team_lead">Team Lead</option>
-              </optgroup>
-              <optgroup label="Design Roles">
-                <option value="ui_designer">UI Designer</option>
-                <option value="ux_designer">UX Designer</option>
-                <option value="graphic_designer">Graphic Designer</option>
-              </optgroup>
-            </select>
+              options={roleOptions}
+              isRequired={true}
+              optgroup={true}
+            />
           </div>
           <div className="w-full md:w-2/5 pr-2">
-            <label htmlFor="experience" className="block font-medium">
-              Years of experience<span className="text-gray-500">*</span>
-            </label>
-            <select
-              id="experience"
-              name="experience"
+            <SelectInput
+              label="Years of experience"
+              id="YearsOfExperience"
               value={formData.experience}
               onChange={handleInputChange}
-              className="w-full p-2 rounded-lg border border-gray-400 my-2 overflow-auto"
-              required
-            >
-              <option value="0">Less than 1 year</option>
-              <option value="1">1 year</option>
-              <option value="2">2 years</option>
-              <option value="3">3 years</option>
-              <option value="4">4 years</option>
-              <option value="5">5 years</option>
-              <option value="6">More than 5 years</option>
-            </select>
+              options={experienceOptions}
+              isRequired={true}
+            />
           </div>
         </div>
         <div>
@@ -213,19 +217,18 @@ function AboutForm({userData}) {
         </div>
         {isChanged && (
           <div className="flex gap-6 my-4 justify-end">
-            <button
+            <SubmissionButton
               type="button"
               onClick={handleCancel}
-              className="font-medium text-sm"
-            >
-              Cancel
-            </button>
-            <button
+              color="white"
+              label="Cancel"
+            />
+            <SubmissionButton
               type="submit"
-              className="p-2 px-4 bg-black hover:bg-green-500 hover:text-black text-white font-medium text-sm rounded-md"
-            >
-              Save
-            </button>
+              onClick={handleSubmit}
+              color="black"
+              label="Save"
+            />
           </div>
         )}
       </form>
