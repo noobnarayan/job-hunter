@@ -12,7 +12,13 @@ function EditProfile() {
   const [showAddEducation, setShowAddEducation] = useState(false);
 
   const { userData } = useSelector((store) => store.auth);
-
+  if (!userData) {
+    return (
+      <div className="h-screen flex justify-center items-center text-xl font-semibold">
+        Loading...
+      </div>
+    );
+  }
   return (
     <div className="px-4">
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">

@@ -10,6 +10,7 @@ import CompanyDashboard from "../Pages/CompanyDashboard";
 import UserProfile from "../Pages/UserProfile";
 import JobPosting from "../Pages/JobPosting";
 import ApplicantInformation from "../Pages/ApplicantInformation";
+import UserOnboaring from "../components/LoginSignup/UserOnboaring";
 function AllRoutes() {
   return (
     <Routes>
@@ -23,6 +24,7 @@ function AllRoutes() {
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/post-new-job" element={<JobPosting />} />
       <Route path="/applicant" element={<ApplicantInformation />} />
+      <Route path="/user-onboarding" element={<UserOnboaring />} />
     </Routes>
   );
 }

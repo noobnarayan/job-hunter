@@ -6,18 +6,19 @@ import SubmissionButton from "../Common/Buttons/SubmissionButton.jsx";
 import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
 function AboutForm({ userData }) {
   const initialFormData = {
-    name: "",
-    location: "",
-    primaryRole: "",
-    YearsOfExperience: "",
-    bio: "",
-    profilePicture:
-      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
+    name: userData?.userProfile.name,
+    location: userData?.userProfile.location,
+    primaryRole: userData?.userProfile.primaryRole,
+    YearsOfExperience: userData?.userProfile.YearsOfExperience,
+    bio: userData?.userProfile.bio,
+    profilePicture: userData?.userProfile.profilePicture,
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(false);
+  const [updating, setUpdating] = useState(null);
+
   const updateUserData = useUpdateUserData();
 
   useEffect(() => {
@@ -71,12 +72,16 @@ function AboutForm({ userData }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setUpdating(true);
       const res = await userService.updateUserProfile(formData);
+      if (res.status === 200) {
+        setIsChanged(false);
+      }
+      setUpdating(false);
     } catch (error) {
       console.log(error);
+      setUpdating(false);
     }
-
-    setFormData(initialFormData);
   };
 
   const handleCancel = () => {
@@ -224,7 +229,7 @@ function AboutForm({ userData }) {
               type="submit"
               onClick={handleSubmit}
               color="black"
-              label="Save"
+              label={updating ? "Saving..." : "Save"}
             />
           </div>
         )}

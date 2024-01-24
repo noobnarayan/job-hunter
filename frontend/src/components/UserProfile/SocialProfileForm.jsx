@@ -5,14 +5,15 @@ import { userService } from "../../services/userService";
 
 function SocialProfileForm({ userData }) {
   const initialFormData = {
-    website: "",
-    linkedin: "",
-    twitter: "",
-    github: "",
+    website: userData?.userProfile.socialProfiles.portfolioWebsite,
+    linkedin: userData?.userProfile.socialProfiles.linkedin,
+    twitter: userData?.userProfile.socialProfiles.twitter,
+    github: userData?.userProfile.socialProfiles.github,
   };
 
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
+  const [updating, setUpdating] = useState(null);
   useEffect(() => {
     if (userData) {
       setFormData({
@@ -45,9 +46,15 @@ function SocialProfileForm({ userData }) {
       },
     };
     try {
-      await userService.updateUserProfile(data);
+      setUpdating(true);
+      const res = await userService.updateUserProfile(data);
+      if (res.status === 200) {
+        setIsChanged(false);
+      }
+      setUpdating(false);
     } catch (error) {
       console.log(error);
+      setUpdating(false);
     }
   };
 
@@ -106,7 +113,7 @@ function SocialProfileForm({ userData }) {
               type="submit"
               onClick={handleSubmit}
               color="black"
-              label="Save"
+              label={updating ? "Saving..." : "Save"}
             />
           </div>
         )}

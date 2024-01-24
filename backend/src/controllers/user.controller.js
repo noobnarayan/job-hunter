@@ -154,8 +154,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 
-
-
 const updateProfilePicture = asyncHandler(async (req, res) => {
     const profilePictureLocalPath = req.file?.path
 
