@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import SubmissionButton from "../Common/Buttons/SubmissionButton";
+import TextInput from "../Common/FormComponents/TextInput";
 
 function SocialProfileForm() {
   const initialFormData = {
@@ -29,93 +31,59 @@ function SocialProfileForm() {
     setFormData(initialFormData);
     console.log(formData);
   };
-
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="website" className="font-medium flex gap-2">
-            <span>
-              <i className="fa-solid fa-globe"></i>
-            </span>
-            Website / Portfolio
-          </label>
-          <input
-            type="text"
-            id="website"
-            name="website"
-            value={formData.website}
-            onChange={handleInputChange}
-            placeholder="https://"
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
-          />
-        </div>
-        <div>
-          <label htmlFor="linkedin" className="font-medium flex gap-2">
-            <span>
-              <i className="fa-brands fa-linkedin-in"></i>
-            </span>
-            Linkedin
-          </label>
-          <input
-            type="text"
-            id="linkedin"
-            name="linkedin"
-            value={formData.linkedin}
-            onChange={handleInputChange}
-            placeholder="https://www.linkedin.com/in/username"
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
-          />
-        </div>
-        <div>
-          <label htmlFor="twitter" className="font-medium flex gap-2">
-            <span>
-              <i className="fa-brands fa-twitter"></i>
-            </span>
-            Twitter
-          </label>
-          <input
-            type="text"
-            id="twitter"
-            name="twitter"
-            value={formData.twitter}
-            onChange={handleInputChange}
-            placeholder="https://twitter.com/username"
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
-          />
-        </div>
-        <div>
-          <label htmlFor="github" className="font-medium flex gap-2">
-            <span>
-              <i className="fa-brands fa-github"></i>
-            </span>
-            GitHub
-          </label>
-          <input
-            type="text"
-            id="github"
-            name="github"
-            value={formData.github}
-            onChange={handleInputChange}
-            placeholder="https://github.com/username"
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
-          />
-        </div>
+        <TextInput
+          label="Website / Portfolio"
+          id="website"
+          value={formData.website}
+          onChange={handleInputChange}
+          isRequired={false}
+          icon={<i className="fa-solid fa-globe"></i>}
+          placeholder={"https://"}
+        />
+        <TextInput
+          label="Linkedin"
+          id="linkedin"
+          value={formData.linkedin}
+          onChange={handleInputChange}
+          isRequired={false}
+          icon={<i className="fa-brands fa-linkedin-in"></i>}
+          placeholder={"https://www.linkedin.com/in/username"}
+        />
+        <TextInput
+          label="Twitter"
+          id="twitter"
+          value={formData.twitter}
+          onChange={handleInputChange}
+          isRequired={false}
+          icon={<i className="fa-brands fa-twitter"></i>}
+          placeholder={"https://twitter.com/username"}
+        />
+        <TextInput
+          label="GitHub"
+          id="github"
+          value={formData.github}
+          onChange={handleInputChange}
+          isRequired={false}
+          placeholder={"https://github.com/username"}
+          icon={<i className="fa-brands fa-github"></i>}
+        />
         {isChanged && (
           <div className="flex gap-6 my-4 justify-end">
-            <button
+            <SubmissionButton
               type="button"
               onClick={handleCancel}
-              className="font-medium text-sm"
-            >
-              Cancel
-            </button>
-            <button
+              color="white"
+              label="Cancel"
+            />
+            <SubmissionButton
               type="submit"
-              className="p-2 px-4 bg-black hover:bg-green-500 hover:text-black text-white font-medium text-sm rounded-md"
-            >
-              Save
-            </button>
+              onClick={handleSubmit}
+              color="black"
+              label="Save"
+            />
           </div>
         )}
       </form>
