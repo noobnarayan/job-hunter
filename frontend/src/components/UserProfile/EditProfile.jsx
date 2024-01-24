@@ -11,7 +11,7 @@ function EditProfile() {
   const [showAddWorkExperience, setShowAddWorkExperience] = useState(false);
   const [showAddEducation, setShowAddEducation] = useState(false);
 
-  const {userData} = useSelector(store => store.auth)
+  const { userData } = useSelector((store) => store.auth);
 
   return (
     <div className="px-4">
@@ -34,7 +34,7 @@ function EditProfile() {
           </p>
         </div>
         <div className="w-full md:w-3/5 ">
-          <SocialProfileForm />
+          <SocialProfileForm userData={userData} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">

@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { userService } from "../../services/userService.js";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../../store/authSlice.js";
 import TextInput from "../Common/FormComponents/TextInput.jsx";
 import SelectInput from "../Common/FormComponents/SelectInput.jsx";
 import SubmissionButton from "../Common/Buttons/SubmissionButton.jsx";
+import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
 function AboutForm({ userData }) {
   const initialFormData = {
     name: "",
@@ -16,10 +15,10 @@ function AboutForm({ userData }) {
       "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg",
   };
 
-  const dispath = useDispatch();
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(false);
+  const updateUserData = useUpdateUserData();
 
   useEffect(() => {
     if (userData) {
@@ -58,14 +57,11 @@ function AboutForm({ userData }) {
         setUploadProgress(true);
         const res = await userService.updateProfilePicture(file);
         if (res.status === 200) {
-          const userData = await userService.getCurrentUser();
-          if (userData) {
-            dispath(updateUser({ userData }));
-          }
+          updateUserData();
         }
         setUploadProgress(false);
       } catch (error) {
-        console.error("Error updating profile picture:", error.response);
+        console.error(`Error updating profile picture: ${error}`);
       }
     } else {
       setFormData({ ...formData, profilePicture: null });
@@ -88,6 +84,7 @@ function AboutForm({ userData }) {
   };
 
   const locationOptions = [
+    { value: "default", label: "Select Country" },
     { value: "india", label: "India" },
     { value: "united_states", label: "United States" },
     { value: "united_kingdom", label: "United Kingdom" },

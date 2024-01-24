@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
 import TextInput from "../Common/FormComponents/TextInput";
+import { userService } from "../../services/userService";
 
-function SocialProfileForm() {
+function SocialProfileForm({ userData }) {
   const initialFormData = {
     website: "",
     linkedin: "",
@@ -12,6 +13,17 @@ function SocialProfileForm() {
 
   const [formData, setFormData] = useState(initialFormData);
   const [isChanged, setIsChanged] = useState(false);
+  useEffect(() => {
+    if (userData) {
+      setFormData({
+        ...formData,
+        website: userData?.userProfile.socialProfiles.portfolioWebsite,
+        linkedin: userData?.userProfile.socialProfiles.linkedin,
+        twitter: userData?.userProfile.socialProfiles.twitter,
+        github: userData?.userProfile.socialProfiles.github,
+      });
+    }
+  }, [userData]);
 
   useEffect(() => {
     setIsChanged(JSON.stringify(formData) !== JSON.stringify(initialFormData));
@@ -22,9 +34,21 @@ function SocialProfileForm() {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
+    const data = {
+      socialProfiles: {
+        portfolioWebsite: formData.website,
+        linkedin: formData.linkedin,
+        twitter: formData.twitter,
+        github: formData.github,
+      },
+    };
+    try {
+      await userService.updateUserProfile(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {

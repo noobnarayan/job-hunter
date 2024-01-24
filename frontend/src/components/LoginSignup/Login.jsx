@@ -4,10 +4,12 @@ import logo from "../assets/media/JobHunter.png";
 import { userService } from "../../services/userService";
 import { login, logout } from "../../store/authSlice";
 import { useDispatch } from "react-redux";
+import useUpdateUserData from "../../hooks/useUpdateUserData";
 
 function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const updateUser = useUpdateUserData();
 
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +44,7 @@ function Login() {
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
-          dispatch(login({ userData }));
+          updateUser();
         }
         setLoading(false);
         navigate("/");
