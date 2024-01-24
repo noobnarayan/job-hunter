@@ -3,6 +3,7 @@ import axios from "axios";
 import SubmissionButton from "../../components/Common/Buttons/SubmissionButton";
 import TextInput from "../Common/FormComponents/TextInput";
 import TextArea from "../Common/FormComponents/TextArea";
+import CompanySearch from "../Common/CompanySearch";
 function WorkExperienceForm({ setShowAddWorkExperience }) {
   const initialFormData = {
     companyName: "",
@@ -16,53 +17,29 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
   };
 
   const [formData, setFormData] = useState(initialFormData);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [companyApiData, setCompanyApiData] = useState([]);
-  const [isSearching, setIsSearching] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(true);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleCompanyInput = (commpany) => {
-    const { name, logo, domain } = commpany;
+  const handleDropdown = (item) => {
+    handleCompanyInput(item);
+    setShowDropdown(!showDropdown);
+  };
+
+  const handleCompanyInput = (company) => {
+    const { name, logo, domain } = company;
 
     setFormData({
       ...formData,
       companyName: name,
-      companyLogo: logo,
+      companyLogo:
+        logo ||
+        "https://photos.wellfound.com/startups/i/267839-22e9550a168c9834c67a3e55e2577688-medium_jpg.jpg?buster=1677467708",
       companyDomain: domain,
     });
-  };
-
-  useEffect(() => {
-    if (isSearching) {
-      const timeoutId = setTimeout(() => {
-        if (searchTerm) {
-          axios
-            .get(
-              `https://autocomplete.clearbit.com/v1/companies/suggest?query=${searchTerm}`
-            )
-            .then((response) => {
-              setCompanyApiData(response.data);
-            })
-            .catch((error) => {
-              console.error("Error fetching data: ", error);
-              setCompanyApiData([]);
-            });
-        } else {
-          setCompanyApiData([]);
-        }
-      }, 300);
-
-      return () => clearTimeout(timeoutId);
-    }
-  }, [searchTerm, isSearching]);
-
-  const handleSearch = (event) => {
-    setSearchTerm(event.target.value);
-    setIsSearching(true);
   };
 
   const handleCancel = () => {
@@ -78,50 +55,29 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
     <div className="bg-gray-100 p-5">
       <form className="flex flex-col gap-2.5" onSubmit={handleFormSubmit}>
         <div>
-          <TextInput
-            label="Company"
-            placeholder="Google"
-            isRequired={true}
-            onChange={handleSearch}
-            id="name"
-            name="name"
-          />
-          <ul className="list-none p-0 m-0">
-            {searchTerm && companyApiData.length > 0
-              ? companyApiData.map((item, index) => (
-                  <li
-                    key={index}
-                    className="flex items-center my-1 p-2 bg-white rounded-md shadow-sm border"
-                    onClick={() => handleCompanyInput(item)}
-                  >
-                    <img
-                      src={item.logo}
-                      alt={item.name}
-                      className="w-10 h-10 rounded-full mr-3"
-                    />
-                    <div className="flex flex-col">
-                      <span className="font-semibold">{item.name}</span>
-                      <span className="text-sm text-gray-500">
-                        {`https://${item.domain}`}
-                      </span>
-                    </div>
-                  </li>
-                ))
-              : searchTerm && (
-                  <li
-                    className="flex items-center my-2 p-2 bg-white rounded-md shadow-sm border border-black hover:cursor-pointer"
-                    onClick={() =>
-                      handleCompanyInput({
-                        name: searchTerm,
-                        logo: null,
-                        domain: null,
-                      })
-                    }
-                  >
-                    No results found for "{searchTerm}". Create "{searchTerm}".
-                  </li>
-                )}
-          </ul>
+          <div className={showDropdown ? "" : "hidden"}>
+            <CompanySearch handleDropdown={handleDropdown} />
+          </div>
+          <div className={!showDropdown ? "" : "hidden"}>
+            <label className="font-medium flex gap-2">
+              Company
+              <span className="text-gray-500">*</span>
+            </label>
+            <div className="flex justify-between items-center my-1 p-2 bg-white rounded-md shadow-sm border">
+              <div className="flex items-center ">
+                <img
+                  src={formData.companyLogo}
+                  alt={formData.companyName}
+                  className="w-10 h-10 rounded-full mr-3"
+                />
+                <span className="font-semibold">{formData.companyName}</span>
+              </div>
+              <i
+                class="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
+                onClick={() => handleDropdown({ name: "", logo: "" })}
+              ></i>
+            </div>
+          </div>
         </div>
         <div>
           <TextInput
