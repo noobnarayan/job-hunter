@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import SubmissionButton from "../../components/Common/Buttons/SubmissionButton";
+import TextInput from "../Common/FormComponents/TextInput";
+import TextArea from "../Common/FormComponents/TextArea";
 function WorkExperienceForm({ setShowAddWorkExperience }) {
   const initialFormData = {
     companyName: "",
@@ -76,15 +78,13 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
     <div className="bg-gray-100 p-5">
       <form className="flex flex-col gap-2.5" onSubmit={handleFormSubmit}>
         <div>
-          <label htmlFor="name" className="font-medium">
-            Company<span className="text-gray-500">*</span>
-          </label>
-          <input
-            type="text"
+          <TextInput
+            label="Company"
+            placeholder="Google"
+            isRequired={true}
+            onChange={handleSearch}
             id="name"
             name="name"
-            className="w-full p-2 rounded-md border border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-200 mt-2"
-            onChange={handleSearch}
           />
           <ul className="list-none p-0 m-0">
             {searchTerm && companyApiData.length > 0
@@ -124,16 +124,14 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
           </ul>
         </div>
         <div>
-          <label htmlFor="title" className="font-medium">
-            Title<span className="text-gray-500">*</span>
-          </label>
-          <input
-            type="text"
+          <TextInput
+            label="Title"
             id="title"
             name="title"
-            value={formData.jobtitle}
             onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+            value={formData.jobtitle}
+            isRequired={true}
+            placeholder="SDE 1"
           />
         </div>
         <div>
@@ -175,35 +173,27 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
           </label>
         </div>
         <div>
-          <label htmlFor="description" className="block font-medium">
-            Description
-          </label>
-          <textarea
+          <TextArea
+            label="Description"
             id="description"
-            name="description"
-            placeholder="Description"
             value={formData.description}
             onChange={handleInputChange}
-            rows="5"
-            cols="50"
-            className="w-full p-2 rounded-lg border border-gray-400 my-2"
-          ></textarea>
+            placeholder="Description"
+          />
         </div>
-
         <div className="flex gap-6 my-4 justify-end">
-          <button
+          <SubmissionButton
             type="button"
             onClick={handleCancel}
-            className="font-medium text-sm"
-          >
-            Cancel
-          </button>
-          <button
+            color="white"
+            label="Cancel"
+          />
+          <SubmissionButton
             type="submit"
-            className="p-2 px-4 bg-black hover:bg-green-500 hover:text-black text-white font-medium text-sm rounded-md"
-          >
-            Save
-          </button>
+            onClick={handleFormSubmit}
+            color="black"
+            label="Save"
+          />
         </div>
       </form>
     </div>
