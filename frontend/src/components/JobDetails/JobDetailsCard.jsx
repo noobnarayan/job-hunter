@@ -1,14 +1,46 @@
 import React from "react";
 
-function JobDetailsCard() {
+function JobDetailsCard({ jobData }) {
+  const {
+    title,
+    salaryRange,
+    location,
+    employer,
+    experience,
+    numberOfOpenings,
+    numberOfApplicants,
+  } = jobData;
+
+  const datePosted = new Date(jobData?.datePosted);
+
+  const now = new Date();
+
+  const diffTime = Math.abs(now - datePosted);
+  const diffMinutes = Math.floor(diffTime / (1000 * 60));
+  const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  const diffMonths = Math.floor(diffTime / (1000 * 60 * 60 * 24 * 30));
+
+  let timeAgo;
+
+  if (diffMinutes < 60) {
+    timeAgo = diffMinutes + " minutes ago";
+  } else if (diffHours < 24) {
+    timeAgo = diffHours + " hours ago";
+  } else if (diffDays < 30) {
+    timeAgo = diffDays + " days ago";
+  } else {
+    timeAgo = diffMonths + " months ago";
+  }
+
   return (
     <div className="flex flex-col gap-6 border p-4 rounded-3xl shadow">
       <div className="flex justify-between border-b pb-5">
         <div className="flex flex-col gap-5">
-          <div>
-            <p className="text-xl font-medium">Inside Sales Executive </p>
-            <p className="text-sm text-gray-600">
-              Shining Stars Institution & travels
+          <div className="flex flex-col gap-1.5">
+            <p className="text-xl font-medium">{title} </p>
+            <p className="text-sm text-gray-600 font-medium">
+              {employer?.userProfile?.companyName}
             </p>
           </div>
           <div className="text-gray-500 text-sm flex flex-col gap-2">
@@ -17,13 +49,17 @@ function JobDetailsCard() {
                 <span>
                   <i className="fa-solid fa-briefcase"></i>
                 </span>
-                <span>1 - 5 years</span>
+                <span>{experience}</span>
               </div>
               <div className="flex gap-3">
                 <span>
                   <i className="fa-solid fa-indian-rupee-sign"></i>{" "}
                 </span>
-                <span>Not Disclosed</span>
+                <span>
+                  {salaryRange
+                    ? `$${salaryRange.from} to $${salaryRange.to}`
+                    : "Not Disclosed"}
+                </span>
               </div>
             </div>
             <div>
@@ -31,27 +67,28 @@ function JobDetailsCard() {
                 <span>
                   <i className="fa-solid fa-location-dot"></i>{" "}
                 </span>
-                <span>Noida,Uttar Pradesh</span>
+                <span>{location}</span>
               </div>
             </div>
           </div>
         </div>
         <div>
           <div className="h-20 w-20 rounded-3xl border overflow-hidden flex justify-center items-center">
-            <img src="https://img.naukri.com/logo_images/v3/302585.gif" />
+            <img src={employer?.userProfile?.companyLogo} />
           </div>
         </div>
       </div>
       <div className="flex justify-between items-center text-sm">
         <div className="flex gap-3 ">
           <div className="font-light">
-            Posted: <span className="font-medium"> 7 days ago </span>
+            Posted: <span className="font-medium"> {timeAgo}</span>
           </div>
           <div className="font-light">
-            Openings: <span className="font-medium"> 10</span>
+            Openings: <span className="font-medium">{numberOfOpenings}</span>
           </div>
           <div className="font-light">
-            Applicants: <span className="font-medium"> 3580</span>
+            Applicants:{" "}
+            <span className="font-medium">{numberOfApplicants}</span>
           </div>
         </div>
         <div className="flex gap-5">

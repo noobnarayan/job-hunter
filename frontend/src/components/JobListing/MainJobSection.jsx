@@ -34,7 +34,7 @@ function MainJobSection() {
         </div>
         <div>
           <div className="text-gray-500 font-medium my-3 ml-1.5">
-            <span>250 Jobs results</span>
+            <span>{jobs.length} Jobs results</span>
           </div>
           <div>
             {jobs.map((job) => (

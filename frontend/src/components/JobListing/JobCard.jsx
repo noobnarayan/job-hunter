@@ -1,7 +1,6 @@
 import React from "react";
 
 function JobCard({ job }) {
-  console.log(job);
   const { title, salaryRange, location, type, responsibilities, employer } =
     job;
   const { companyLogo, companyName } = employer.userProfile;

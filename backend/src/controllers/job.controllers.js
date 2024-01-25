@@ -1,4 +1,3 @@
-import { all } from "axios";
 import { Job } from "../models/job.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
@@ -79,7 +78,24 @@ const getJobs = asyncHandler(async (req, res) => {
 
 const getJobById = asyncHandler(async (req, res, next) => {
   try {
-    const job = await Job.findById(req.params.id);
+    let job = await Job.findById(req.params.id)
+      .populate({
+        path: "employer",
+        select: "userProfile.companyLogo  userProfile.companyName",
+      })
+      .select("-applicants");
+
+    const numApplicants = await Job.countDocuments({
+      _id: req.params.id,
+      "applicants.0": { $exists: true },
+    });
+
+    // Convert the Mongoose document to a plain JavaScript object
+    job = job.toObject();
+
+    // Add the numberOfApplicants property
+    job.numberOfApplicants = numApplicants;
+
     if (!job) {
       return next(new ApiError(404, "Job not found in the database"));
     }
