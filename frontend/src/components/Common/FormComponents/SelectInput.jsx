@@ -8,9 +8,10 @@ function SelectInput({
   options,
   isRequired,
   optgroup,
+  className,
 }) {
   return (
-    <div>
+    <div className={`${className}`}>
       <label htmlFor={id} className="block font-medium">
         {label}
         {isRequired && <span className="text-gray-500">*</span>}

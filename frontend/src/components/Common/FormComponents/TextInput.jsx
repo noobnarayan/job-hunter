@@ -8,9 +8,10 @@ function TextInput({
   isRequired,
   icon,
   placeholder,
+  className,
 }) {
   return (
-    <div>
+    <div className={`${className}`}>
       <label htmlFor={id} className="font-medium flex gap-2">
         {icon && <span>{icon}</span>}
         <span>

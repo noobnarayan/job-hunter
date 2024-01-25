@@ -72,7 +72,7 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
                 <span className="font-semibold">{formData.companyName}</span>
               </div>
               <i
-                class="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
+                className="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
                 onClick={() => handleDropdown({ name: "", logo: "" })}
               ></i>
             </div>

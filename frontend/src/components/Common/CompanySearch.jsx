@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import TextInput from "./FormComponents/TextInput";
 
-const CompanySearch = ({ handleDropdown }) => {
+const CompanySearch = ({ handleDropdown, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [companyApiData, setCompanyApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -45,6 +45,7 @@ const CompanySearch = ({ handleDropdown }) => {
         onChange={handleSearch}
         id="name"
         name="name"
+        className={width}
       />
       <ul className="list-none p-0 m-0">
         {searchTerm && companyApiData.length > 0
