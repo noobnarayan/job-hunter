@@ -1,4 +1,5 @@
 import React from "react";
+import CheckBoxLabel from "../Common/FormComponents/CheckBoxLabel";
 
 function UserOnboaring() {
   return (
@@ -23,10 +24,7 @@ function UserOnboaring() {
             <p className="text-xs mt-1 text-gray-400">
               Tip: You can choose a city, state, or country
             </p>
-            <div className="bg-green-500 flex gap-2 py-1 px-2.5 text-white w-fit items-center justify-center rounded-3xl  ">
-              <i class="fa-solid fa-circle-check text-white"></i>
-              <span className="text-sm font-medium">India</span>
-            </div>
+            <CheckBoxLabel text={"India"} />
           </div>
         </div>
       </div>
