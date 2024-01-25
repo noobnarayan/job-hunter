@@ -35,7 +35,16 @@ const getJobs = asyncHandler(async (req, res) => {
       sort[sortKey[0]] = sortKey[1] === "desc" ? -1 : 1;
     }
 
-    const jobs = await Job.find(query).sort(sort).skip(startIndex).limit(limit);
+    const jobs = await Job.find(query)
+      .populate({
+        path: "employer",
+        select: "userProfile.companyLogo  userProfile.companyName",
+      })
+      .sort(sort)
+      .skip(startIndex)
+      .limit(limit)
+      .select("-applicants");
+
     if (!jobs.length) {
       throw new ApiError(404, "No jobs found in the database");
     }

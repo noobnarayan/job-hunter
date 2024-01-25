@@ -1,8 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import Searchbar from "./Searchbar";
 import SideBarFilter from "./SideBarFilter";
 import JobCard from "./JobCard";
+import { useEffect } from "react";
+import { contentService } from "../../services/contentService";
+
 function MainJobSection() {
+  const [jobs, setJobs] = useState([]);
+
+  const getJobs = async () => {
+    try {
+      const res = await contentService.getJobs();
+      if (res.jobs.length > 0) {
+        setJobs(res.jobs);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getJobs();
+  }, []);
+
   return (
     <div className="flex flex-col px-5 gap-5 mt-20 md:flex-row">
       <div className="border rounded-xl w-full md:w-[30%]">
@@ -17,10 +37,9 @@ function MainJobSection() {
             <span>250 Jobs results</span>
           </div>
           <div>
-            <JobCard />
-            <JobCard />
-            <JobCard />
-            <JobCard />
+            {jobs.map((job) => (
+              <JobCard key={job._id} job={job} />
+            ))}
           </div>
         </div>
       </div>
