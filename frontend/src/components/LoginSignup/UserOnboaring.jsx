@@ -6,14 +6,16 @@ import CompanySearch from "../Common/CompanySearch";
 
 function UserOnboaring() {
   const initialFormData = {
+    location: "",
+    primaryRole: "",
+    YearsOfExperience: "",
     companyName: "",
     companyLogo: "",
     companyDomain: "",
     title: "",
-    startDate: "",
-    endDate: "",
-    current: null,
-    description: "",
+    notEmployed: false,
+    linkedin: "",
+    website: "",
   };
 
   const [showDropdown, setShowDropdown] = useState(true);
@@ -23,6 +25,24 @@ function UserOnboaring() {
     handleCompanyInput(item);
     setShowDropdown(!showDropdown);
   };
+
+  const handleInputChange = (e) => {
+    const { id, type } = e.target;
+
+    if (type === "checkbox") {
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [id]: !prevFormData[id],
+      }));
+    } else {
+      const { value } = e.target;
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [id]: value,
+      }));
+    }
+  };
+
   const handleCompanyInput = (company) => {
     const { name, logo, domain } = company;
 
@@ -35,6 +55,12 @@ function UserOnboaring() {
       companyDomain: domain,
     });
   };
+
+  const handleSubmission = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   const locationOptions = [
     { value: "default", label: "Select Country" },
     { value: "india", label: "India" },
@@ -99,7 +125,7 @@ function UserOnboaring() {
           </p>
         </div>
       </div>
-      <form className="w-11/12 md:w-5/6 lg:w-4/6">
+      <form className="w-11/12 md:w-5/6 lg:w-4/6" onSubmit={handleSubmission}>
         <div className="bg-white  rounded-xl p-6 md:p-10 flex flex-col gap-6 mb-10">
           <div>
             <p className="font-medium">
@@ -112,8 +138,8 @@ function UserOnboaring() {
               <CheckBoxLabel text={"India"} />
               <SelectInput
                 id="location"
-                // value={formData.location}
-                // onChange={handleInputChange}
+                value={formData.location}
+                onChange={handleInputChange}
                 options={locationOptions}
                 className={"w-full md:w-1/2"}
               />
@@ -127,12 +153,10 @@ function UserOnboaring() {
             <div className="pl-3 flex flex-col gap-2">
               <CheckBoxLabel text={"India"} />
               <SelectInput
-                // label="Select your primary role"
                 id="primaryRole"
-                // value={formData.primaryRole}
-                // onChange={handleInputChange}
+                value={formData.primaryRole}
+                onChange={handleInputChange}
                 options={roleOptions}
-                // isRequired={true}
                 optgroup={true}
                 className={"w-full md:w-1/2"}
               />
@@ -146,10 +170,9 @@ function UserOnboaring() {
             <div className="pl-3 flex flex-col gap-2">
               <CheckBoxLabel text={"India"} />
               <SelectInput
-                // label="Years of experience"
                 id="YearsOfExperience"
-                // value={formData.experience}
-                // onChange={handleInputChange}
+                value={formData.YearsOfExperience}
+                onChange={handleInputChange}
                 options={experienceOptions}
                 className={"w-full md:w-1/2"}
               />
@@ -170,8 +193,8 @@ function UserOnboaring() {
                   label="Title"
                   id="title"
                   name="title"
-                  // onChange={handleInputChange}
-                  // value={formData.jobtitle}
+                  onChange={handleInputChange}
+                  value={formData.title}
                   isRequired={true}
                   placeholder="SDE 1"
                   className={"w-full md:w-1/2"}
@@ -188,7 +211,7 @@ function UserOnboaring() {
                       Company
                       <span className="text-gray-500">*</span>
                     </label>
-                    <div className="flex justify-between items-center my-1 p-2 bg-white rounded-md shadow-sm border">
+                    <div className="flex justify-between items-center my-2.5 p-2 bg-white rounded-md shadow-sm border">
                       <div className="flex items-center ">
                         <img
                           src={formData.companyLogo}
@@ -209,11 +232,13 @@ function UserOnboaring() {
                 <div className="flex gap-3 items-center mb-3">
                   <input
                     type="checkbox"
-                    id="current"
-                    name="current"
-                    className="form-checkbox h-4 w-4 rounded "
+                    id="notEmployed"
+                    name="notEmployed"
+                    checked={formData.notEmployed}
+                    onChange={handleInputChange}
+                    className="form-checkbox h-4 w-4 rounded"
                   />
-                  <label htmlFor="current" className="text-sm">
+                  <label htmlFor="notEmployed" className="text-sm">
                     I'm not currently employed
                   </label>
                 </div>
@@ -224,16 +249,16 @@ function UserOnboaring() {
             <TextInput
               label="Linkedin Profile"
               id="linkedin"
-              // value={formData.linkedin}
-              // onChange={handleInputChange}
+              value={formData.linkedin}
+              onChange={handleInputChange}
               placeholder={"https://www.linkedin.com/in/username"}
               className={"w-full md:w-1/2 flex flex-col gap-3"}
             />
             <TextInput
               label="Your Website"
-              id="linkedin"
-              // value={formData.linkedin}
-              // onChange={handleInputChange}
+              id="website"
+              value={formData.website}
+              onChange={handleInputChange}
               placeholder={"https://mypersonalwebsite.com"}
               className={"w-full md:w-1/2 flex flex-col gap-3"}
             />

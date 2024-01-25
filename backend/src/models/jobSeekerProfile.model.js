@@ -27,6 +27,7 @@ const workExperienceSchema = new Schema({
       default:
         "https://photos.wellfound.com/startups/i/267839-22e9550a168c9834c67a3e55e2577688-medium_jpg.jpg?buster=1677467708",
     },
+    domain: String,
   },
   location: String,
   startMonth: String,
