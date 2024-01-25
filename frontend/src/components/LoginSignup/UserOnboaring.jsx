@@ -90,17 +90,17 @@ function UserOnboaring() {
     <div className="mt-[3.8rem]  bg-[#ebeff5] flex flex-col items-center ">
       <div>
         <div className="py-10 flex flex-col justify-center items-center gap-5">
-          <h2 className="font-semibold text-5xl text-gray-950">
+          <h2 className="font-semibold text-5xl text-gray-950 text-center">
             Create your profile
           </h2>
-          <p className="text-lg text-gray-950">
+          <p className="text-lg text-gray-950 text-center">
             Apply privately to thousands of tech companies & startups with one
             profile.
           </p>
         </div>
       </div>
-      <form className="w-4/6">
-        <div className="bg-white  rounded-xl p-10 flex flex-col gap-6 mb-10">
+      <form className="w-11/12 md:w-5/6 lg:w-4/6">
+        <div className="bg-white  rounded-xl p-6 md:p-10 flex flex-col gap-6 mb-10">
           <div>
             <p className="font-medium">
               <span className="text-green-500 mr-1">*</span>Where are you based?
@@ -115,7 +115,7 @@ function UserOnboaring() {
                 // value={formData.location}
                 // onChange={handleInputChange}
                 options={locationOptions}
-                className={"w-1/2"}
+                className={"w-full md:w-1/2"}
               />
             </div>
           </div>
@@ -134,7 +134,7 @@ function UserOnboaring() {
                 options={roleOptions}
                 // isRequired={true}
                 optgroup={true}
-                className={"w-1/2"}
+                className={"w-full md:w-1/2"}
               />
             </div>
           </div>
@@ -151,7 +151,7 @@ function UserOnboaring() {
                 // value={formData.experience}
                 // onChange={handleInputChange}
                 options={experienceOptions}
-                className={"w-1/2"}
+                className={"w-full md:w-1/2"}
               />
             </div>
           </div>
@@ -174,13 +174,13 @@ function UserOnboaring() {
                   // value={formData.jobtitle}
                   isRequired={true}
                   placeholder="SDE 1"
-                  className={"w-1/2"}
+                  className={"w-full md:w-1/2"}
                 />
                 <div>
                   <div className={showDropdown ? "" : "hidden"}>
                     <CompanySearch
                       handleDropdown={handleDropdown}
-                      width={"w-1/2"}
+                      width={"w-full md:w-1/2"}
                     />
                   </div>
                   <div className={!showDropdown ? "" : "hidden"}>
@@ -220,14 +220,14 @@ function UserOnboaring() {
               </div>
             </div>
           </div>
-          <div className="bg-gray-100 p-16 flex flex-col gap-10">
+          <div className="bg-gray-100 p-5 md:p-16 flex flex-col gap-10">
             <TextInput
               label="Linkedin Profile"
               id="linkedin"
               // value={formData.linkedin}
               // onChange={handleInputChange}
               placeholder={"https://www.linkedin.com/in/username"}
-              className={"w-1/2 flex flex-col gap-3"}
+              className={"w-full md:w-1/2 flex flex-col gap-3"}
             />
             <TextInput
               label="Your Website"
@@ -235,7 +235,7 @@ function UserOnboaring() {
               // value={formData.linkedin}
               // onChange={handleInputChange}
               placeholder={"https://mypersonalwebsite.com"}
-              className={"w-1/2 flex flex-col gap-3"}
+              className={"w-full md:w-1/2 flex flex-col gap-3"}
             />
           </div>
           <button
