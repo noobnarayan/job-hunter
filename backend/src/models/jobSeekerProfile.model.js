@@ -80,6 +80,8 @@ const jobSeekerProfileSchema = new Schema({
   socialProfiles: socialProfilesSchema,
   publicProfile: Boolean,
   jobPreferences: jobPreferencesSchema,
+  yearsOfExperience: String,
+  primaryRole: String,
 });
 
 export const JobSeekerProfile = mongoose.model(

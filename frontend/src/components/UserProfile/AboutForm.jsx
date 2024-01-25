@@ -9,7 +9,7 @@ function AboutForm({ userData }) {
     name: userData?.userProfile.name,
     location: userData?.userProfile.location,
     primaryRole: userData?.userProfile.primaryRole,
-    YearsOfExperience: userData?.userProfile.YearsOfExperience,
+    yearsOfExperience: userData?.userProfile.yearsOfExperience,
     bio: userData?.userProfile.bio,
     profilePicture: userData?.userProfile.profilePicture,
   };
@@ -20,7 +20,6 @@ function AboutForm({ userData }) {
   const [updating, setUpdating] = useState(null);
 
   const updateUserData = useUpdateUserData();
-
   useEffect(() => {
     if (userData) {
       setFormData({
@@ -28,7 +27,7 @@ function AboutForm({ userData }) {
         name: userData.userProfile.name,
         location: userData.userProfile.location,
         primaryRole: userData.userProfile.primaryRole,
-        YearsOfExperience: userData.userProfile.YearsOfExperience,
+        yearsOfExperience: userData.userProfile.yearsOfExperience,
         bio: userData.userProfile.bio,
         profilePicture: userData.userProfile.profilePicture,
       });
@@ -194,8 +193,8 @@ function AboutForm({ userData }) {
           <div className="w-full md:w-2/5 pr-2">
             <SelectInput
               label="Years of experience"
-              id="YearsOfExperience"
-              value={formData.experience}
+              id="yearsOfExperience"
+              value={formData.yearsOfExperience}
               onChange={handleInputChange}
               options={experienceOptions}
               isRequired={true}

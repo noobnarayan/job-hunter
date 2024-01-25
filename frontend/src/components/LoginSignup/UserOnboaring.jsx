@@ -3,12 +3,13 @@ import CheckBoxLabel from "../Common/FormComponents/CheckBoxLabel";
 import SelectInput from "../Common/FormComponents/SelectInput";
 import TextInput from "../Common/FormComponents/TextInput";
 import CompanySearch from "../Common/CompanySearch";
+import { userService } from "../../services/userService";
 
 function UserOnboaring() {
   const initialFormData = {
     location: "",
     primaryRole: "",
-    YearsOfExperience: "",
+    yearsOfExperience: "",
     companyName: "",
     companyLogo: "",
     companyDomain: "",
@@ -56,9 +57,34 @@ function UserOnboaring() {
     });
   };
 
-  const handleSubmission = (e) => {
+  const handleSubmission = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    const data = {
+      address: { country: formData.location },
+      location: formData.location,
+      primaryRole: formData.primaryRole,
+      socialProfiles: {
+        linkedin: formData.linkedin,
+        github: "",
+        twitter: "",
+        portfolioWebsite: formData.website,
+      },
+      workExperience: {
+        jobTitle: formData.title,
+        company: {
+          name: formData.companyName,
+          logoUrl: formData.companyLogo,
+          domain: formData.companyDomain,
+        },
+      },
+      yearsOfExperience: formData.yearsOfExperience,
+    };
+    try {
+      const res = await userService.updateUserProfile(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const locationOptions = [
@@ -170,8 +196,8 @@ function UserOnboaring() {
             <div className="pl-3 flex flex-col gap-2">
               <CheckBoxLabel text={"India"} />
               <SelectInput
-                id="YearsOfExperience"
-                value={formData.YearsOfExperience}
+                id="yearsOfExperience"
+                value={formData.yearsOfExperience}
                 onChange={handleInputChange}
                 options={experienceOptions}
                 className={"w-full md:w-1/2"}
@@ -188,48 +214,50 @@ function UserOnboaring() {
                 Your company will never see that you're looking for a job
               </p>
               <CheckBoxLabel text={"India"} />
-              <div className="flex flex-col gap-1.5">
-                <TextInput
-                  label="Title"
-                  id="title"
-                  name="title"
-                  onChange={handleInputChange}
-                  value={formData.title}
-                  isRequired={true}
-                  placeholder="SDE 1"
-                  className={"w-full md:w-1/2"}
-                />
-                <div>
-                  <div className={showDropdown ? "" : "hidden"}>
-                    <CompanySearch
-                      handleDropdown={handleDropdown}
-                      width={"w-full md:w-1/2"}
-                    />
-                  </div>
-                  <div className={!showDropdown ? "" : "hidden"}>
-                    <label className="font-medium flex gap-2">
-                      Company
-                      <span className="text-gray-500">*</span>
-                    </label>
-                    <div className="flex justify-between items-center my-2.5 p-2 bg-white rounded-md shadow-sm border">
-                      <div className="flex items-center ">
-                        <img
-                          src={formData.companyLogo}
-                          alt={formData.companyName}
-                          className="w-10 h-10 rounded-full mr-3"
-                        />
-                        <span className="font-semibold">
-                          {formData.companyName}
-                        </span>
+              <div className="flex flex-col gap-1.5 ">
+                <div className={formData.notEmployed ? "hidden" : ""}>
+                  <TextInput
+                    label="Title"
+                    id="title"
+                    name="title"
+                    onChange={handleInputChange}
+                    value={formData.title}
+                    isRequired={true}
+                    placeholder="SDE 1"
+                    className={"w-full md:w-1/2"}
+                  />
+                  <div>
+                    <div className={showDropdown ? "" : "hidden"}>
+                      <CompanySearch
+                        handleDropdown={handleDropdown}
+                        width={"w-full md:w-1/2"}
+                      />
+                    </div>
+                    <div className={!showDropdown ? "" : "hidden"}>
+                      <label className="font-medium flex gap-2">
+                        Company
+                        <span className="text-gray-500">*</span>
+                      </label>
+                      <div className="flex justify-between items-center my-2.5 p-2 bg-white rounded-md shadow-sm border">
+                        <div className="flex items-center ">
+                          <img
+                            src={formData.companyLogo}
+                            alt={formData.companyName}
+                            className="w-10 h-10 rounded-full mr-3"
+                          />
+                          <span className="font-semibold">
+                            {formData.companyName}
+                          </span>
+                        </div>
+                        <i
+                          className="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
+                          onClick={() => handleDropdown({ name: "", logo: "" })}
+                        ></i>
                       </div>
-                      <i
-                        className="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
-                        onClick={() => handleDropdown({ name: "", logo: "" })}
-                      ></i>
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-3 items-center mb-3">
+                <div className="flex gap-3 items-center my-3 ml-1.5">
                   <input
                     type="checkbox"
                     id="notEmployed"

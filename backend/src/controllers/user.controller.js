@@ -1,213 +1,285 @@
-import { asyncHandler } from "../utils/asyncHandler.js"
-import { User } from "../models/user.model.js"
-import { ApiError } from "../utils/ApiError.js"
-import { ApiResponse } from "../utils/ApiResponse.js"
-import { deleteFromCloudinary, uploadOnCloudinary } from "../utils/cloudinary.service.js"
-import { JobSeekerProfile } from "../models/jobSeekerProfile.model.js"
+import { asyncHandler } from "../utils/asyncHandler.js";
+import { User } from "../models/user.model.js";
+import { ApiError } from "../utils/ApiError.js";
+import { ApiResponse } from "../utils/ApiResponse.js";
+import {
+  deleteFromCloudinary,
+  uploadOnCloudinary,
+} from "../utils/cloudinary.service.js";
+import { JobSeekerProfile } from "../models/jobSeekerProfile.model.js";
 
 // Testing endpoints
 const ping = (req, res) => {
-    res.send("User API is working")
-}
+  res.send("User API is working");
+};
 const authPing = (req, res) => {
-    res.send("User Auth is working")
-}
+  res.send("User Auth is working");
+};
 
 const cookieOptions = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-    domain: process.env.NODE_ENV === 'production' ? 'your-production-url' : 'localhost'
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  domain:
+    process.env.NODE_ENV === "production" ? "your-production-url" : "localhost",
 };
 
 const generateAccessAndRefereshTokens = async (userId) => {
-    try {
-        const user = await User.findById(userId)
-        const accessToken = user.generateAccessToken()
-        const refreshToken = user.generateRefreshToken()
+  try {
+    const user = await User.findById(userId);
+    const accessToken = user.generateAccessToken();
+    const refreshToken = user.generateRefreshToken();
 
-        user.refreshToken = refreshToken
-        await user.save({ validateBeforeSave: false })
+    user.refreshToken = refreshToken;
+    await user.save({ validateBeforeSave: false });
 
-        return { accessToken, refreshToken }
-
-
-    } catch (error) {
-        throw new ApiError(500, `Something went wrong while generating referesh and access token: ${error}`)
-    }
-}
+    return { accessToken, refreshToken };
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `Something went wrong while generating referesh and access token: ${error}`
+    );
+  }
+};
 
 const registerUser = asyncHandler(async (req, res) => {
-    const { email, password, role, userProfile } = req.body
+  const { email, password, role, userProfile } = req.body;
 
-    if (
-        [email, password].some((field) => field?.trim() === "")
+  if ([email, password].some((field) => field?.trim() === "")) {
+    throw new ApiError(400, "All fields are required");
+  }
 
-    ) {
-        throw new ApiError(400, "All fields are required")
-    }
+  const existingUser = await User.findOne({ email });
+  if (existingUser) {
+    throw new ApiError(409, "User already exists");
+  }
 
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-        throw new ApiError(409, "User already exists")
-    }
+  const username = email.split("@")[0];
+  const user = await User.create({
+    email: email.toLowerCase(),
+    username: username.toLowerCase(),
+    password,
+    role,
+    userProfile,
+  });
 
-    const username = email.split('@')[0];
-    const user = await User.create({ email: email.toLowerCase(), username: username.toLowerCase(), password, role, userProfile })
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshtoken"
+  );
 
-    const createdUser = await User.findById(user._id).select("-password -refreshtoken")
+  if (!createdUser) {
+    throw new ApiError(500, "Something went wrong while registering the user");
+  }
 
-    if (!createdUser) {
-        throw new ApiError(500, "Something went wrong while registering the user")
-    }
-
-    return res.status(201).json(
-        new ApiResponse(201, {}, "User registered successfully")
-    )
-})
-
-const loginUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body
-
-    if (!email) {
-        throw new ApiError(400, "Email is required")
-    }
-
-    if (!password) {
-        throw new ApiError(400, "Password is required")
-    }
-
-    const user = await User.findOne({ email: email.toLowerCase() })
-
-    if (!user) {
-        throw new ApiError(404, "User not found")
-    }
-
-    const isPasswordValid = await user.isPasswordCorrect(password)
-
-    if (!isPasswordValid) {
-        throw new ApiError(401, "Invalid user credentials")
-    }
-
-    const { refreshToken, accessToken } = await generateAccessAndRefereshTokens(user._id)
-
-
-    return res
-        .status(200)
-        .cookie("accessToken", accessToken, cookieOptions)
-        .cookie("refreshToken", refreshToken, cookieOptions)
-        .json(new ApiResponse(200, { accessToken, refreshToken }, "User login successful"));
-
-})
-
-const logoutUser = asyncHandler(async (req, res) => {
-    await User.findByIdAndUpdate(req.user._id,
-        {
-            $unset:
-            {
-                refreshToken: 1
-            }
-        },
-        {
-            new: true
-        }
-    )
-
-    return res
-        .status(200)
-        .clearCookie("accessToken", cookieOptions)
-        .clearCookie("refreshToken", cookieOptions)
-        .json(new ApiResponse(200, {}, "User logged out"))
-})
-
-const getUserProfile = asyncHandler(async (req, res) => {
-    return res
-        .status(200)
-        .json(new ApiResponse(200, req.user, "User profile fetch successful"))
-})
-
-
-const updateUserProfile = asyncHandler(async (req, res) => {
-    const updates = Object.keys(req.body);
-    const allowedUpdates = ['contactNumber', 'address', 'dateOfBirth', 'gender', 'nationality', 'savedJobs', 'profilePicture', 'resume', 'certifications', 'languages', 'interests', 'projectExperience', 'name', 'location', 'primaryRole', 'YearsOfExperience','bio', 'skills', 'education', 'workExperience', 'applications', 'socialProfiles', 'publicProfile', 'jobPreferences'];
-    const isValidOperation = updates.every((update) => allowedUpdates.includes(update));
-    
-    if (!isValidOperation) {
-        return res.status(400).send({ error: 'Invalid updates!' });
-    }
-
-    try {
-        const userProfileUpdates = {};
-        updates.forEach((update) => userProfileUpdates[`userProfile.${update}`] = req.body[update]);
-
-        const user = await User.findByIdAndUpdate(req.user._id, userProfileUpdates, { new: true, runValidators: true });
-
-        if (!user) {
-            return res.status(404).send();
-        }
-
-        res.send(user);
-    } catch (error) {
-        res.status(400).send(error);
-    }
+  return res
+    .status(201)
+    .json(new ApiResponse(201, {}, "User registered successfully"));
 });
 
+const loginUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Email is required");
+  }
+
+  if (!password) {
+    throw new ApiError(400, "Password is required");
+  }
+
+  const user = await User.findOne({ email: email.toLowerCase() });
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  const isPasswordValid = await user.isPasswordCorrect(password);
+
+  if (!isPasswordValid) {
+    throw new ApiError(401, "Invalid user credentials");
+  }
+
+  const { refreshToken, accessToken } = await generateAccessAndRefereshTokens(
+    user._id
+  );
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, cookieOptions)
+    .cookie("refreshToken", refreshToken, cookieOptions)
+    .json(
+      new ApiResponse(
+        200,
+        { accessToken, refreshToken },
+        "User login successful"
+      )
+    );
+});
+
+const logoutUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndUpdate(
+    req.user._id,
+    {
+      $unset: {
+        refreshToken: 1,
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", cookieOptions)
+    .clearCookie("refreshToken", cookieOptions)
+    .json(new ApiResponse(200, {}, "User logged out"));
+});
+
+const getUserProfile = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.user, "User profile fetch successful"));
+});
+
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const updates = Object.keys(req.body);
+  const allowedUpdates = [
+    "contactNumber",
+    "address",
+    "dateOfBirth",
+    "gender",
+    "nationality",
+    "savedJobs",
+    "profilePicture",
+    "resume",
+    "certifications",
+    "languages",
+    "interests",
+    "projectExperience",
+    "name",
+    "location",
+    "primaryRole",
+    "yearsOfExperience",
+    "bio",
+    "skills",
+    "education",
+    "workExperience",
+    "applications",
+    "socialProfiles",
+    "publicProfile",
+    "jobPreferences",
+  ];
+  const nonValidOperations = [];
+  const isValidOperation = updates.every((update) => {
+    if (allowedUpdates.includes(update)) {
+      return true;
+    } else {
+      nonValidOperations.push(update);
+      return false;
+    }
+  });
+
+  if (!isValidOperation) {
+    return res
+      .status(400)
+      .send({ error: `Invalid updates! ${nonValidOperations.toString()}` });
+  }
+
+  try {
+    const userProfileUpdates = {};
+    updates.forEach(
+      (update) =>
+        (userProfileUpdates[`userProfile.${update}`] = req.body[update])
+    );
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      userProfileUpdates,
+      { new: true, runValidators: true }
+    ).select("-password");
+
+    if (!user) {
+      return res.status(404).send();
+    }
+
+    res.send(user);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
 
 const updateProfilePicture = asyncHandler(async (req, res) => {
-    const profilePictureLocalPath = req.file?.path
+  const profilePictureLocalPath = req.file?.path;
 
-    if (!profilePictureLocalPath) {
-        throw new ApiError(400, "Profile Picture file is missing")
+  if (!profilePictureLocalPath) {
+    throw new ApiError(400, "Profile Picture file is missing");
+  }
+
+  let user = await User.findById(req.user._id);
+
+  let oldProfilePictureUrl = user?.userProfile?.profilePicture;
+
+  const profilePicture = await uploadOnCloudinary(profilePictureLocalPath);
+  if (!profilePicture?.url) {
+    throw new ApiError(400, "Error while uploading profile picture");
+  }
+
+  if (user.role === "jobSeeker") {
+    user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          "userProfile.profilePicture": profilePicture.url,
+        },
+      },
+      { new: true }
+    ).select("-password");
+  } else if (user.role === "employer") {
+    user = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $set: {
+          "userProfile.companyLogo": profilePicture.url,
+        },
+      },
+      { new: true }
+    ).select("-password");
+  }
+
+  if (
+    oldProfilePictureUrl &&
+    oldProfilePictureUrl !=
+      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
+  ) {
+    try {
+      const splitUrl = oldProfilePictureUrl.split("/");
+      const filenameWithExtension = splitUrl[splitUrl.length - 1];
+      const imageId = filenameWithExtension.split(".")[0];
+      const res = await deleteFromCloudinary(imageId);
+    } catch (error) {
+      throw new ApiError(
+        304,
+        `Error deleting profile picture: ${error.message}`
+      );
     }
+  }
 
-    let user = await User.findById(req.user._id);
-
-    let oldProfilePictureUrl = user?.userProfile?.profilePicture;
-
-    const profilePicture = await uploadOnCloudinary(profilePictureLocalPath)
-    if (!profilePicture?.url) {
-        throw new ApiError(400, "Error while uploading profile picture")
-    }
-
-    if (user.role === 'jobSeeker') {
-        user = await User.findByIdAndUpdate(req.user._id, {
-            $set: {
-                "userProfile.profilePicture": profilePicture.url
-            }
-        }, { new: true }).select("-password");
-    } else if (user.role === 'employer') {
-        user = await User.findByIdAndUpdate(req.user._id, {
-            $set: {
-                "userProfile.companyLogo": profilePicture.url
-            }
-        }, { new: true }).select("-password");
-    }
-
-    if (oldProfilePictureUrl && oldProfilePictureUrl != "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg") {
-        try {
-            const splitUrl = oldProfilePictureUrl.split("/");
-            const filenameWithExtension = splitUrl[splitUrl.length - 1];
-            const imageId = filenameWithExtension.split(".")[0];
-            const res = await deleteFromCloudinary(imageId);
-        } catch (error) {
-            throw new ApiError(304, `Error deleting profile picture: ${error.message}`);
-        }
-    }
-
-    return res
-        .status(200)
-        .json(new ApiResponse(200, user, "User profile picture updated successfully"))
-})
-
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, user, "User profile picture updated successfully")
+    );
+});
 
 export {
-    ping,
-    authPing,
-    registerUser,
-    loginUser,
-    logoutUser,
-    getUserProfile,
-    updateUserProfile,
-    updateProfilePicture
-}
+  ping,
+  authPing,
+  registerUser,
+  loginUser,
+  logoutUser,
+  getUserProfile,
+  updateUserProfile,
+  updateProfilePicture,
+};
