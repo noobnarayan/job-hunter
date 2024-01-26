@@ -1,8 +1,15 @@
 import React from "react";
 
-function JobCard({ job }) {
-  const { title, salaryRange, location, type, responsibilities, employer } =
-    job;
+function JobCard({ job, redirectToDetail }) {
+  const {
+    title,
+    salaryRange,
+    location,
+    type,
+    responsibilities,
+    employer,
+    _id,
+  } = job;
   const { companyLogo, companyName } = employer.userProfile;
 
   const datePosted = new Date(job.datePosted);
@@ -28,7 +35,10 @@ function JobCard({ job }) {
   }
 
   return (
-    <div className="my-4 hover:cursor-pointer">
+    <div
+      className="my-4 hover:cursor-pointer"
+      onClick={() => redirectToDetail(_id)}
+    >
       <div className="border p-3.5 shadow rounded-lg">
         {/* Top */}
         <div className="mb-5 flex flex-col md:flex-row justify-between gap-5 md:gap-1">

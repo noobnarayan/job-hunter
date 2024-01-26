@@ -4,9 +4,11 @@ import SideBarFilter from "./SideBarFilter";
 import JobCard from "./JobCard";
 import { useEffect } from "react";
 import { contentService } from "../../services/contentService";
+import { useNavigate } from "react-router-dom";
 
 function MainJobSection() {
   const [jobs, setJobs] = useState([]);
+  const navigate = useNavigate();
 
   const getJobs = async () => {
     try {
@@ -23,6 +25,10 @@ function MainJobSection() {
     getJobs();
   }, []);
 
+  const redirectToDetail = (id) => {
+    navigate(`/job/${id}`);
+  };
+
   return (
     <div className="flex flex-col px-5 gap-5 mt-20 md:flex-row">
       <div className="border rounded-xl w-full md:w-[30%]">
@@ -38,7 +44,11 @@ function MainJobSection() {
           </div>
           <div>
             {jobs.map((job) => (
-              <JobCard key={job._id} job={job} />
+              <JobCard
+                key={job._id}
+                job={job}
+                redirectToDetail={redirectToDetail}
+              />
             ))}
           </div>
         </div>
