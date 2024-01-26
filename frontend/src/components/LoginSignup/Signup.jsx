@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
 import { userService } from "../../services/userService";
+import useUpdateUserData from "../../hooks/useUpdateUserData";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function Signup() {
     password: "",
     confirmPassword: "",
   });
+  const updateUser = useUpdateUserData();
 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -43,7 +45,7 @@ function Signup() {
 
   const postUserData = async (data) => {
     setLoading(true);
-    const { name } = data;
+    const { name, email, password } = data;
     const userData = {
       ...data,
       role: "jobSeeker",
@@ -53,8 +55,15 @@ function Signup() {
     try {
       const res = await userService.signup(userData);
       if (res.data.statusCode === 201) {
+        const res = await userService.login({ email, password });
+        if (res.status === 200) {
+          const userData = await userService.getCurrentUser();
+          if (userData) {
+            updateUser();
+          }
+        }
         setLoading(false);
-        navigate("/login");
+        navigate("/user-onboarding");
       }
     } catch (error) {
       console.log(error);

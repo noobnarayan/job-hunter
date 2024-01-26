@@ -4,6 +4,7 @@ import SelectInput from "../Common/FormComponents/SelectInput";
 import TextInput from "../Common/FormComponents/TextInput";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
 
 function UserOnboaring() {
   const initialFormData = {
@@ -19,6 +20,7 @@ function UserOnboaring() {
     website: "",
   };
 
+  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(true);
   const [formData, setFormData] = useState(initialFormData);
 
@@ -79,9 +81,13 @@ function UserOnboaring() {
         },
       },
       yearsOfExperience: formData.yearsOfExperience,
+      doneOnboarding: true,
     };
     try {
       const res = await userService.updateUserProfile(data);
+      if (res.status === 200) {
+        navigate("/jobs");
+      }
     } catch (error) {
       console.log(error);
     }
