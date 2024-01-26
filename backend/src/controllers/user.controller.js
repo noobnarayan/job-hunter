@@ -170,6 +170,7 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     "socialProfiles",
     "publicProfile",
     "jobPreferences",
+    "doneOnboarding",
   ];
   const nonValidOperations = [];
   const isValidOperation = updates.every((update) => {

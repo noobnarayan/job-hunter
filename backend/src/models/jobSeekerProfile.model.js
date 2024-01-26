@@ -51,6 +51,7 @@ const jobPreferencesSchema = new Schema({
 });
 const jobSeekerProfileSchema = new Schema({
   contactNumber: String,
+  doneOnboarding: { type: Boolean, default: false },
   address: {
     city: String,
     state: String,
