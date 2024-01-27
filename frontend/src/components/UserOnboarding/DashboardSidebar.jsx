@@ -3,6 +3,7 @@ import {
   UserPlusIcon,
   UserCircleIcon,
   ShieldCheckIcon,
+  ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
 
 import { NavLink, Link } from "react-router-dom";
@@ -11,18 +12,23 @@ import logo from "../assets/media/JobHunter.png";
 const sidebarLinks = [
   {
     name: "Dashboard",
-    href: "/dashboard",
+    href: "/dashboard/home",
     icon: HomeIcon,
   },
   {
     name: "Applications",
-    href: "/applications",
+    href: "/dashboard/applications",
     icon: UserPlusIcon,
   },
   {
     name: "Shortlisted",
-    href: "/shortedlisted",
+    href: "/dashboard/shortedlisted",
     icon: ShieldCheckIcon,
+  },
+  {
+    name: "Messages",
+    href: "/dashboard/messages",
+    icon: ChatBubbleBottomCenterIcon,
   },
 ];
 

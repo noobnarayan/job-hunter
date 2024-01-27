@@ -1,7 +1,7 @@
 import React from "react";
 
 function Applications() {
-  return <div>Applications</div>;
+  return <div className="mt-28 flex">Applications</div>;
 }
 
 export default Applications;

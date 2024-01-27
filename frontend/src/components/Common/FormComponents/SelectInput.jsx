@@ -9,6 +9,7 @@ function SelectInput({
   isRequired,
   optgroup,
   className,
+  description,
 }) {
   return (
     <div className={`${className}`}>
@@ -16,6 +17,9 @@ function SelectInput({
         {label}
         {isRequired && <span className="text-gray-500">*</span>}
       </label>
+      {description && (
+        <span className="text-gray-500 text-sm ml-1.5 ">{description}</span>
+      )}
       <select
         id={id}
         name={id}

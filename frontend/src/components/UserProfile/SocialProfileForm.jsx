@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
-import TextInput from "../Common/FormComponents/TextInput";
+import InputField from "../Common/FormComponents/InputField";
 import { userService } from "../../services/userService";
 
 function SocialProfileForm({ userData }) {
@@ -65,7 +65,7 @@ function SocialProfileForm({ userData }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <TextInput
+        <InputField
           label="Website / Portfolio"
           id="website"
           value={formData.website}
@@ -74,7 +74,7 @@ function SocialProfileForm({ userData }) {
           icon={<i className="fa-solid fa-globe"></i>}
           placeholder={"https://"}
         />
-        <TextInput
+        <InputField
           label="Linkedin"
           id="linkedin"
           value={formData.linkedin}
@@ -83,7 +83,7 @@ function SocialProfileForm({ userData }) {
           icon={<i className="fa-brands fa-linkedin-in"></i>}
           placeholder={"https://www.linkedin.com/in/username"}
         />
-        <TextInput
+        <InputField
           label="Twitter"
           id="twitter"
           value={formData.twitter}
@@ -92,7 +92,7 @@ function SocialProfileForm({ userData }) {
           icon={<i className="fa-brands fa-twitter"></i>}
           placeholder={"https://twitter.com/username"}
         />
-        <TextInput
+        <InputField
           label="GitHub"
           id="github"
           value={formData.github}

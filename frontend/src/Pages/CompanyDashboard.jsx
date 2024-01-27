@@ -3,6 +3,8 @@ import DashboardSidebar from "../components/UserOnboarding/DashboardSidebar";
 import { Route, Routes } from "react-router-dom";
 import Dashboard from "../components/CompanyDashboard/Dashboard";
 import Applications from "../components/CompanyDashboard/Applications";
+import Shortlisted from "../components/CompanyDashboard/Shortlisted";
+import JobPosting from "./JobPosting";
 
 function CompanyDashboard() {
   return (
@@ -12,9 +14,10 @@ function CompanyDashboard() {
       </aside>
       <div className="flex-1 overflow-auto">
         <Routes>
-          <Route exact path="/" element={<Dashboard />} />
-          <Route exact path="/applications" element={<Applications />} />
-          <Route exact path="/" element={<Dashboard />} />
+          <Route path="/home" element={<Dashboard />} />
+          <Route path="/applications" element={<Applications />} />
+          <Route path="/shortedlisted" element={<Shortlisted />} />
+          <Route path="/post-job" element={<JobPosting />} />
         </Routes>
       </div>
     </div>

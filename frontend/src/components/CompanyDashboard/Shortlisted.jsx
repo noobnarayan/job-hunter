@@ -1,7 +1,7 @@
 import React from "react";
 
 function Shortlisted() {
-  return <div>Shortlisted</div>;
+  return <div className="mt-28 items-center justify-center">Shortlisted</div>;
 }
 
 export default Shortlisted;

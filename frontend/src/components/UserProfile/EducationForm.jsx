@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
-import TextInput from "../Common/FormComponents/TextInput";
+import InputField from "../Common/FormComponents/InputField";
 
 function EducationForm({ setShowAddEducation }) {
   const initialFormData = {
@@ -74,7 +74,7 @@ function EducationForm({ setShowAddEducation }) {
       <form className="flex flex-col gap-2.5">
         <div>
           <div className={showDropdown ? "" : "hidden"}>
-            <TextInput
+            <InputField
               label="Education"
               id="name"
               onChange={handleSearch}
@@ -153,7 +153,7 @@ function EducationForm({ setShowAddEducation }) {
           />
         </div>
         <div>
-          <TextInput
+          <InputField
             label="Degree"
             id="degree"
             value={formData.degree}
@@ -161,7 +161,7 @@ function EducationForm({ setShowAddEducation }) {
             isRequired={false}
             placeholder="Enter degree"
           />
-          <TextInput
+          <InputField
             label="Major"
             id="major"
             value={formData.major}

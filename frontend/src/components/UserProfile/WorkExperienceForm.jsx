@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SubmissionButton from "../../components/Common/Buttons/SubmissionButton";
-import TextInput from "../Common/FormComponents/TextInput";
+import InputField from "../Common/FormComponents/InputField";
 import TextArea from "../Common/FormComponents/TextArea";
 import CompanySearch from "../Common/CompanySearch";
 function WorkExperienceForm({ setShowAddWorkExperience }) {
@@ -79,7 +79,7 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
           </div>
         </div>
         <div>
-          <TextInput
+          <InputField
             label="Title"
             id="title"
             name="title"

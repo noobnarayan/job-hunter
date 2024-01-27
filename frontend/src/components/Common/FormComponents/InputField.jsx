@@ -1,14 +1,16 @@
 import React from "react";
 
-function TextInput({
+function InputField({
   label,
   id,
+  type = "text",
   value,
   onChange,
   isRequired,
   icon,
   placeholder,
   className,
+  description,
 }) {
   return (
     <div className={`${className}`}>
@@ -19,8 +21,9 @@ function TextInput({
           {isRequired && <span className="text-gray-500">*</span>}
         </span>
       </label>
+      <span className="text-gray-500 text-sm ml-1.5 ">{description}</span>
       <input
-        type="text"
+        type={type}
         id={id}
         name={id}
         value={value}
@@ -33,4 +36,4 @@ function TextInput({
   );
 }
 
-export default TextInput;
+export default InputField;

@@ -5,13 +5,16 @@ import useUpdateUserData from "./hooks/useUpdateUserData";
 
 function App() {
   const location = useLocation();
-  const hideOnRoutes = ["/login", "/signup", "/dashboard"];
+  const hideOnRoutes = ["/login", "/signup"];
   useUpdateUserData();
 
   return (
     <>
       <div className="font-Poppins">
-        {!hideOnRoutes.includes(location.pathname) && <Navbar />}
+        {!(
+          location.pathname.startsWith("/dashboard") ||
+          hideOnRoutes.includes(location.pathname)
+        ) && <Navbar />}
         <AllRoutes />
       </div>
     </>

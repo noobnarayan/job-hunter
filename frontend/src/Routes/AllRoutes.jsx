@@ -20,7 +20,7 @@ function AllRoutes() {
       <Route path="/jobs" element={<JobListing />} />
       <Route path="/job/:id" element={<JobDetails />} />
       <Route path="/companies" element={<CompaniesPage />} />
-      <Route path="/dashboard" element={<CompanyDashboard />} />
+      <Route path="/dashboard/*" element={<CompanyDashboard />} />
       <Route path="/profile" element={<UserProfile />} />
       <Route path="/post-new-job" element={<JobPosting />} />
       <Route path="/applicant" element={<ApplicantInformation />} />

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import CheckBoxLabel from "../Common/FormComponents/CheckBoxLabel";
 import SelectInput from "../Common/FormComponents/SelectInput";
-import TextInput from "../Common/FormComponents/TextInput";
+import InputField from "../Common/FormComponents/InputField";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
@@ -223,7 +223,7 @@ function UserOnboaring() {
               <CheckBoxLabel text={"India"} />
               <div className="flex flex-col gap-1.5 ">
                 <div className={formData.notEmployed ? "hidden" : ""}>
-                  <TextInput
+                  <InputField
                     label="Title"
                     id="title"
                     name="title"
@@ -281,7 +281,7 @@ function UserOnboaring() {
             </div>
           </div>
           <div className="bg-gray-100 p-5 md:p-16 flex flex-col gap-10">
-            <TextInput
+            <InputField
               label="Linkedin Profile"
               id="linkedin"
               value={formData.linkedin}
@@ -289,7 +289,7 @@ function UserOnboaring() {
               placeholder={"https://www.linkedin.com/in/username"}
               className={"w-full md:w-1/2 flex flex-col gap-3"}
             />
-            <TextInput
+            <InputField
               label="Your Website"
               id="website"
               value={formData.website}

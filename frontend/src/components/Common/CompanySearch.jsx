@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import TextInput from "./FormComponents/TextInput";
+import InputField from "./FormComponents/InputField";
 
 const CompanySearch = ({ handleDropdown, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -38,7 +38,7 @@ const CompanySearch = ({ handleDropdown, width }) => {
 
   return (
     <div>
-      <TextInput
+      <InputField
         label="Company"
         placeholder="Google"
         isRequired={true}

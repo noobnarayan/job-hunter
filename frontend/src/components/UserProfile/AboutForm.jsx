@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { userService } from "../../services/userService.js";
-import TextInput from "../Common/FormComponents/TextInput.jsx";
+import InputField from "../Common/FormComponents/InputField.jsx";
 import SelectInput from "../Common/FormComponents/SelectInput.jsx";
 import SubmissionButton from "../Common/Buttons/SubmissionButton.jsx";
 import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
@@ -142,7 +142,7 @@ function AboutForm({ userData }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <TextInput
+        <InputField
           label="Your Name"
           id="name"
           value={formData.name}
