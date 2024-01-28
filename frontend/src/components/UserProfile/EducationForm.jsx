@@ -126,30 +126,22 @@ function EducationForm({ setShowAddEducation }) {
             </div>
           </div>
         </div>
-
         <div>
-          <label htmlFor="start" className="font-medium">
-            Start Date (Month/Year)<span className="text-gray-500">*</span>
-          </label>
-          <input
-            type="month"
+          <InputField
+            label="Start Date (Month/Year)"
             id="start"
-            name="start"
+            type="month"
             onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+            isRequired={true}
           />
         </div>
-
         <div>
-          <label htmlFor="end" className="font-medium">
-            End Date (Month/Year)<span className="text-gray-500">*</span>
-          </label>
-          <input
-            type="month"
+          <InputField
+            label="End Date (Month/Year)"
             id="end"
-            name="end"
+            type="month"
             onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+            isRequired={true}
           />
         </div>
         <div>

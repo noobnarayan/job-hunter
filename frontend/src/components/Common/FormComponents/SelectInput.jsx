@@ -25,7 +25,7 @@ function SelectInput({
         name={id}
         value={value}
         onChange={onChange}
-        className="w-full p-2 rounded-lg border border-gray-400 my-2 overflow-auto"
+        className="w-full p-2 rounded-sm border border-gray-400 my-2 overflow-auto"
         required={isRequired}
       >
         {optgroup

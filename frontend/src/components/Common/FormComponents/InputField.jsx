@@ -29,7 +29,7 @@ function InputField({
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+        className="w-full p-2 rounded-sm border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
         required={isRequired}
       />
     </div>

@@ -3,6 +3,7 @@ import SubmissionButton from "../../components/Common/Buttons/SubmissionButton";
 import InputField from "../Common/FormComponents/InputField";
 import TextArea from "../Common/FormComponents/TextArea";
 import CompanySearch from "../Common/CompanySearch";
+import Checkbox from "../Common/FormComponents/Checkbox";
 function WorkExperienceForm({ setShowAddWorkExperience }) {
   const initialFormData = {
     companyName: "",
@@ -90,42 +91,30 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
           />
         </div>
         <div>
-          <label htmlFor="startDate" className="font-medium">
-            Start Date (Month/Year)<span className="text-gray-500">*</span>
-          </label>
-          <input
+          <InputField
+            label="Start Date (Month/Year)"
             type="month"
             id="startDate"
             name="startDate"
             value={formData.startDate}
             onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+            isRequired={true}
           />
         </div>
 
         <div>
-          <label htmlFor="endDate" className="font-medium">
-            End Date (Month/Year)<span className="text-gray-500">*</span>
-          </label>
-          <input
+          <InputField
+            label="End Date (Month/Year)"
             type="month"
             id="endDate"
             name="endDate"
             value={formData.endDate}
             onChange={handleInputChange}
-            className="w-full p-2 rounded-md border border-gray-400 my-2 focus:outline-none focus:ring-1 focus:ring-gray-200"
+            isRequired={true}
           />
         </div>
-        <div className="flex gap-3 items-center mb-3">
-          <input
-            type="checkbox"
-            id="current"
-            name="current"
-            className="form-checkbox h-4 w-4 rounded "
-          />
-          <label htmlFor="current" className="font-medium ">
-            I currently work here
-          </label>
+        <div className="ml-2">
+          <Checkbox label="I currently work here" id="current" name="current" />
         </div>
         <div>
           <TextArea

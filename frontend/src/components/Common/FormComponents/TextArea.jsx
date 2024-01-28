@@ -15,7 +15,7 @@ function TextArea({ label, id, value, onChange, placeholder, isRequired }) {
         placeholder={placeholder}
         rows="5"
         cols="50"
-        className="w-full p-2 rounded-lg border border-gray-400 my-2"
+        className="w-full p-2 rounded border border-gray-400 my-2"
         required={isRequired}
       ></textarea>
     </div>

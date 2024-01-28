@@ -5,7 +5,7 @@ function SubmissionButton({ color, label, onClick, type, className }) {
     color === "white"
       ? "text-black"
       : "bg-black text-white hover:bg-green-500 hover:text-black"
-  } ${className}`;
+  }`;
 
   return (
     <button type={type} onClick={onClick} className={buttonStyle}>

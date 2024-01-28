@@ -2,7 +2,7 @@ import React from "react";
 
 function Checkbox({ label, name, checked, onChange }) {
   return (
-    <label className="inline-flex items-center">
+    <label className="inline-flex items-center text-sm">
       <input
         type="checkbox"
         name={name}

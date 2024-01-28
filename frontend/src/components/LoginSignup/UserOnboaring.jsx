@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import CheckBoxLabel from "../Common/FormComponents/CheckBoxLabel";
 import SelectInput from "../Common/FormComponents/SelectInput";
 import InputField from "../Common/FormComponents/InputField";
+import Checkbox from "../Common/FormComponents/Checkbox";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
 import { useNavigate } from "react-router-dom";
@@ -265,17 +266,13 @@ function UserOnboaring() {
                   </div>
                 </div>
                 <div className="flex gap-3 items-center my-3 ml-1.5">
-                  <input
-                    type="checkbox"
-                    id="notEmployed"
+                  <Checkbox
+                    label={"I'm not currently employed"}
                     name="notEmployed"
+                    id="notEmployed"
                     checked={formData.notEmployed}
                     onChange={handleInputChange}
-                    className="form-checkbox h-4 w-4 rounded"
                   />
-                  <label htmlFor="notEmployed" className="text-sm">
-                    I'm not currently employed
-                  </label>
                 </div>
               </div>
             </div>
