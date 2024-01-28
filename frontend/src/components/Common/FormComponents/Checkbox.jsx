@@ -1,6 +1,6 @@
 import React from "react";
 
-function Checkbox({ label, name, checked, onChange }) {
+function Checkbox({ label, name, checked, onChange, className }) {
   return (
     <label className="inline-flex items-center text-sm">
       <input
@@ -8,9 +8,9 @@ function Checkbox({ label, name, checked, onChange }) {
         name={name}
         checked={checked}
         onChange={onChange}
-        className="form-checkbox rounded"
+        className="form-checkbox rounded focus:ring-2 focus:ring-green-500 text-green-600 hover:cursor-pointer"
       />
-      <span className="ml-2">{label}</span>
+      <span className={`ml-2 ${className}`}>{label}</span>
     </label>
   );
 }

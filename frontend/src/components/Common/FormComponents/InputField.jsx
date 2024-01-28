@@ -21,7 +21,9 @@ function InputField({
           {isRequired && <span className="text-gray-500">*</span>}
         </span>
       </label>
-      <span className="text-gray-500 text-sm ml-1.5 ">{description}</span>
+      {description && (
+        <span className="text-gray-500 text-sm ml-1.5 ">{description}</span>
+      )}
       <input
         type={type}
         id={id}

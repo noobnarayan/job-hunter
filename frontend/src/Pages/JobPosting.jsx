@@ -5,6 +5,7 @@ import DynamicInputForm from "../components/Common/FormComponents/DynamicInputFo
 import InputField from "../components/Common/FormComponents/InputField";
 import Checkbox from "../components/Common/FormComponents/Checkbox";
 import SubmissionButton from "../components/Common/Buttons/SubmissionButton";
+import RadioButton from "../components/Common/FormComponents/RadioButton";
 
 function JobPosting() {
   const [formData, setFormData] = useState({
@@ -135,8 +136,9 @@ function JobPosting() {
             <div>
               <InputField
                 label="Title"
+                description="Enter the title of the job position you are posting."
                 isRequired={true}
-                placeholder="e.g. Software Engineer. Product Designer, etc."
+                placeholder="E.g., 'Software Engineer', 'Product Designer', etc."
                 id="title"
                 name="title"
                 onChange={handleInputChange}
@@ -145,16 +147,19 @@ function JobPosting() {
 
             <div>
               <SelectInput
-                label={"Type of position"}
+                label="Type of position"
+                description="Select the type of position you are offering."
                 isRequired={true}
-                id={"typeOfPosition"}
+                id="typeOfPosition"
                 options={jobTypeOptions}
                 onChange={handleInputChange}
               />
             </div>
+
             <div>
               <SelectInput
                 label="Select your primary role"
+                description="Select the primary role that the candidate will be expected to perform."
                 id="primaryRole"
                 options={roleOptions}
                 isRequired={true}
@@ -162,15 +167,18 @@ function JobPosting() {
                 onChange={handleInputChange}
               />
             </div>
+
             <div>
               <SelectInput
                 label="Years of experience"
+                description="Select the minimum years of experience required for the position."
                 id="yearsOfExperience"
                 options={experienceOptions}
                 isRequired={true}
                 onChange={handleInputChange}
               />
             </div>
+
             <div>
               <InputField
                 label={"Skills"}
@@ -186,41 +194,68 @@ function JobPosting() {
             <div>
               <InputField
                 label="Education"
+                description="Specify the educational qualifications required for the position."
                 id="education"
                 value={formData.education}
                 onChange={handleInputChange}
+                placeholder="E.g., 'Bachelor's in Computer Science'"
               />
             </div>
             <div>
               <InputField
                 label="Location"
+                description="Specify the work location for the position."
                 id="location"
                 value={formData.location}
                 onChange={handleInputChange}
+                placeholder="E.g., 'Bengaluru, India'"
               />
-            </div>
-            <div>
-              <div>
-                <InputField
-                  label="Application Deadline"
-                  isRequired={true}
-                  placeholder="e.g. Software Engineer. Product Designer, etc."
-                  id="applicationDeadline"
-                  name="applicationDeadline"
-                  type="date"
-                  value={formData.applicationDeadline}
-                  onChange={handleInputChange}
-                />
-              </div>
             </div>
 
             <div>
-              <Checkbox
-                label="Remote Work?"
-                name="remoteWork"
-                checked={formData.remoteWork}
-                onChange={handleCheckboxChange}
+              <InputField
+                label="Application Deadline"
+                isRequired={true}
+                placeholder="e.g. Software Engineer. Product Designer, etc."
+                id="applicationDeadline"
+                name="applicationDeadline"
+                type="date"
+                value={formData.applicationDeadline}
+                onChange={handleInputChange}
               />
+            </div>
+
+            <div className="flex flex-col space-y-2">
+              <span className="font-semibold text-lg">Work Mode</span>
+              <span className="text-sm text-gray-500">
+                Please select your preferred work mode
+              </span>
+              <div className="flex space-x-4">
+                <RadioButton
+                  id="onsite"
+                  name="workMode"
+                  value="Onsite"
+                  checked={formData.workMode === "Onsite"}
+                  onChange={handleInputChange}
+                  label="Onsite"
+                />
+                <RadioButton
+                  id="hybrid"
+                  name="workMode"
+                  value="Hybrid"
+                  checked={formData.workMode === "Hybrid"}
+                  onChange={handleInputChange}
+                  label="Hybrid"
+                />
+                <RadioButton
+                  id="remote"
+                  name="workMode"
+                  value="Remote"
+                  checked={formData.workMode === "Remote"}
+                  onChange={handleInputChange}
+                  label="Remote"
+                />
+              </div>
             </div>
 
             <div className="py-3 font-medium text-lg border-b">
@@ -230,28 +265,31 @@ function JobPosting() {
               <div>
                 <DynamicInputForm
                   label="Responsibilities"
-                  placeholder="List the responsibilities of the position."
+                  description="Enter the responsibilities associated with the position here. These could include tasks that the person in this role would be expected to perform, duties they would need to carry out, and any responsibilities they would have. Each responsibility should be entered separately. Click on 'Add' after typing each responsibility."
                   name="responsibilities"
                   values={formData.responsibilities}
                   handleInputChange={handleArrayInputChange}
+                  placeholder="E.g., 'Manage team meetings'"
                 />
               </div>
               <div>
                 <DynamicInputForm
                   label="Requirements"
-                  placeholder="Specify the requirements for the position."
+                  description="Enter the requirements for the position here. These could include necessary skills, qualifications, or experiences that the candidate should possess. Each requirement should be entered separately. Click on 'Add' after typing each requirement."
                   name="requirements"
                   values={formData.requirements}
                   handleInputChange={handleArrayInputChange}
+                  placeholder="E.g., 'Minimum 5 years of experience in management'"
                 />
               </div>
               <div>
                 <DynamicInputForm
                   label="Benefits"
-                  placeholder="List the benefits of the position."
+                  description="List the benefits associated with the position here. These could include health insurance, retirement plans, paid time off, or other perks offered by your company. Each benefit should be entered separately. Click on 'Add' after typing each benefit."
                   name="benefits"
                   values={formData.benefits}
                   handleInputChange={handleArrayInputChange}
+                  placeholder="E.g., 'Health insurance coverage'"
                 />
               </div>
 

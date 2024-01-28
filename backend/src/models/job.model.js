@@ -19,6 +19,12 @@ const jobSchema = new Schema(
       enum: ["Full-time", "Part-time", "Contract", "Internship", "Freelance"],
       default: "Full-time",
     },
+    workMode: {
+      type: String,
+      enum: ["Onsite", "Hybrid", "Remote"],
+      default: "Onsite",
+    },
+
     location: String,
     datePosted: { type: Date, default: Date.now },
     employer: {
@@ -32,7 +38,7 @@ const jobSchema = new Schema(
     ],
     benefits: [String],
     applicationDeadline: Date,
-    remoteWork: Boolean,
+
     travelRequirements: String,
     additionalRequirements: [String],
     urgent: Boolean,

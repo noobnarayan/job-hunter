@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Select, SelectItem } from "@tremor/react";
+import Checkbox from "../Common/FormComponents/Checkbox";
+import RadioButton from "../Common/FormComponents/RadioButton";
 
 function SideBarFilter() {
   const [YOE, setYOE] = useState(30);
   const handleExperienceChange = (e) => {
     setYOE(e.target.value);
   };
+  const handleInputChange = (e) => {};
 
   return (
     <div>
@@ -40,69 +43,31 @@ function SideBarFilter() {
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="full-time"
-                    name="full-time"
-                    className="form-checkbox h-4 w-4  rounded"
-                    style={{ color: "green", outline: "none" }}
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="full-time"
-                  >
-                    Full-time
-                  </label>
-                </div>
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="part-time"
-                    name="part-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="part-time"
-                  >
-                    Part-time
-                  </label>
-                </div>
+                <Checkbox
+                  label="Full-time"
+                  name="full-time"
+                  className={"text-gray-500 text-sm font-medium"}
+                />
+                <Checkbox
+                  label="Part-time"
+                  name="part-time"
+                  className={"text-gray-500 text-sm font-medium"}
+                />
               </div>
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="internship"
-                    name="internship"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="internship"
-                  >
-                    Internship
-                  </label>
-                </div>
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="freelance"
-                    name="freelance"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="freelance"
-                  >
-                    Freelance
-                  </label>
-                </div>
+                <Checkbox
+                  label="Internship"
+                  name="internship"
+                  className={"text-gray-500 text-sm font-medium"}
+                />
+                <Checkbox
+                  label="Freelance"
+                  name="freelance"
+                  className={"text-gray-500 text-sm font-medium"}
+                />
               </div>
             </div>
           </div>
-
           {/* Experience */}
           <div className="pr-4 border-b pb-4">
             <div className="py-4">
@@ -130,64 +95,52 @@ function SideBarFilter() {
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="radio"
-                    id="full-time"
-                    name="job-type"
-                    className="form-radio h-4 w-4 accent-green-600 "
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="full-time"
-                  >
-                    Under $10000
-                  </label>
-                </div>
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="radio"
-                    id="part-time"
-                    name="job-type"
-                    className="form-radio h-4 w-4 accent-green-600 "
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="part-time"
-                  >
-                    $10000 - $25000
-                  </label>
-                </div>
+                <RadioButton
+                  id="under-3LPA"
+                  name="salary-range"
+                  value="Under ₹3 LPA"
+                  label="Under ₹3 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
+                <RadioButton
+                  id="3-6LPA"
+                  name="salary-range"
+                  value="₹3 LPA - ₹6 LPA"
+                  label="₹3 LPA - ₹6 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
               </div>
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="radio"
-                    id="internship"
-                    name="job-type"
-                    className="form-radio h-4 w-4 accent-green-600 "
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="internship"
-                  >
-                    $25000 - $50000
-                  </label>
-                </div>
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="radio"
-                    id="freelance"
-                    name="job-type"
-                    className="form-radio h-4 w-4 accent-green-600 "
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="freelance"
-                  >
-                    More than $50000
-                  </label>
-                </div>
+                <RadioButton
+                  id="6-10LPA"
+                  name="salary-range"
+                  value="₹6 LPA - ₹10 LPA"
+                  label="₹6 LPA - ₹10 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
+                <RadioButton
+                  id="10-15LPA"
+                  name="salary-range"
+                  value="₹10 LPA - ₹15 LPA"
+                  label="₹10 LPA - ₹15 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
+              </div>
+              <div className="flex justify-between">
+                <RadioButton
+                  id="15-20LPA"
+                  name="salary-range"
+                  value="₹15 LPA - ₹20 LPA"
+                  label="₹15 LPA - ₹20 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
+                <RadioButton
+                  id="more-than-20LPA"
+                  name="salary-range"
+                  value="More than ₹20 LPA"
+                  label="More than ₹20 LPA"
+                  className="text-gray-500 text-sm font-medium"
+                />
               </div>
             </div>
           </div>
@@ -198,50 +151,23 @@ function SideBarFilter() {
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="full-time"
-                    name="full-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="full-time"
-                  >
-                    On-site
-                  </label>
-                </div>
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="part-time"
-                    name="part-time"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded "
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="part-time"
-                  >
-                    Hybrid
-                  </label>
-                </div>
+                <Checkbox
+                  label="On-site"
+                  name="full-time"
+                  className="text-gray-500 text-sm font-medium"
+                />
+                <Checkbox
+                  label="Hybrid"
+                  name="part-time"
+                  className="text-gray-500 text-sm font-medium"
+                />
               </div>
               <div className="flex justify-between">
-                <div className="flex gap-2.5 items-center">
-                  <input
-                    type="checkbox"
-                    id="internship"
-                    name="internship"
-                    className="form-checkbox h-4 w-4 accent-green-600 rounded"
-                  />
-                  <label
-                    className="text-gray-500 text-sm font-medium"
-                    htmlFor="internship"
-                  >
-                    Remote
-                  </label>
-                </div>
+                <Checkbox
+                  label="Remote"
+                  name="internship"
+                  className="text-gray-500 text-sm font-medium"
+                />
               </div>
             </div>
           </div>
