@@ -169,7 +169,7 @@ function UserOnboaring() {
               <p className="text-xs mt-1 text-gray-400 hidden">
                 Tip: You can choose a city, state, or country
               </p>
-              <CheckBoxLabel text={"India"} />
+              <CheckBoxLabel text={formData.location} />
               <SelectInput
                 id="location"
                 value={formData.location}
@@ -185,7 +185,7 @@ function UserOnboaring() {
               your current role?
             </p>
             <div className="pl-3 flex flex-col gap-2">
-              <CheckBoxLabel text={"India"} />
+              <CheckBoxLabel text={formData.primaryRole} />
               <SelectInput
                 id="primaryRole"
                 value={formData.primaryRole}
@@ -202,7 +202,12 @@ function UserOnboaring() {
               experience do you have in your current role?
             </p>
             <div className="pl-3 flex flex-col gap-2">
-              <CheckBoxLabel text={"India"} />
+              <CheckBoxLabel
+                text={
+                  formData.yearsOfExperience &&
+                  `${formData.yearsOfExperience} years`
+                }
+              />
               <SelectInput
                 id="yearsOfExperience"
                 value={formData.yearsOfExperience}
@@ -221,7 +226,7 @@ function UserOnboaring() {
               <p className="text-xs mt-1 text-gray-400">
                 Your company will never see that you're looking for a job
               </p>
-              <CheckBoxLabel text={"India"} />
+              <CheckBoxLabel text={formData.companyName} />
               <div className="flex flex-col gap-1.5 ">
                 <div className={formData.notEmployed ? "hidden" : ""}>
                   <InputField
