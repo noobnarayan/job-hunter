@@ -7,6 +7,17 @@ import { contentService } from "../../services/contentService";
 import { useNavigate } from "react-router-dom";
 
 function MainJobSection() {
+  const [filters, setFilters] = useState({
+    datePost: "",
+    jobTypes: [],
+    experience: 30,
+    salaryRange: {
+      from: null,
+      to: null,
+    },
+    workMode: [],
+  });
+
   const [jobs, setJobs] = useState([]);
   const navigate = useNavigate();
 
@@ -32,7 +43,7 @@ function MainJobSection() {
   return (
     <div className="flex flex-col px-5 gap-5 mt-20 md:flex-row">
       <div className="border rounded-xl w-full md:w-[30%]">
-        <SideBarFilter />
+        <SideBarFilter filters={filters} setFilters={setFilters} />
       </div>
       <div className=" w-full md:w-[70%]">
         <div>
