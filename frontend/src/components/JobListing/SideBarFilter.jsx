@@ -147,7 +147,7 @@ function SideBarFilter() {
           {/* On-site/Remote */}
           <div className="pr-4 border-b pb-4">
             <div className="py-4">
-              <span className="font-bold">Job Type</span>
+              <span className="font-bold">Work Mode</span>
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">

@@ -14,7 +14,6 @@ const authPing = (req, res) => {
 const getJobs = asyncHandler(async (req, res) => {
   try {
     let query = {};
-    let sort = {};
 
     // Pagination functionality
     const page = parseInt(req.query.page, 10) || 1;
@@ -28,10 +27,51 @@ const getJobs = asyncHandler(async (req, res) => {
       query.title = { $regex: req.query.search, $options: "i" };
     }
 
-    // Sort functionality
-    if (req.query.sortBy) {
-      const sortKey = req.query.sortBy.split(":").map((item) => item.trim());
-      sort[sortKey[0]] = sortKey[1] === "desc" ? -1 : 1;
+    // Date posted filter
+    if (req.query.datePosted) {
+      const today = new Date();
+      if (req.query.datePosted === "Today") {
+        query.datePosted = { $gte: new Date(today.setHours(0, 0, 0, 0)) };
+      } else if (req.query.datePosted === "Yesterday") {
+        query.datePosted = {
+          $gte: new Date(today.setDate(today.getDate() - 1)),
+          $lt: new Date(today.setHours(0, 0, 0, 0)),
+        };
+      } else if (req.query.datePosted === "This week") {
+        query.datePosted = {
+          $gte: new Date(today.setDate(today.getDate() - 7)),
+        };
+      } else if (req.query.datePosted === "This month") {
+        query.datePosted = {
+          $gte: new Date(today.setMonth(today.getMonth() - 1)),
+        };
+      }
+    }
+
+    // Job type filter
+    if (req.query.type) {
+      query.type = req.query.type;
+    }
+
+    // Experience filter
+    if (req.query.experienceFrom && req.query.experienceTo) {
+      query.experience = {
+        from: { $gte: req.query.experienceFrom },
+        to: { $lte: req.query.experienceTo },
+      };
+    }
+
+    // Salary range filter
+    if (req.query.salaryFrom && req.query.salaryTo) {
+      query.salaryRange = {
+        from: { $gte: req.query.salaryFrom },
+        to: { $lte: req.query.salaryTo },
+      };
+    }
+
+    // Work mode filter
+    if (req.query.workMode) {
+      query.workMode = req.query.workMode;
     }
 
     const jobs = await Job.find(query)
@@ -39,7 +79,6 @@ const getJobs = asyncHandler(async (req, res) => {
         path: "employer",
         select: "userProfile.companyLogo  userProfile.companyName",
       })
-      .sort(sort)
       .skip(startIndex)
       .limit(limit)
       .select("-applicants");

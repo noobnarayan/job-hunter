@@ -1,5 +1,4 @@
 import mongoose, { Schema } from "mongoose";
-import { User } from "./user.model.js";
 
 const jobSchema = new Schema(
   {
@@ -9,14 +8,17 @@ const jobSchema = new Schema(
     requirements: [String],
     skills: [String],
     education: String,
-    experience: String,
+    experience: {
+      from: Number,
+      to: Number,
+    },
     salaryRange: {
       from: Number,
       to: Number,
     },
     type: {
       type: String,
-      enum: ["Full-time", "Part-time", "Contract", "Internship", "Freelance"],
+      enum: ["Full-time", "Part-time", "Internship", "Freelance"],
       default: "Full-time",
     },
     workMode: {
