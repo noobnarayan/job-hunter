@@ -6,6 +6,7 @@ import InputField from "../components/Common/FormComponents/InputField";
 import Checkbox from "../components/Common/FormComponents/Checkbox";
 import SubmissionButton from "../components/Common/Buttons/SubmissionButton";
 import RadioButton from "../components/Common/FormComponents/RadioButton";
+import SkillsSearch from "../components/Common/SkillsSearch";
 
 function JobPosting() {
   const [formData, setFormData] = useState({
@@ -191,6 +192,7 @@ function JobPosting() {
                 onChange={handleInputChange}
               />
             </div>
+            <SkillsSearch />
             <div>
               <InputField
                 label="Education"

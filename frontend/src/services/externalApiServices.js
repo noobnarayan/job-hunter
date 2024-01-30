@@ -46,7 +46,7 @@ async function searchSkills(query) {
 
   try {
     const response = await axios.get(
-      `https://emsiservices.com/skills/versions/latest/skills?q=${query}`,
+      `https://emsiservices.com/skills/versions/latest/skills?q=${query}&limit=5`,
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -54,7 +54,7 @@ async function searchSkills(query) {
       }
     );
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("Failed to call API", error);
   }

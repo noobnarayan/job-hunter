@@ -113,7 +113,7 @@ function EducationForm({ setShowAddEducation }) {
             <div className="my-2 px-2.5 py-2.5 bg-white border rounded-md flex justify-between items-center">
               <span>{formData.institution}</span>
               <i
-                class="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
+                className="fa-solid fa-x text-gray-400 hover:cursor-pointer mr-3 text-xs"
                 onClick={() => handleDropdown({ name: "" })}
               ></i>
             </div>
