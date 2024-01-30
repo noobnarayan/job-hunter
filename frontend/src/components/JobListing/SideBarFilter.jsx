@@ -45,7 +45,6 @@ function SideBarFilter({ filters, setFilters }) {
         : [...prevFilters.workMode, name],
     }));
   };
-  console.log(filters);
   return (
     <div>
       <div className="text-sm">
