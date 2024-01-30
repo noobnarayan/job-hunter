@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextArea from "../components/Common/FormComponents/TextArea";
 import SelectInput from "../components/Common/FormComponents/SelectInput";
 import DynamicInputForm from "../components/Common/FormComponents/DynamicInputForm";
@@ -9,6 +9,8 @@ import RadioButton from "../components/Common/FormComponents/RadioButton";
 import SkillsSearch from "../components/Common/SkillsSearch";
 
 function JobPosting() {
+  const [selectedSkills, setSelectedSkills] = useState(new Map());
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -32,6 +34,13 @@ function JobPosting() {
     urgent: false,
     numberOfOpenings: 0,
   });
+
+  useEffect(() => {
+    setFormData((prevData) => ({
+      ...prevData,
+      skills: Array.from(selectedSkills.keys()),
+    }));
+  }, [selectedSkills]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -181,18 +190,23 @@ function JobPosting() {
             </div>
 
             <div>
-              <InputField
-                label={"Skills"}
-                id={"skills"}
-                isRequired={true}
-                placeholder={"e.g. Python, React, Data Analysis"}
-                description={
-                  "Enter your skills separated by commas and spaces. For example, 'Python, React, Data Analysis'."
-                }
-                onChange={handleInputChange}
+              <label className="font-medium flex gap-2">
+                <span>
+                  Skills
+                  <span className="text-gray-500">*</span>
+                </span>
+              </label>
+
+              <span className="text-gray-500 text-sm ml-1.5 ">
+                Input job's required skills from the dropdown in the 'Skills'
+                field.
+              </span>
+              <SkillsSearch
+                selectedSkills={selectedSkills}
+                setSelectedSkills={setSelectedSkills}
               />
             </div>
-            <SkillsSearch />
+
             <div>
               <InputField
                 label="Education"

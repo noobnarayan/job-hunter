@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import InputField from "./FormComponents/InputField";
 import { externalApiServices } from "../../services/externalApiServices";
 
-function SkillsSearch() {
+function SkillsSearch({ selectedSkills, setSelectedSkills }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [skillsApiData, setSkillsApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [selectedSkills, setSelectedSkills] = useState(new Map());
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -49,7 +48,7 @@ function SkillsSearch() {
   };
   return (
     <div>
-      <div className="flex flex-wrap gap-3 ">
+      <div className="flex flex-wrap gap-3 my-3">
         {Array.from(selectedSkills.keys()).map((skill, index) => (
           <div
             key={index}
@@ -74,7 +73,7 @@ function SkillsSearch() {
         {isLoading ? (
           <div className="px-2 font-medium ">Loading...</div>
         ) : (
-          <ul className="border my-1">
+          <ul className={`${searchTerm ? "border" : ""} my-1`}>
             {searchTerm && skillsApiData.length > 0
               ? skillsApiData.map((skill) => (
                   <li

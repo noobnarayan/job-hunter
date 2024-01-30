@@ -6,10 +6,12 @@ import WorkExperienceForm from "./WorkExperienceForm";
 import EducationCard from "./EducationCard";
 import EducationForm from "./EducationForm";
 import { useSelector } from "react-redux";
+import SkillsSearch from "../Common/SkillsSearch";
 
 function EditProfile() {
   const [showAddWorkExperience, setShowAddWorkExperience] = useState(false);
   const [showAddEducation, setShowAddEducation] = useState(false);
+  const [selectedSkills, setSelectedSkills] = useState(new Map());
 
   const { userData } = useSelector((store) => store.auth);
   if (!userData) {
@@ -22,35 +24,35 @@ function EditProfile() {
   return (
     <div className="px-4">
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
-        <div className="w-full md:w-2/5 flex flex-col gap-2.5">
+        <div className="w-full md:w-[30%] flex flex-col gap-2.5">
           <p className="font-medium">About</p>
           <p className="text-gray-400 text-sm">
             Tell us about yourself so companies know who you are.
           </p>
         </div>
-        <div className="w-full md:w-3/5 ">
+        <div className="w-full md:w-[70%] ">
           <AboutForm userData={userData} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
-        <div className="w-full md:w-2/5 flex flex-col gap-2.5">
+        <div className="w-full md:w-[30%] flex flex-col gap-2.5">
           <p className="font-medium">Social Profiles</p>
           <p className="text-gray-400 text-sm">
             Where can people find you online?
           </p>
         </div>
-        <div className="w-full md:w-3/5 ">
+        <div className="w-full md:w-[70%] ">
           <SocialProfileForm userData={userData} />
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
-        <div className="w-full md:w-2/5 flex flex-col gap-2.5">
+        <div className="w-full md:w-[30%] flex flex-col gap-2.5">
           <p className="font-medium">Your work experience</p>
           <p className="text-gray-400 text-sm">
             What other positions have you held?
           </p>
         </div>
-        <div className="w-full md:w-3/5 flex flex-col gap-3.5">
+        <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
             <WorkExperienceCard />
             <WorkExperienceCard />
@@ -71,13 +73,13 @@ function EditProfile() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
-        <div className="w-full md:w-2/5 flex flex-col gap-2.5">
-          <p className="font-medium">Your work experience</p>
+        <div className="w-full md:w-[30%] flex flex-col gap-2.5">
+          <p className="font-medium">Education</p>
           <p className="text-gray-400 text-sm">
-            What other positions have you held?
+            What schools have you studied at?
           </p>
         </div>
-        <div className="w-full md:w-3/5 flex flex-col gap-3.5">
+        <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
             <EducationCard />
             <EducationCard />
@@ -93,6 +95,20 @@ function EditProfile() {
               <span>Add education</span>
             </div>
           )}
+        </div>
+      </div>
+      <div className="flex flex-col md:flex-row gap-16 my-5 border-b pb-10">
+        <div className="w-full md:w-[30%] flex flex-col gap-2.5">
+          <p className="font-medium">Your Skills</p>
+          <p className="text-gray-400 text-sm">
+            This will help startups hone in on your strengths.
+          </p>
+        </div>
+        <div className="w-full md:w-[70%] flex flex-col gap-3.5">
+          <SkillsSearch
+            selectedSkills={selectedSkills}
+            setSelectedSkills={setSelectedSkills}
+          />
         </div>
       </div>
     </div>
