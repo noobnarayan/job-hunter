@@ -1,6 +1,11 @@
 import axios from "axios";
 
-export const externalApiServices = { getAccessToken, searchSkills };
+export const externalApiServices = {
+  getAccessToken,
+  searchSkills,
+  searchCompanies,
+  searchUniversities,
+};
 
 async function getAccessToken() {
   const clientId = import.meta.env.VITE_LIGHTCAST_API_CLIENT_ID;
@@ -52,5 +57,29 @@ async function searchSkills(query) {
     return response.data;
   } catch (error) {
     console.error("Failed to call API", error);
+  }
+}
+
+async function searchCompanies(query) {
+  try {
+    const response = await axios.get(
+      `https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch data: ", error);
+    return [];
+  }
+}
+
+async function searchUniversities(query) {
+  try {
+    const response = await axios.get(
+      `http://universities.hipolabs.com/search?name=${query}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch data: ", error);
+    return [];
   }
 }

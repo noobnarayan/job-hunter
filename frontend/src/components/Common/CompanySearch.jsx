@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import InputField from "./FormComponents/InputField";
+import { externalApiServices } from "../../services/externalApiServices";
 
 const CompanySearch = ({ handleDropdown, width }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,19 +9,10 @@ const CompanySearch = ({ handleDropdown, width }) => {
 
   useEffect(() => {
     if (isSearching) {
-      const timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(async () => {
         if (searchTerm) {
-          axios
-            .get(
-              `https://autocomplete.clearbit.com/v1/companies/suggest?query=${searchTerm}`
-            )
-            .then((response) => {
-              setCompanyApiData(response.data);
-            })
-            .catch((error) => {
-              console.error("Error fetching data: ", error);
-              setCompanyApiData([]);
-            });
+          const data = await externalApiServices.searchCompanies(searchTerm);
+          setCompanyApiData(data);
         } else {
           setCompanyApiData([]);
         }

@@ -1,7 +1,7 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
 import InputField from "../Common/FormComponents/InputField";
+import { externalApiServices } from "../../services/externalApiServices";
 
 function EducationForm({ setShowAddEducation }) {
   const initialFormData = {
@@ -37,17 +37,10 @@ function EducationForm({ setShowAddEducation }) {
   };
   useEffect(() => {
     if (isSearching) {
-      const timeoutId = setTimeout(() => {
+      const timeoutId = setTimeout(async () => {
         if (searchTerm) {
-          axios
-            .get(`http://universities.hipolabs.com/search?name=${searchTerm}`)
-            .then((response) => {
-              setData(response.data);
-            })
-            .catch((error) => {
-              console.error("Error fetching data: ", error);
-              setData([]);
-            });
+          const data = await externalApiServices.searchUniversities(searchTerm);
+          setData(data);
         } else {
           setData([]);
         }
