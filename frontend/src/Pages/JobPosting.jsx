@@ -312,9 +312,8 @@ function JobPosting() {
               <div>
                 <InputField
                   label="Additional Requirements"
-                  placeholder={
-                    "Specify any additional requirements for the job."
-                  }
+                  description="Specify any additional requirements for the job that were not covered in the main requirements section."
+                  placeholder="Specify any additional requirements for the job."
                   id="additionalRequirements"
                   name="additionalRequirements"
                   onChange={handleInputChange}
@@ -325,6 +324,7 @@ function JobPosting() {
                   label="Number of Openings"
                   id="numberOfOpenings"
                   type="number"
+                  description="Enter the number of vacancies for this position."
                   value={formData.numberOfOpenings}
                   onChange={handleInputChange}
                 />
@@ -334,6 +334,7 @@ function JobPosting() {
                   label="Salary Range From"
                   id="from"
                   type="number"
+                  description="Enter the minimum salary for this position."
                   value={formData.salaryRange.from}
                   onChange={handleSalaryRangeChange}
                 />
@@ -341,6 +342,7 @@ function JobPosting() {
                   label="Salary Range To"
                   id="to"
                   type="number"
+                  description="Enter the maximum salary for this position."
                   value={formData.salaryRange.to}
                   onChange={handleSalaryRangeChange}
                 />
@@ -360,11 +362,12 @@ function JobPosting() {
                 label={"Description"}
                 isRequired={true}
                 placeholder={
-                  "Describe the responsibilities of the position. You can always change this later."
+                  "Provide a detailed description of the position. This could include the responsibilities, tasks, and expectations associated with the role."
                 }
                 id={"description"}
                 name={"description"}
                 onChange={handleInputChange}
+                aiButton={true}
               />
             </div>
             <SubmissionButton label="Submit" type="submit" className={"py-3"} />

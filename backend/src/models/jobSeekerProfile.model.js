@@ -83,6 +83,7 @@ const jobSeekerProfileSchema = new Schema({
   jobPreferences: jobPreferencesSchema,
   yearsOfExperience: String,
   primaryRole: String,
+  aiUseLimit: { type: Number, default: 1 },
 });
 
 export const JobSeekerProfile = mongoose.model(
