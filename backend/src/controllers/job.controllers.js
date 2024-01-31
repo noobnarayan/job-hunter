@@ -179,43 +179,6 @@ const postJob = asyncHandler(async (req, res, next) => {
   }
 });
 
-// let jobDetails = {
-//   title: "Full Stack Web Development Instructor",
-//   responsibilities: [
-//     "Deliver high-quality instruction in full stack web development",
-//     "Guide students through hands-on projects",
-//     "Provide feedback on students' progress",
-//     "Collaborate with the curriculum development team",
-//   ],
-//   requirements: [
-//     "Bachelor's degree in Computer Science or related field",
-//     "Strong programming skills in JavaScript and familiarity with frameworks like React and Node.js",
-//     "Experience in teaching or mentoring",
-//     "Excellent problem-solving abilities",
-//   ],
-//   skills: ["JavaScript", "React", "Node.js", "Teaching", "Problem-solving"],
-//   education: "Bachelor's degree in Computer Science or a related field",
-//   experience: 0,
-//   salaryRange: {
-//     from: 50000,
-//     to: 70000,
-//   },
-//   type: "Internship",
-//   location: "Bangalore, India",
-//   employer: "Masai School",
-//   benefits: [
-//     "Health insurance",
-//     "Professional development opportunities",
-//     "Flexible work hours",
-//   ],
-//   workMode: "Hybrid",
-//   travelRequirements: "No travel required",
-//   additionalRequirements: [
-//     "Strong communication skills",
-//     "Ability to work in a fast-paced environment",
-//   ],
-// };
-
 const sendJobDescription = asyncHandler(async (req, res) => {
   const { role, _id } = req.user;
   const jobDetails = req.body;

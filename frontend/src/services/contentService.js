@@ -1,7 +1,12 @@
 import axios from "axios";
 import { api_url } from "../../config";
 
-export const contentService = { getJobs, getSingleJob, postNewJob };
+export const contentService = {
+  getJobs,
+  getSingleJob,
+  postNewJob,
+  generateJobDescription,
+};
 
 async function getJobs() {
   try {
@@ -28,6 +33,17 @@ async function getSingleJob(id) {
 async function postNewJob(data) {
   try {
     const res = await axios.post(`${api_url}/jobs`, data, {
+      withCredentials: true,
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function generateJobDescription(data) {
+  try {
+    const res = await axios.post(`${api_url}/generate-job-description`, data, {
       withCredentials: true,
     });
     return res;

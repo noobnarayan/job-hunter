@@ -9,15 +9,13 @@ import RadioButton from "../components/Common/FormComponents/RadioButton";
 import SkillsSearch from "../components/Common/SkillsSearch";
 import TextEditor from "../components/Common/FormComponents/TextEditor";
 import { contentService } from "../services/contentService";
+import { useSelector } from "react-redux";
 
 function JobPosting() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
   const [value, setValue] = useState("");
-
-  // const textEditorConfig = {
-  //   buttons: ["bold", "italic"],
-  // };
-  // console.log(value);
+  const { userData } = useSelector((store) => store.auth);
+  const [generatingDescription, setGeneratingDescription] = useState(null);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -26,7 +24,7 @@ function JobPosting() {
     requirements: [],
     skills: [],
     education: "",
-    experience: 0,
+    experience: "0",
     salaryRange: {
       from: 0,
       to: 0,
@@ -41,7 +39,6 @@ function JobPosting() {
     urgent: false,
     numberOfOpenings: 0,
   });
-  console.log(formData);
 
   useEffect(() => {
     setFormData((prevData) => ({
@@ -88,9 +85,39 @@ function JobPosting() {
     }
   };
 
+  const handleGenerate = async () => {
+    formData.employer = userData.userProfile.companyName;
+    if (formData.hasOwnProperty("description")) {
+      delete formData.description;
+    }
+
+    if (formData.hasOwnProperty("urgent")) {
+      delete formData.urgent;
+    }
+
+    for (let field in formData) {
+      if (field !== "description" && field !== "urgent" && !formData[field]) {
+        alert("Please fill all the form details.");
+        console.log(field);
+        return;
+      }
+    }
+    setGeneratingDescription(true);
+    try {
+      const res = await contentService.generateJobDescription(formData);
+      console.log(res);
+      setGeneratingDescription(false);
+      setFormData({ ...formData, description: res.data.data });
+    } catch (error) {
+      console.log(error);
+      setGeneratingDescription(false);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Add logic to send formData to the backend
+    formData.employer = userData?._id;
     console.log("Form submitted:", formData);
 
     try {
@@ -382,6 +409,9 @@ function JobPosting() {
                 name={"description"}
                 onChange={handleInputChange}
                 aiButton={true}
+                handleGenerate={handleGenerate}
+                generatingDescription={generatingDescription}
+                value={formData.description}
               />
             </div>
 

@@ -10,6 +10,8 @@ function TextEditor({
   isRequired,
   aiButton,
   description,
+  handleGenerate,
+  generatingDescription,
 }) {
   const handleEditorChange = (content, editor) => {
     onChange({ target: { name: id, value: content } });
@@ -24,8 +26,11 @@ function TextEditor({
         </div>
         {aiButton && (
           <div className="flex justify-end">
-            <span className="bg-black w-36 py-1 px-1 text-xs text-white text-center rounded cursor-pointer ">
-              ✨ Generate using AI
+            <span
+              className="bg-black w-36 py-1 px-1 text-xs text-white text-center rounded cursor-pointer"
+              onClick={handleGenerate}
+            >
+              {generatingDescription ? "Generating..." : "✨ Generate using AI"}
             </span>
           </div>
         )}
