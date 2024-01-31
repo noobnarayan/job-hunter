@@ -4,6 +4,11 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { generateJobDescription } from "../models/openAi.service.js";
 import { User } from "../models/user.model.js";
+import { JSDOM } from "jsdom";
+import createDOMPurify from "dompurify";
+
+const window = new JSDOM("").window;
+const DOMPurify = createDOMPurify(window);
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -136,6 +141,9 @@ const getJobById = asyncHandler(async (req, res, next) => {
 
     // Add the numberOfApplicants property
     job.numberOfApplicants = numApplicants;
+
+    // Sanitize the job description
+    job.description = DOMPurify.sanitize(job.description);
 
     if (!job) {
       return next(new ApiError(404, "Job not found in the database"));
