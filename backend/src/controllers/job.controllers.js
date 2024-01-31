@@ -2,6 +2,8 @@ import { Job } from "../models/job.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { generateJobDescription } from "../models/openAi.service.js";
+import { User } from "../models/user.model.js";
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -177,4 +179,83 @@ const postJob = asyncHandler(async (req, res, next) => {
   }
 });
 
-export { ping, authPing, getJobs, getJobById, postJob };
+// let jobDetails = {
+//   title: "Full Stack Web Development Instructor",
+//   responsibilities: [
+//     "Deliver high-quality instruction in full stack web development",
+//     "Guide students through hands-on projects",
+//     "Provide feedback on students' progress",
+//     "Collaborate with the curriculum development team",
+//   ],
+//   requirements: [
+//     "Bachelor's degree in Computer Science or related field",
+//     "Strong programming skills in JavaScript and familiarity with frameworks like React and Node.js",
+//     "Experience in teaching or mentoring",
+//     "Excellent problem-solving abilities",
+//   ],
+//   skills: ["JavaScript", "React", "Node.js", "Teaching", "Problem-solving"],
+//   education: "Bachelor's degree in Computer Science or a related field",
+//   experience: 0,
+//   salaryRange: {
+//     from: 50000,
+//     to: 70000,
+//   },
+//   type: "Internship",
+//   location: "Bangalore, India",
+//   employer: "Masai School",
+//   benefits: [
+//     "Health insurance",
+//     "Professional development opportunities",
+//     "Flexible work hours",
+//   ],
+//   workMode: "Hybrid",
+//   travelRequirements: "No travel required",
+//   additionalRequirements: [
+//     "Strong communication skills",
+//     "Ability to work in a fast-paced environment",
+//   ],
+// };
+
+const sendJobDescription = asyncHandler(async (req, res) => {
+  const { role, _id } = req.user;
+  const jobDetails = req.body;
+
+  if (role !== "employer") {
+    throw new ApiError(
+      403,
+      "Unauthorized action. Only users with an 'employer' role are permitted to generate job descriptions."
+    );
+  }
+
+  const user = await User.findById(_id);
+  if (user.userProfile?.aiUseLimit < 1) {
+    throw new ApiError(
+      429,
+      "Quota exceeded. The user has reached the limit for free job description generations. An upgrade to the plan is required to continue using this feature."
+    );
+  }
+
+  try {
+    const response = await generateJobDescription(jobDetails);
+
+    if (response) {
+      user.userProfile.aiUseLimit -= 1;
+      await user.save();
+    }
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, response, "Job description generated successfully")
+      );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message:
+        "An error occurred while generating the job description. A retry is suggested.",
+      error: error.message,
+    });
+  }
+});
+
+export { ping, authPing, getJobs, getJobById, postJob, sendJobDescription };
