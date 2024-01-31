@@ -8,6 +8,7 @@ import SubmissionButton from "../components/Common/Buttons/SubmissionButton";
 import RadioButton from "../components/Common/FormComponents/RadioButton";
 import SkillsSearch from "../components/Common/SkillsSearch";
 import TextEditor from "../components/Common/FormComponents/TextEditor";
+import { contentService } from "../services/contentService";
 
 function JobPosting() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
@@ -24,7 +25,7 @@ function JobPosting() {
     responsibilities: [],
     requirements: [],
     skills: [],
-    education: "software_engineer",
+    education: "",
     experience: 0,
     salaryRange: {
       from: 0,
@@ -33,10 +34,9 @@ function JobPosting() {
     type: "Full-time",
     location: "",
     employer: "",
-    applicants: [],
     benefits: [],
     applicationDeadline: "",
-    remoteWork: false,
+    workMode: "",
     additionalRequirements: [],
     urgent: false,
     numberOfOpenings: 0,
@@ -88,19 +88,25 @@ function JobPosting() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Add logic to send formData to the backend
     console.log("Form submitted:", formData);
+
+    try {
+      const res = await contentService.postNewJob(formData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const jobTypeOptions = [
     { value: "default", label: "Select Job Type" },
-    { value: "full_time", label: "Full-time" },
-    { value: "part_time", label: "Part-time" },
-    { value: "contract", label: "Contract" },
-    { value: "internship", label: "Internship" },
-    { value: "freelance", label: "Freelance" },
+    { value: "Full-time", label: "Full-time" },
+    { value: "Part-time", label: "Part-time" },
+    { value: "Internship", label: "Internship" },
+    { value: "Freelance", label: "Freelance" },
   ];
 
   const roleOptions = [
@@ -190,7 +196,7 @@ function JobPosting() {
               <SelectInput
                 label="Years of experience"
                 description="Select the minimum years of experience required for the position."
-                id="yearsOfExperience"
+                id="experience"
                 options={experienceOptions}
                 isRequired={true}
                 onChange={handleInputChange}

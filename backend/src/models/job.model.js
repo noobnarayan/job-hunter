@@ -8,10 +8,7 @@ const jobSchema = new Schema(
     requirements: [String],
     skills: [String],
     education: String,
-    experience: {
-      from: Number,
-      to: Number,
-    },
+    experience: Number,
     salaryRange: {
       from: Number,
       to: Number,
@@ -40,9 +37,7 @@ const jobSchema = new Schema(
     ],
     benefits: [String],
     applicationDeadline: Date,
-
-    travelRequirements: String,
-    additionalRequirements: [String],
+    additionalRequirements: String,
     urgent: Boolean,
     numberOfOpenings: Number,
   },
