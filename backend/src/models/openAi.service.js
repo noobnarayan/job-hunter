@@ -41,7 +41,7 @@ ${JSON.stringify(jobDetails, null, 2)}
 
 ---
 
-*Important Notes:*
+*Important Notes:(Its is instruction for you, don't provide this in the  response)*
 
 - Focus on clarity and conciseness; use simple language and avoid jargon.
 - Incorporate relevant keywords for search engines and applicant tracking systems.

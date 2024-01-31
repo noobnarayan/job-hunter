@@ -27,10 +27,14 @@ function TextEditor({
         {aiButton && (
           <div className="flex justify-end">
             <span
-              className="bg-black w-36 py-1 px-1 text-xs text-white text-center rounded cursor-pointer"
+              className={`bg-black w-36 py-1 px-1 text-xs text-white text-center rounded cursor-pointer ${
+                generatingDescription ? "hover:cursor-wait" : ""
+              }`}
               onClick={handleGenerate}
             >
-              {generatingDescription ? "Generating..." : "✨ Generate using AI"}
+              {generatingDescription
+                ? "Generating... ⏳"
+                : "✨ Generate using AI"}
             </span>
           </div>
         )}

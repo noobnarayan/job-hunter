@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import TextArea from "../components/Common/FormComponents/TextArea";
 import SelectInput from "../components/Common/FormComponents/SelectInput";
 import DynamicInputForm from "../components/Common/FormComponents/DynamicInputForm";
 import InputField from "../components/Common/FormComponents/InputField";
@@ -105,7 +104,7 @@ function JobPosting() {
     setGeneratingDescription(true);
     try {
       const res = await contentService.generateJobDescription(formData);
-      console.log(res);
+
       setGeneratingDescription(false);
       setFormData({ ...formData, description: res.data.data });
     } catch (error) {
@@ -116,7 +115,6 @@ function JobPosting() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: Add logic to send formData to the backend
     formData.employer = userData?._id;
     console.log("Form submitted:", formData);
 
