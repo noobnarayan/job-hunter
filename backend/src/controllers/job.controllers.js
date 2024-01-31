@@ -2,7 +2,7 @@ import { Job } from "../models/job.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { generateJobDescription } from "../models/openAi.service.js";
+import { generateJobDescription } from "../utils/openAi.service.js";
 import { User } from "../models/user.model.js";
 import { JSDOM } from "jsdom";
 import createDOMPurify from "dompurify";
