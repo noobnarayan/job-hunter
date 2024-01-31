@@ -49,7 +49,7 @@ function JobDetailsCard({ jobData }) {
                 <span>
                   <i className="fa-solid fa-briefcase"></i>
                 </span>
-                <span>{experience}</span>
+                <span>{`${experience} Years`}</span>
               </div>
               <div className="flex gap-3">
                 <span>
