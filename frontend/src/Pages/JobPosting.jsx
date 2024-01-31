@@ -7,9 +7,16 @@ import Checkbox from "../components/Common/FormComponents/Checkbox";
 import SubmissionButton from "../components/Common/Buttons/SubmissionButton";
 import RadioButton from "../components/Common/FormComponents/RadioButton";
 import SkillsSearch from "../components/Common/SkillsSearch";
+import TextEditor from "../components/Common/FormComponents/TextEditor";
 
 function JobPosting() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
+  const [value, setValue] = useState("");
+
+  // const textEditorConfig = {
+  //   buttons: ["bold", "italic"],
+  // };
+  // console.log(value);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -17,8 +24,8 @@ function JobPosting() {
     responsibilities: [],
     requirements: [],
     skills: [],
-    education: "",
-    experience: "",
+    education: "software_engineer",
+    experience: 0,
     salaryRange: {
       from: 0,
       to: 0,
@@ -34,6 +41,7 @@ function JobPosting() {
     urgent: false,
     numberOfOpenings: 0,
   });
+  console.log(formData);
 
   useEffect(() => {
     setFormData((prevData) => ({
@@ -358,7 +366,7 @@ function JobPosting() {
               </div>
             </div>
             <div>
-              <TextArea
+              <TextEditor
                 label={"Description"}
                 isRequired={true}
                 placeholder={
@@ -370,6 +378,7 @@ function JobPosting() {
                 aiButton={true}
               />
             </div>
+
             <SubmissionButton label="Submit" type="submit" className={"py-3"} />
           </form>
         </div>
