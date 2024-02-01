@@ -172,7 +172,7 @@ function JobPosting() {
   ];
 
   return (
-    <div className="py-3 px-20">
+    <div className="py-3 px-2 md:px-8 lg:px-20">
       <div className="my-5">
         <h2 className="font-semibold text-2xl">New Job Posting</h2>
       </div>
