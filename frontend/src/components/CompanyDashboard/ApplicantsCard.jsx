@@ -1,6 +1,6 @@
 import React from "react";
 
-function ApplicantsCard() {
+function ApplicantsCard({ isShortlisted }) {
   return (
     <div className="rounded border shadow py-3.5 px-4 flex flex-col gap-4">
       <div className="flex flex-col md:flex-row justify-between">
@@ -116,15 +116,28 @@ function ApplicantsCard() {
         </div>
       </div>
       <div className="flex flex-col md:flex-row gap-3.5 justify-end">
-        <button className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center">
-          ❌ Not intrested
-        </button>
-        <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
-          🔖 Shortlist
-        </button>
-        <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
-          💬 Request to chat
-        </button>
+        {isShortlisted ? (
+          <>
+            <button className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center">
+              ❌ Remove from shortlist
+            </button>
+            <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
+              💬 Request to chat
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center">
+              ❌ Not interested
+            </button>
+            <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
+              🔖 Shortlist
+            </button>
+            <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
+              💬 Request to chat
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
