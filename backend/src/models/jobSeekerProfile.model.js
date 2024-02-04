@@ -29,11 +29,8 @@ const workExperienceSchema = new Schema({
     },
     domain: String,
   },
-  location: String,
-  startMonth: String,
-  startYear: Number,
-  endMonth: String,
-  endYear: Number,
+  startMonth: Date,
+  endMonth: Date,
   currentJob: Boolean,
   description: String,
 });
