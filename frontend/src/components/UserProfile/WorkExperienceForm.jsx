@@ -50,18 +50,20 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      workExperience: {
-        jobTitle: formData.title,
-        company: {
-          name: formData.companyName,
-          logoUrl: formData.companyLogo,
-          domain: formData.companyDomain,
+      workExperience: [
+        {
+          jobTitle: formData.title,
+          company: {
+            name: formData.companyName,
+            logoUrl: formData.companyLogo,
+            domain: formData.companyDomain,
+          },
+          startMonth: formData.startDate,
+          startMonth: formData.endDate,
+          currentJob: formData.current,
+          description: formData.description,
         },
-        startMonth: formData.startDate,
-        startMonth: formData.endDate,
-        currentJob: formData.current,
-        description: formData.description,
-      },
+      ],
     };
     try {
       const res = await userService.updateUserProfile(data);

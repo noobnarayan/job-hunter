@@ -14,6 +14,8 @@ function EditProfile() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
 
   const { userData } = useSelector((store) => store.auth);
+
+  const userWorkExperience = userData?.userProfile?.workExperience;
   if (!userData) {
     return (
       <div className="h-screen flex justify-center items-center text-xl font-semibold">
@@ -54,8 +56,9 @@ function EditProfile() {
         </div>
         <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
-            <WorkExperienceCard />
-            <WorkExperienceCard />
+            {userWorkExperience.map((exp) => (
+              <WorkExperienceCard key={exp._id} exp={exp} />
+            ))}
           </div>
           {showAddWorkExperience ? (
             <WorkExperienceForm

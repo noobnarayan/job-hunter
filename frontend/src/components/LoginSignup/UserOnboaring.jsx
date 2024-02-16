@@ -73,14 +73,16 @@ function UserOnboaring() {
         twitter: "",
         portfolioWebsite: formData.website,
       },
-      workExperience: {
-        jobTitle: formData.title,
-        company: {
-          name: formData.companyName,
-          logoUrl: formData.companyLogo,
-          domain: formData.companyDomain,
+      workExperience: [
+        {
+          jobTitle: formData.title,
+          company: {
+            name: formData.companyName,
+            logoUrl: formData.companyLogo,
+            domain: formData.companyDomain,
+          },
         },
-      },
+      ],
       yearsOfExperience: formData.yearsOfExperience,
       doneOnboarding: true,
     };
