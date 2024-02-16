@@ -31,7 +31,7 @@ const CompanySearch = ({ handleDropdown, width }) => {
     <div>
       <InputField
         label="Company"
-        placeholder="Google"
+        placeholder="e.g. Google"
         isRequired={true}
         onChange={handleSearch}
         id="name"

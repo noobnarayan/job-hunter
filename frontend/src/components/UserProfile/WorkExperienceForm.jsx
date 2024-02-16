@@ -4,6 +4,7 @@ import InputField from "../Common/FormComponents/InputField";
 import TextArea from "../Common/FormComponents/TextArea";
 import CompanySearch from "../Common/CompanySearch";
 import Checkbox from "../Common/FormComponents/Checkbox";
+import { userService } from "../../services/userService.js";
 function WorkExperienceForm({ setShowAddWorkExperience }) {
   const initialFormData = {
     companyName: "",
@@ -46,9 +47,28 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
     setShowAddWorkExperience(false);
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    const data = {
+      workExperience: {
+        jobTitle: formData.title,
+        company: {
+          name: formData.companyName,
+          logoUrl: formData.companyLogo,
+          domain: formData.companyDomain,
+        },
+        startMonth: formData.startDate,
+        startMonth: formData.endDate,
+        currentJob: formData.current,
+        description: formData.description,
+      },
+    };
+    try {
+      const res = await userService.updateUserProfile(data);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -85,7 +105,7 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             id="title"
             name="title"
             onChange={handleInputChange}
-            value={formData.jobtitle}
+            value={formData.jobTitle}
             isRequired={true}
             placeholder="SDE 1"
           />
