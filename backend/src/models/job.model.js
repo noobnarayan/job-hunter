@@ -40,6 +40,7 @@ const jobSchema = new Schema(
     additionalRequirements: String,
     urgent: Boolean,
     numberOfOpenings: Number,
+    active: { type: Boolean, default: true },
   },
   {
     timestamps: true,
