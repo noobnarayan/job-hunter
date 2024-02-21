@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SubmissionButton from "../../components/Common/Buttons/SubmissionButton";
 import InputField from "../Common/FormComponents/InputField";
 import TextArea from "../Common/FormComponents/TextArea";
 import CompanySearch from "../Common/CompanySearch";
 import Checkbox from "../Common/FormComponents/Checkbox";
 import { userService } from "../../services/userService.js";
-function WorkExperienceForm({ setShowAddWorkExperience }) {
+import { useSelector } from "react-redux";
+
+function WorkExperienceForm({ setShowAddWorkExperience, data }) {
+  const { userData } = useSelector((store) => store.auth);
   const initialFormData = {
     companyName: "",
     companyLogo: "",
@@ -19,6 +22,21 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
 
   const [formData, setFormData] = useState(initialFormData);
   const [showDropdown, setShowDropdown] = useState(true);
+
+  useEffect(() => {
+    if (data) {
+      setFormData({
+        companyName: data.company.name,
+        companyLogo: data.company.logoUrl,
+        companyDomain: data.company.domain,
+        title: data.jobTitle,
+        description: data.description,
+        startDate: data.startMonth,
+        endDate: data.endMonth,
+        current: data.currentJob || null,
+      });
+    }
+  }, [data]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -36,10 +54,8 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
     setFormData({
       ...formData,
       companyName: name,
-      companyLogo:
-        logo ||
-        "https://photos.wellfound.com/startups/i/267839-22e9550a168c9834c67a3e55e2577688-medium_jpg.jpg?buster=1677467708",
-      companyDomain: domain,
+      companyLogo: logo || "",
+      companyDomain: domain || "",
     });
   };
 
@@ -49,8 +65,35 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const data = {
-      workExperience: [
+    const { userProfile } = userData;
+    let update = null;
+    if (data != undefined || data != null) {
+      const workExperienceCopy = [...userProfile.workExperience];
+      const indexToUpdate = workExperienceCopy.findIndex(
+        (experience) =>
+          experience.jobTitle === data.jobTitle &&
+          experience.company.name === data.company.name
+      );
+
+      if (indexToUpdate !== -1) {
+        workExperienceCopy[indexToUpdate] = {
+          jobTitle: formData.title,
+          company: {
+            name: formData.companyName,
+            logoUrl: formData.companyLogo,
+            domain: formData.companyDomain,
+          },
+          startMonth: formData.startDate,
+          endMonth: formData.endDate,
+          currentJob: formData.current,
+          description: formData.description,
+        };
+      }
+
+      update = { workExperience: workExperienceCopy };
+    } else {
+      const updatedWorkExperience = [
+        ...userProfile.workExperience,
         {
           jobTitle: formData.title,
           company: {
@@ -59,15 +102,16 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             domain: formData.companyDomain,
           },
           startMonth: formData.startDate,
-          startMonth: formData.endDate,
+          endMonth: formData.endDate,
           currentJob: formData.current,
           description: formData.description,
         },
-      ],
-    };
+      ];
+      update = { workExperience: updatedWorkExperience };
+    }
+
     try {
-      const res = await userService.updateUserProfile(data);
-      console.log(res);
+      const res = await userService.updateUserProfile(update);
     } catch (error) {
       console.log(error);
     }
@@ -78,7 +122,10 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
       <form className="flex flex-col gap-2.5" onSubmit={handleFormSubmit}>
         <div>
           <div className={showDropdown ? "" : "hidden"}>
-            <CompanySearch handleDropdown={handleDropdown} />
+            <CompanySearch
+              handleDropdown={handleDropdown}
+              companyName={formData?.companyName}
+            />
           </div>
           <div className={!showDropdown ? "" : "hidden"}>
             <label className="font-medium flex gap-2">
@@ -107,7 +154,7 @@ function WorkExperienceForm({ setShowAddWorkExperience }) {
             id="title"
             name="title"
             onChange={handleInputChange}
-            value={formData.jobTitle}
+            value={formData.title}
             isRequired={true}
             placeholder="SDE 1"
           />

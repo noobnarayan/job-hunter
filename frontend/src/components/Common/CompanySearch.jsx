@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import InputField from "./FormComponents/InputField";
 import { externalApiServices } from "../../services/externalApiServices";
 
-const CompanySearch = ({ handleDropdown, width }) => {
+const CompanySearch = ({ handleDropdown, width, companyName }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [companyApiData, setCompanyApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -27,6 +27,11 @@ const CompanySearch = ({ handleDropdown, width }) => {
     setIsSearching(true);
   };
 
+  useEffect(() => {
+    setSearchTerm(companyName);
+    setIsSearching(true);
+  }, [companyName]);
+
   return (
     <div>
       <InputField
@@ -37,6 +42,7 @@ const CompanySearch = ({ handleDropdown, width }) => {
         id="name"
         name="name"
         className={width}
+        value={searchTerm}
       />
       <ul className="list-none p-0 m-0">
         {searchTerm && companyApiData.length > 0

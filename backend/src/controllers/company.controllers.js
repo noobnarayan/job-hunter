@@ -159,10 +159,81 @@ const getAllApplications = asyncHandler(async (req, res) => {
     );
   }
 });
+const getShortListedCandidates = asyncHandler(async (req, res) => {
+  const { _id, role } = req.user;
+  if (role !== "employer") {
+    throw new ApiError(401, "Unauthorized request, only employers are allowed");
+  }
+  try {
+    const shortlistedCandidates = await Job.aggregate([
+      {
+        $match: {
+          employer: _id,
+        },
+      },
+      {
+        $match: {
+          "shortlistedCandidates.0": { $exists: true },
+        },
+      },
+      {
+        $unwind: "$shortlistedCandidates",
+      },
+      {
+        $project: {
+          _id: 1,
+          applicant: "$shortlistedCandidates",
+          job: "$_id",
+        },
+      },
+    ]);
+
+    let final = [];
+
+    for (const application of shortlistedCandidates) {
+      const applicantId = application.applicant;
+      const jobId = application.job;
+
+      try {
+        const applicatProfilePromise = User.findById(applicantId)
+          .select(
+            "_id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume "
+          )
+          .exec();
+        const jobDetailsPromise = Job.findById(jobId)
+          .select("_id title")
+          .exec();
+
+        const [applicantProfile, jobDetails] = await Promise.all([
+          applicatProfilePromise,
+          jobDetailsPromise,
+        ]);
+
+        final.push({ applicantProfile, jobDetails });
+      } catch (error) {
+        console.error("Error fetching user or job details:", error);
+      }
+    }
+
+    if (!final || final.length === 0) {
+      throw new ApiError(404, "No job listings found");
+    }
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, final, "Job listings fetched successfully"));
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
+    );
+  }
+});
 
 export {
   getAllJobListings,
   getAllApplications,
   getActiveJobListings,
   getNonActiveJobListings,
+  getShortListedCandidates,
 };
