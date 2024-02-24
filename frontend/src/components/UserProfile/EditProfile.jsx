@@ -97,8 +97,9 @@ function EditProfile() {
         <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
             {userEducation.length > 0 &&
-              userEducation.map((edu) => (
+              userEducation.map((edu, index) => (
                 <EducationCard
+                  key={index}
                   edu={edu}
                   setShowAddEducation={setShowAddEducation}
                   setEducationFormData={setEducationFormData}

@@ -274,6 +274,68 @@ const updateProfilePicture = asyncHandler(async (req, res) => {
     );
 });
 
+const addSkill = asyncHandler(async (req, res) => {
+  const { skill } = req.body;
+  const { role } = req.user;
+  if (role !== "jobSeeker") {
+    throw new ApiError(401, "You are not authorized to perform this action");
+  }
+
+  if (!skill) {
+    throw new ApiError(400, "Skill is required");
+  }
+  try {
+    const user = await User.findByIdAndUpdate(req.user._id);
+    user.userProfile.skills.push(skill);
+    await user.save();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Skills updated successfully"));
+  } catch (error) {
+    throw new ApiError(500, `${error}`);
+  }
+});
+
+const removeSkill = asyncHandler(async (req, res) => {
+  const { skill } = req.body;
+  const { role } = req.user;
+  if (role !== "jobSeeker") {
+    throw new ApiError(401, "You are not authorized to perform this action");
+  }
+  if (!skill) {
+    throw new ApiError(400, "Skill is required");
+  }
+
+  try {
+    const user = await User.findByIdAndUpdate(req.user._id);
+    user.userProfile.skills = user.userProfile.skills.filter(
+      (s) => s !== skill
+    );
+    await user.save();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Skills removed successfully"));
+  } catch (error) {
+    throw new ApiError(500, `${error}`);
+  }
+});
+
+const getSkills = asyncHandler(async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(
+          200,
+          req.user.userProfile.skills,
+          "Skills fetched successfully"
+        )
+      );
+  } catch (error) {
+    throw new ApiError(500, `${error}`);
+  }
+});
+
 export {
   ping,
   authPing,
@@ -283,4 +345,7 @@ export {
   getUserProfile,
   updateUserProfile,
   updateProfilePicture,
+  addSkill,
+  removeSkill,
+  getSkills,
 };
