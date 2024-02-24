@@ -74,6 +74,7 @@ function EditProfile() {
             <WorkExperienceForm
               setShowAddWorkExperience={setShowAddWorkExperience}
               data={workExperienceFormData}
+              setWorkExperienceFormData={setWorkExperienceFormData}
             />
           ) : (
             <div
@@ -98,6 +99,7 @@ function EditProfile() {
             {userEducation.length > 0 &&
               userEducation.map((edu) => (
                 <EducationCard
+                  edu={edu}
                   setShowAddEducation={setShowAddEducation}
                   setEducationFormData={setEducationFormData}
                 />
@@ -107,7 +109,8 @@ function EditProfile() {
           {showAddEducation ? (
             <EducationForm
               setShowAddEducation={setShowAddEducation}
-              data={educationFormData}
+              educationFormData={educationFormData}
+              setEducationFormData={setEducationFormData}
             />
           ) : (
             <div

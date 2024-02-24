@@ -1,8 +1,26 @@
 import React, { useState } from "react";
 
-function EducationCard() {
+function EducationCard({ setShowAddEducation, setEducationFormData, edu }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
+  const getFormattedDate = (dateString) => {
+    const date = new Date(dateString);
+    return (
+      date.toLocaleString("default", { month: "short" }) +
+      " " +
+      date.getFullYear()
+    );
+  };
+
+  const { institution, degree, fieldOfStudy, startYear, endYear } = edu;
+
+  const formattedStartYear = getFormattedDate(startYear + "-01");
+  const formattedEndYear = getFormattedDate(endYear + "-01");
+
+  const openEditForm = () => {
+    setShowAddEducation(true);
+    setEducationFormData(edu);
+  };
   return (
     <div className="border p-3.5 border-b-4 bg-gray-50 flex flex-col gap-3 rounded">
       <div className="flex justify-between">
@@ -11,14 +29,23 @@ function EducationCard() {
             <img src="https://wellfound.com/images/shared/nopic_college.png" />
           </div>
           <div className="flex flex-col gap-1">
-            <p className="font-medium">North Bengal University</p>
-            <p className="">English Language and Literature, BA</p>
-            <p className="text-gray-500 text-sm">Mar 2018 to May 2022</p>
-            <p className="text-gray-500 text-sm">9.5 CGPA</p>
+            <p className="font-medium">{institution}</p>
+            <p className="">
+              {fieldOfStudy}, {degree}
+            </p>
+            <p className="text-gray-500 text-sm">
+              {formattedStartYear} to {formattedEndYear}
+            </p>
+            {/* <p className="text-gray-500 text-sm">9.5 CGPA</p> */}
           </div>
         </div>
         <div>
-          <span className="text-sm text-gray-500">Edit</span>
+          <span
+            className="text-sm text-gray-500 hover:cursor-pointer"
+            onClick={openEditForm}
+          >
+            Edit
+          </span>
         </div>
       </div>
     </div>

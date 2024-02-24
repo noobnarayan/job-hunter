@@ -8,7 +8,11 @@ import { userService } from "../../services/userService.js";
 import { useSelector } from "react-redux";
 import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
 
-function WorkExperienceForm({ setShowAddWorkExperience, data }) {
+function WorkExperienceForm({
+  setShowAddWorkExperience,
+  data,
+  setWorkExperienceFormData,
+}) {
   const { userData } = useSelector((store) => store.auth);
   const updateUser = useUpdateUserData();
 
@@ -70,6 +74,7 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
 
   const handleCancel = () => {
     setShowAddWorkExperience(false);
+    setWorkExperienceFormData(null);
   };
 
   const handleFormSubmit = async (e) => {

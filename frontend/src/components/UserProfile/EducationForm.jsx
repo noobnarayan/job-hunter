@@ -2,8 +2,18 @@ import React, { useEffect, useState } from "react";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
 import InputField from "../Common/FormComponents/InputField";
 import { externalApiServices } from "../../services/externalApiServices";
+import { userService } from "../../services/userService";
+import { useSelector } from "react-redux";
+import useUpdateUserData from "../../hooks/useUpdateUserData";
 
-function EducationForm({ setShowAddEducation }) {
+function EducationForm({
+  setShowAddEducation,
+  educationFormData,
+  setEducationFormData,
+}) {
+  const { userData } = useSelector((store) => store.auth);
+  const updateUser = useUpdateUserData();
+
   const initialFormData = {
     institution: "",
     start: "",
@@ -17,6 +27,25 @@ function EducationForm({ setShowAddEducation }) {
   const [isSearching, setIsSearching] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
   const [showDropdown, setShowDropdown] = useState(true);
+  const [saving, setSaving] = useState(null);
+
+  useEffect(() => {
+    if (educationFormData) {
+      updateFormData(educationFormData);
+    }
+  }, [educationFormData]);
+
+  const updateFormData = (data) => {
+    const { institution, degree, fieldOfStudy, startYear, endYear } = data;
+
+    setFormData({
+      institution: institution,
+      start: startYear,
+      end: endYear,
+      degree: degree,
+      major: fieldOfStudy,
+    });
+  };
 
   const handleDropdown = (item) => {
     handleInstituteInput(item);
@@ -52,15 +81,77 @@ function EducationForm({ setShowAddEducation }) {
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
+    setFormData({
+      ...formData,
+      institution: event.target.value,
+    });
     setIsSearching(true);
   };
 
   const handleCancel = () => {
     setShowAddEducation(false);
+    setEducationFormData(null);
   };
-  const handleFormSubmit = (e) => {
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setSaving(true);
+    const { userProfile } = userData;
+    let update = null;
+
+    if (educationFormData) {
+      update = updateExistingEducation(userProfile);
+    } else {
+      update = addNewEducation(userProfile);
+    }
+
+    try {
+      const res = await userService.updateUserProfile(update);
+      setSaving(false);
+      if (res.status === 200) {
+        updateUser();
+        setShowAddEducation(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setSaving(false);
+    }
+  };
+
+  const updateExistingEducation = (userProfile) => {
+    const educationCopy = [...userProfile.education];
+    const indexToUpdate = educationCopy.findIndex(
+      (education) =>
+        education.degree === educationFormData.degree &&
+        education.institution === educationFormData.institution
+    );
+
+    if (indexToUpdate !== -1) {
+      educationCopy[indexToUpdate] = {
+        institution: formData.institution,
+        degree: formData.degree,
+        fieldOfStudy: formData.major,
+        startYear: formData.start,
+        endYear: formData.end,
+      };
+    }
+
+    return { education: educationCopy };
+  };
+
+  const addNewEducation = (userProfile) => {
+    const updatedEducation = [
+      ...userProfile.education,
+      {
+        institution: formData.institution,
+        degree: formData.degree,
+        fieldOfStudy: formData.major,
+        startYear: formData.start,
+        endYear: formData.end,
+      },
+    ];
+
+    return { education: updatedEducation };
   };
   return (
     <div className="bg-gray-100 p-5">
@@ -70,6 +161,8 @@ function EducationForm({ setShowAddEducation }) {
             <InputField
               label="Education"
               id="name"
+              name="institution"
+              value={formData.institution}
               onChange={handleSearch}
               isRequired={true}
               placeholder="College/University"
@@ -123,7 +216,9 @@ function EducationForm({ setShowAddEducation }) {
           <InputField
             label="Start Date (Month/Year)"
             id="start"
+            name="start"
             type="month"
+            value={formData.start}
             onChange={handleInputChange}
             isRequired={true}
           />
@@ -132,7 +227,9 @@ function EducationForm({ setShowAddEducation }) {
           <InputField
             label="End Date (Month/Year)"
             id="end"
+            name="end"
             type="month"
+            value={formData.end}
             onChange={handleInputChange}
             isRequired={true}
           />
@@ -167,7 +264,7 @@ function EducationForm({ setShowAddEducation }) {
             type="submit"
             onClick={handleFormSubmit}
             color="black"
-            label="Save"
+            label={saving ? "Saving.." : "Save"}
           />
         </div>
       </form>
