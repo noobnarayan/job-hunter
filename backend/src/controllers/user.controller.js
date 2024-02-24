@@ -320,22 +320,6 @@ const removeSkill = asyncHandler(async (req, res) => {
   }
 });
 
-const getSkills = asyncHandler(async (req, res) => {
-  try {
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          req.user.userProfile.skills,
-          "Skills fetched successfully"
-        )
-      );
-  } catch (error) {
-    throw new ApiError(500, `${error}`);
-  }
-});
-
 export {
   ping,
   authPing,
@@ -347,5 +331,4 @@ export {
   updateProfilePicture,
   addSkill,
   removeSkill,
-  getSkills,
 };

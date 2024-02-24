@@ -2,7 +2,6 @@ import { Router } from "express";
 import {
   addSkill,
   authPing,
-  getSkills,
   getUserProfile,
   loginUser,
   logoutUser,
@@ -28,6 +27,5 @@ router
   .post(verifyJWT, upload.single("profilePicture"), updateProfilePicture);
 router.route("/add-skill").post(verifyJWT, addSkill);
 router.route("/remove-skill").post(verifyJWT, removeSkill);
-router.route("/get-skill").get(verifyJWT, getSkills);
 
 export default router;

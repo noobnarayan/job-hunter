@@ -81,3 +81,25 @@ async function updateUserProfile(data) {
     throw error;
   }
 }
+
+async function addSkill(skill) {
+  try {
+    const res = await axios.post(`${api_url}/users/add-skill`, skill, {
+      withCredentials: true,
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function removeSkill(skill) {
+  try {
+    const res = await axios.post(`${api_url}/users/remove-skill`, skill, {
+      withCredentials: true,
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
