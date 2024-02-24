@@ -10,6 +10,8 @@ import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
 
 function WorkExperienceForm({ setShowAddWorkExperience, data }) {
   const { userData } = useSelector((store) => store.auth);
+  const updateUser = useUpdateUserData();
+
   const initialFormData = {
     companyName: "",
     companyLogo: "",
@@ -20,24 +22,31 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
     current: null,
     description: "",
   };
-  const updateUser = useUpdateUserData();
+
   const [formData, setFormData] = useState(initialFormData);
   const [showDropdown, setShowDropdown] = useState(true);
   const [saving, setSaving] = useState(null);
+
   useEffect(() => {
     if (data) {
-      setFormData({
-        companyName: data.company.name,
-        companyLogo: data.company.logoUrl,
-        companyDomain: data.company.domain,
-        title: data.jobTitle,
-        description: data.description,
-        startDate: data.startMonth,
-        endDate: data.endMonth,
-        current: data.currentJob || null,
-      });
+      updateFormData(data);
     }
   }, [data]);
+
+  const updateFormData = (data) => {
+    const { company, jobTitle, description, startMonth, endMonth, currentJob } =
+      data;
+    setFormData({
+      companyName: company?.name || "",
+      companyLogo: company?.logoUrl || "",
+      companyDomain: company?.domain || "",
+      title: jobTitle || "",
+      description: description || "",
+      startDate: startMonth || "",
+      endDate: endMonth || "",
+      current: currentJob || null,
+    });
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +60,6 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
 
   const handleCompanyInput = (company) => {
     const { name, logo, domain } = company;
-
     setFormData({
       ...formData,
       companyName: name,
@@ -69,47 +77,11 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
     setSaving(true);
     const { userProfile } = userData;
     let update = null;
-    if (data != undefined || data != null) {
-      const workExperienceCopy = [...userProfile.workExperience];
-      const indexToUpdate = workExperienceCopy.findIndex(
-        (experience) =>
-          experience.jobTitle === data.jobTitle &&
-          experience.company.name === data.company.name
-      );
 
-      if (indexToUpdate !== -1) {
-        workExperienceCopy[indexToUpdate] = {
-          jobTitle: formData.title,
-          company: {
-            name: formData.companyName,
-            logoUrl: formData.companyLogo,
-            domain: formData.companyDomain,
-          },
-          startMonth: formData.startDate,
-          endMonth: formData.endDate,
-          currentJob: formData.current,
-          description: formData.description,
-        };
-      }
-
-      update = { workExperience: workExperienceCopy };
+    if (data) {
+      update = updateExistingWorkExperience(userProfile);
     } else {
-      const updatedWorkExperience = [
-        ...userProfile.workExperience,
-        {
-          jobTitle: formData.title,
-          company: {
-            name: formData.companyName,
-            logoUrl: formData.companyLogo,
-            domain: formData.companyDomain,
-          },
-          startMonth: formData.startDate,
-          endMonth: formData.endDate,
-          currentJob: formData.current,
-          description: formData.description,
-        },
-      ];
-      update = { workExperience: updatedWorkExperience };
+      update = addNewWorkExperience(userProfile);
     }
 
     try {
@@ -123,6 +95,52 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
       console.log(error);
       setSaving(false);
     }
+  };
+
+  const updateExistingWorkExperience = (userProfile) => {
+    const workExperienceCopy = [...userProfile.workExperience];
+    const indexToUpdate = workExperienceCopy.findIndex(
+      (experience) =>
+        experience.jobTitle === data.jobTitle &&
+        experience.company.name === data.company.name
+    );
+
+    if (indexToUpdate !== -1) {
+      workExperienceCopy[indexToUpdate] = {
+        jobTitle: formData.title,
+        company: {
+          name: formData.companyName,
+          logoUrl: formData.companyLogo,
+          domain: formData.companyDomain,
+        },
+        startMonth: formData.startDate,
+        endMonth: formData.endDate,
+        currentJob: formData.current,
+        description: formData.description,
+      };
+    }
+
+    return { workExperience: workExperienceCopy };
+  };
+
+  const addNewWorkExperience = (userProfile) => {
+    const updatedWorkExperience = [
+      ...userProfile.workExperience,
+      {
+        jobTitle: formData.title,
+        company: {
+          name: formData.companyName,
+          logoUrl: formData.companyLogo,
+          domain: formData.companyDomain,
+        },
+        startMonth: formData.startDate,
+        endMonth: formData.endDate,
+        currentJob: formData.current,
+        description: formData.description,
+      },
+    ];
+
+    return { workExperience: updatedWorkExperience };
   };
 
   return (
