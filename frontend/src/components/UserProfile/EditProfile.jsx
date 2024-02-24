@@ -14,10 +14,11 @@ function EditProfile() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
 
   const { userData } = useSelector((store) => store.auth);
-
+  const userEducation = userData?.userProfile?.education;
   const userWorkExperience = userData?.userProfile?.workExperience;
 
   const [workExperienceFormData, setWorkExperienceFormData] = useState(null);
+  const [educationFormData, setEducationFormData] = useState(null);
 
   if (!userData) {
     return (
@@ -59,14 +60,15 @@ function EditProfile() {
         </div>
         <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
-            {userWorkExperience.map((exp, index) => (
-              <WorkExperienceCard
-                key={index}
-                exp={exp}
-                setShowAddWorkExperience={setShowAddWorkExperience}
-                setWorkExperienceFormData={setWorkExperienceFormData}
-              />
-            ))}
+            {userWorkExperience.length > 0 &&
+              userWorkExperience.map((exp, index) => (
+                <WorkExperienceCard
+                  key={index}
+                  exp={exp}
+                  setShowAddWorkExperience={setShowAddWorkExperience}
+                  setWorkExperienceFormData={setWorkExperienceFormData}
+                />
+              ))}
           </div>
           {showAddWorkExperience ? (
             <WorkExperienceForm
@@ -93,11 +95,20 @@ function EditProfile() {
         </div>
         <div className="w-full md:w-[70%] flex flex-col gap-3.5">
           <div className="flex flex-col gap-3">
-            <EducationCard />
-            <EducationCard />
+            {userEducation.length > 0 &&
+              userEducation.map((edu) => (
+                <EducationCard
+                  setShowAddEducation={setShowAddEducation}
+                  setEducationFormData={setEducationFormData}
+                />
+              ))}
           </div>
+
           {showAddEducation ? (
-            <EducationForm setShowAddEducation={setShowAddEducation} />
+            <EducationForm
+              setShowAddEducation={setShowAddEducation}
+              data={educationFormData}
+            />
           ) : (
             <div
               className="text-sm text-green-600 flex gap-1 items-center hover:cursor-pointer"

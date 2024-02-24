@@ -6,6 +6,7 @@ import CompanySearch from "../Common/CompanySearch";
 import Checkbox from "../Common/FormComponents/Checkbox";
 import { userService } from "../../services/userService.js";
 import { useSelector } from "react-redux";
+import useUpdateUserData from "../../hooks/useUpdateUserData.jsx";
 
 function WorkExperienceForm({ setShowAddWorkExperience, data }) {
   const { userData } = useSelector((store) => store.auth);
@@ -19,10 +20,10 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
     current: null,
     description: "",
   };
-
+  const updateUser = useUpdateUserData();
   const [formData, setFormData] = useState(initialFormData);
   const [showDropdown, setShowDropdown] = useState(true);
-
+  const [saving, setSaving] = useState(null);
   useEffect(() => {
     if (data) {
       setFormData({
@@ -65,6 +66,7 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    setSaving(true);
     const { userProfile } = userData;
     let update = null;
     if (data != undefined || data != null) {
@@ -112,8 +114,14 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
 
     try {
       const res = await userService.updateUserProfile(update);
+      setSaving(false);
+      if (res.status === 200) {
+        updateUser();
+        setShowAddWorkExperience(false);
+      }
     } catch (error) {
       console.log(error);
+      setSaving(false);
     }
   };
 
@@ -205,7 +213,7 @@ function WorkExperienceForm({ setShowAddWorkExperience, data }) {
             type="submit"
             onClick={handleFormSubmit}
             color="black"
-            label="Save"
+            label={saving ? "Saving..." : "Save"}
           />
         </div>
       </form>
