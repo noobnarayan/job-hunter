@@ -20,6 +20,17 @@ function EditProfile() {
   const [workExperienceFormData, setWorkExperienceFormData] = useState(null);
   const [educationFormData, setEducationFormData] = useState(null);
 
+  useEffect(() => {
+    // Check if userData and userProfile exist
+    if (userData && userData.userProfile && userData.userProfile.skills) {
+      // Initialize selectedSkills with userData skills
+      const initialSkills = new Map(
+        userData.userProfile.skills.map((skill) => [skill, true])
+      );
+      setSelectedSkills(initialSkills);
+    }
+  }, [userData]); // Trigger effect when userData changes
+
   if (!userData) {
     return (
       <div className="h-screen flex justify-center items-center text-xl font-semibold">
@@ -135,6 +146,7 @@ function EditProfile() {
           <SkillsSearch
             selectedSkills={selectedSkills}
             setSelectedSkills={setSelectedSkills}
+            profile={true}
           />
         </div>
       </div>

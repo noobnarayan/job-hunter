@@ -285,12 +285,22 @@ const addSkill = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Skill is required");
   }
   try {
-    const user = await User.findByIdAndUpdate(req.user._id);
+    const user = await User.findById(req.user._id);
     user.userProfile.skills.push(skill);
+    user.markModified("userProfile.skills");
     await user.save();
+
+    const updatedUser = await User.findById(req.user._id);
+    console.log(updatedUser.userProfile.skills);
     return res
       .status(200)
-      .json(new ApiResponse(200, {}, "Skills updated successfully"));
+      .json(
+        new ApiResponse(
+          200,
+          updatedUser.userProfile.skills,
+          "Skills updated successfully"
+        )
+      );
   } catch (error) {
     throw new ApiError(500, `${error}`);
   }
@@ -307,10 +317,11 @@ const removeSkill = asyncHandler(async (req, res) => {
   }
 
   try {
-    const user = await User.findByIdAndUpdate(req.user._id);
+    const user = await User.findById(req.user._id);
     user.userProfile.skills = user.userProfile.skills.filter(
       (s) => s !== skill
     );
+    user.markModified("userProfile.skills");
     await user.save();
     return res
       .status(200)

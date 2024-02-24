@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import InputField from "./FormComponents/InputField";
 import { externalApiServices } from "../../services/externalApiServices";
+import { userService } from "../../services/userService";
 
-function SkillsSearch({ selectedSkills, setSelectedSkills }) {
+function SkillsSearch({ selectedSkills, setSelectedSkills, profile }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [skillsApiData, setSkillsApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -32,6 +33,9 @@ function SkillsSearch({ selectedSkills, setSelectedSkills }) {
     setIsSearching(true);
   };
   const handleSkillSelect = (skill) => {
+    if (profile) {
+      makeAddSkillRequest(skill);
+    }
     if (selectedSkills.has(skill)) {
       selectedSkills.delete(skill);
     } else {
@@ -43,9 +47,29 @@ function SkillsSearch({ selectedSkills, setSelectedSkills }) {
     setSkillsApiData([]);
   };
   const handleRemoveSkill = (skill) => {
+    if (profile) {
+      makeRemoveSkillRequest(skill);
+    }
     selectedSkills.delete(skill);
     setSelectedSkills(new Map(selectedSkills));
   };
+
+  const makeAddSkillRequest = async (skill) => {
+    try {
+      const res = await userService.addSkill(skill);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const makeRemoveSkillRequest = async (skill) => {
+    try {
+      const res = await userService.removeSkill(skill);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-wrap gap-3 my-3">
