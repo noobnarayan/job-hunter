@@ -10,6 +10,7 @@ export const userService = {
   updateUserProfile,
   addSkill,
   removeSkill,
+  updateResume,
 };
 
 async function login(userData) {
@@ -104,6 +105,21 @@ async function removeSkill(skill) {
     const res = await axios.post(
       `${api_url}/users/remove-skill`,
       { skill },
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function updateResume(resume) {
+  try {
+    const res = await axios.post(
+      `${api_url}/users/resume`,
+      { resume },
       {
         withCredentials: true,
       }

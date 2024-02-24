@@ -331,6 +331,29 @@ const removeSkill = asyncHandler(async (req, res) => {
   }
 });
 
+const updateResume = asyncHandler(async (req, res) => {
+  const { resume } = req.body;
+  const { role } = req.user;
+  if (role !== "jobSeeker") {
+    throw new ApiError(401, "You are not authorized to perform this action");
+  }
+  if (!resume) {
+    throw new ApiError(400, "Resume is required");
+  }
+
+  try {
+    const user = await User.findById(req.user._id);
+    user.userProfile.resume = resume;
+    user.markModified("userProfile.resume");
+    await user.save();
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Resume updated successfully"));
+  } catch (error) {
+    throw new ApiError(500, `${error}`);
+  }
+});
+
 export {
   ping,
   authPing,
@@ -342,4 +365,5 @@ export {
   updateProfilePicture,
   addSkill,
   removeSkill,
+  updateResume,
 };

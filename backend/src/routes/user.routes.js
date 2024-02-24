@@ -9,6 +9,7 @@ import {
   registerUser,
   removeSkill,
   updateProfilePicture,
+  updateResume,
   updateUserProfile,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
@@ -27,5 +28,6 @@ router
   .post(verifyJWT, upload.single("profilePicture"), updateProfilePicture);
 router.route("/add-skill").post(verifyJWT, addSkill);
 router.route("/remove-skill").post(verifyJWT, removeSkill);
+router.route("/resume").post(verifyJWT, updateResume);
 
 export default router;
