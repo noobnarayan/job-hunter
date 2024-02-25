@@ -229,4 +229,63 @@ const sendJobDescription = asyncHandler(async (req, res) => {
   }
 });
 
-export { ping, authPing, getJobs, getJobById, postJob, sendJobDescription };
+const applyForJob = asyncHandler(async (req, res) => {
+  const { role, _id } = req.user;
+  const jobId = req.params.id;
+  if (role !== "jobSeeker") {
+    throw new ApiError(
+      403,
+      "Only applicants are authorized to apply for a job"
+    );
+  }
+
+  try {
+    const job = await Job.findById(jobId);
+    if (!job) {
+      throw new ApiError(404, "Job not found in the database");
+    }
+    job.applicants.push(_id);
+    job.markModified("applicants");
+    await job.save();
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Job applied successfully"));
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `An error occurred while applying for the job :: ${error}`
+    );
+  }
+});
+
+const saveJob = asyncHandler(async (req, res) => {
+  const { role, _id } = req.user;
+  const jobId = req.params.id;
+  if (role !== "jobSeeker") {
+    throw new ApiError(403, "Only employers are authorized to save a job");
+  }
+  try {
+    const user = await User.findById(_id);
+    user.userProfile.savedJobs.push(jobId);
+    user.markModified("userProfile.savedJobs");
+    await user.save();
+
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Saved the job successfully"));
+  } catch (error) {
+    throw new ApiError(500, "An error occurred while saving the job");
+  }
+});
+
+export {
+  ping,
+  authPing,
+  getJobs,
+  getJobById,
+  postJob,
+  sendJobDescription,
+  applyForJob,
+  saveJob,
+};
