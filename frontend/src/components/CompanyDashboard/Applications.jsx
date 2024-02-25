@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ApplicantsCard from "./ApplicantsCard";
 import SelectInput from "../Common/FormComponents/SelectInput";
-
+import { companyService } from "../../services/companyService.js";
 function Applications() {
   const [sortValue, setSortValue] = useState("latest value");
   const sortOptions = [
@@ -12,6 +12,32 @@ function Applications() {
   const handleSortChange = (event) => {
     setSortValue(event.target.value);
   };
+
+  const [applicants, setApplicants] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchApplications();
+  }, []);
+
+  const fetchApplications = async () => {
+    setLoading(true);
+    try {
+      const res = await companyService.getAllApplications();
+      setApplicants(res);
+    } catch (error) {
+      console.log(error);
+    }
+    setLoading(false);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen ">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="py-3 px-2 md:px-8 lg:px-20 ">
@@ -27,10 +53,13 @@ function Applications() {
         </div>
       </div>
       <div className="border rounded p-1.5 md:p-5 flex flex-col gap-5">
+        {applicants.map((applicant, index) => (
+          <ApplicantsCard key={index} data={applicant} />
+        ))}
+        {/* <ApplicantsCard />
         <ApplicantsCard />
         <ApplicantsCard />
-        <ApplicantsCard />
-        <ApplicantsCard isShortlisted={true} />
+        <ApplicantsCard isShortlisted={true} /> */}
       </div>
     </div>
   );
