@@ -6,6 +6,11 @@ export const contentService = {
   getSingleJob,
   postNewJob,
   generateJobDescription,
+  getCompanyJobListings,
+  getActiveJobListings,
+  getNonActiveJobListings,
+  getAllApplications,
+  getShortListedCandidates,
 };
 
 async function getJobs() {
@@ -47,6 +52,64 @@ async function generateJobDescription(data) {
       withCredentials: true,
     });
     return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getCompanyJobListings() {
+  try {
+    const res = await axios.get(`${api_url}/company/listings`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getActiveJobListings() {
+  try {
+    const res = await axios.get(`${api_url}/company/active-listings`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getNonActiveJobListings() {
+  try {
+    const res = await axios.get(`${api_url}/company/non-active-listings`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+async function getAllApplications() {
+  try {
+    const res = await axios.get(`${api_url}/company/applications`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+async function getShortListedCandidates() {
+  try {
+    const res = await axios.get(`${api_url}/company/shortlisted-candidates`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
   } catch (error) {
     throw error;
   }
