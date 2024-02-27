@@ -303,6 +303,39 @@ const saveJob = asyncHandler(async (req, res) => {
   }
 });
 
+const getJobLocations = asyncHandler(async (req, res) => {
+  try {
+    let query = {};
+
+    if (req.query.search) {
+      query.location = { $regex: req.query.search, $options: "i" };
+    }
+
+    let locations = await Job.distinct("location", query);
+
+    if (!locations.length) {
+      return res
+        .status(200)
+        .json(new ApiResponse(200, [], "No job locations found"));
+    }
+
+    if (locations.length > 5) {
+      locations = locations.slice(0, 5);
+    }
+
+    return res
+      .status(200)
+      .json(
+        new ApiResponse(200, locations, "Job locations fetched successfully")
+      );
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `Something went wrong while fetching job locations from MongoDB:: ${error}`
+    );
+  }
+});
+
 export {
   ping,
   authPing,
@@ -312,4 +345,5 @@ export {
   sendJobDescription,
   applyForJob,
   saveJob,
+  getJobLocations,
 };
