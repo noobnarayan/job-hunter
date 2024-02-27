@@ -8,33 +8,41 @@ import { useNavigate } from "react-router-dom";
 
 function MainJobSection() {
   const [filters, setFilters] = useState({
-    datePost: "",
+    datePosted: "",
     jobTypes: [],
     experience: 30,
     salaryRange: {
-      from: null,
-      to: null,
+      from: 0,
+      to: 10000000000,
     },
     workMode: [],
   });
 
   const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
+  const [search, setSearch] = useState("");
 
-  const getJobs = async () => {
+  const getJobs = async (filters) => {
+    setLoading(true);
     try {
-      const res = await contentService.getJobs();
-      if (res.jobs.length > 0) {
+      const res = await contentService.getJobs(filters);
+      if (res) {
         setJobs(res.jobs);
       }
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    getJobs();
-  }, []);
+    const debounceTimer = setTimeout(() => {
+      getJobs({ ...filters, search });
+    }, 300);
+
+    return () => clearTimeout(debounceTimer);
+  }, [filters, search]);
 
   const redirectToDetail = (id) => {
     navigate(`/job/${id}`);
@@ -47,7 +55,7 @@ function MainJobSection() {
       </div>
       <div className=" w-full md:w-[70%]">
         <div>
-          <Searchbar />
+          <Searchbar setSearch={setSearch} search={search} />
         </div>
         <div>
           <div className="text-gray-500 font-medium my-3 ml-1.5">

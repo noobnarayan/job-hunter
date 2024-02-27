@@ -30,25 +30,30 @@ const getJobs = asyncHandler(async (req, res) => {
     const total = await Job.countDocuments(query);
 
     // Search functionality
+
+    // if (req.query.search) {
+    //   query.title = { $regex: req.query.search, $options: "i" };
+    // }
+
     if (req.query.search) {
-      query.title = { $regex: req.query.search, $options: "i" };
+      query.description = { $regex: req.query.search, $options: "i" };
     }
 
     // Date posted filter
     if (req.query.datePosted) {
       const today = new Date();
-      if (req.query.datePosted === "Today") {
+      if (req.query.datePosted === "today") {
         query.datePosted = { $gte: new Date(today.setHours(0, 0, 0, 0)) };
-      } else if (req.query.datePosted === "Yesterday") {
+      } else if (req.query.datePosted === "yesterday") {
         query.datePosted = {
           $gte: new Date(today.setDate(today.getDate() - 1)),
           $lt: new Date(today.setHours(0, 0, 0, 0)),
         };
-      } else if (req.query.datePosted === "This week") {
+      } else if (req.query.datePosted === "this_week") {
         query.datePosted = {
           $gte: new Date(today.setDate(today.getDate() - 7)),
         };
-      } else if (req.query.datePosted === "This month") {
+      } else if (req.query.datePosted === "this_month") {
         query.datePosted = {
           $gte: new Date(today.setMonth(today.getMonth() - 1)),
         };
@@ -61,19 +66,31 @@ const getJobs = asyncHandler(async (req, res) => {
     }
 
     // Experience filter
-    if (req.query.experienceFrom && req.query.experienceTo) {
-      query.experience = {
-        from: { $gte: req.query.experienceFrom },
-        to: { $lte: req.query.experienceTo },
-      };
+    if (req.query.experience) {
+      query.experience = { $lte: req.query.experience };
     }
 
-    // Salary range filter
+    //Salary filters
+
     if (req.query.salaryFrom && req.query.salaryTo) {
-      query.salaryRange = {
-        from: { $gte: req.query.salaryFrom },
-        to: { $lte: req.query.salaryTo },
-      };
+      query.$or = [
+        {
+          "salaryRange.from": {
+            $gte: req.query.salaryFrom,
+            $lte: req.query.salaryTo,
+          },
+        },
+        {
+          "salaryRange.to": {
+            $gte: req.query.salaryFrom,
+            $lte: req.query.salaryTo,
+          },
+        },
+        {
+          "salaryRange.from": { $lte: req.query.salaryFrom },
+          "salaryRange.to": { $gte: req.query.salaryTo },
+        },
+      ];
     }
 
     // Work mode filter
@@ -81,18 +98,19 @@ const getJobs = asyncHandler(async (req, res) => {
       query.workMode = req.query.workMode;
     }
 
+    if (req.query.location) {
+      query.location = { $regex: req.query.location, $options: "i" };
+    }
+
     const jobs = await Job.find(query)
       .populate({
         path: "employer",
         select: "userProfile.companyLogo  userProfile.companyName",
       })
+      .sort({ datePosted: -1 })
       .skip(startIndex)
       .limit(limit)
       .select("-applicants");
-
-    if (!jobs.length) {
-      throw new ApiError(404, "No jobs found in the database");
-    }
 
     // Pagination result
     const pagination = {};
@@ -107,6 +125,12 @@ const getJobs = asyncHandler(async (req, res) => {
         page: page - 1,
         limit,
       };
+    }
+
+    if (!jobs.length) {
+      return res
+        .status(200)
+        .json(new ApiResponse(200, { jobs, pagination }, "No Job found "));
     }
 
     return res

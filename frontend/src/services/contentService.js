@@ -13,17 +13,40 @@ export const contentService = {
   getShortListedCandidates,
 };
 
-async function getJobs() {
+async function getJobs(filters) {
   try {
+    // Create a new instance of URLSearchParams
+    let params = new URLSearchParams();
+
+    // Append each filter as a separate parameter
+    // Uncomment the lines as per your requirement
+    params.append("search", filters.search);
+    params.append("datePosted", filters.datePosted);
+    params.append("experience", filters.experience);
+    params.append("salaryFrom", filters.salaryRange.from);
+    params.append("salaryTo", filters.salaryRange.to);
+
+    // Append each job type as a separate parameter
+    filters.jobTypes.forEach((jobType) => {
+      params.append("type", jobType);
+    });
+
+    filters.workMode.forEach((workMode) => {
+      params.append("workMode", workMode);
+    });
+
     const res = await axios.get(`${api_url}/jobs`, {
+      params: params,
       withCredentials: true,
     });
+
     const jobs = res.data.data;
     return jobs;
   } catch (error) {
     throw error;
   }
 }
+
 async function getSingleJob(id) {
   try {
     const res = await axios.get(`${api_url}/jobs/${id}`, {

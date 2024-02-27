@@ -1,6 +1,10 @@
 import React from "react";
 
-function Searchbar() {
+function Searchbar({ setSearch }) {
+  const handleInputChange = (e) => {
+    setSearch(e.target.value);
+  };
+
   return (
     <>
       <div className="flex flex-col text-gray-400 items-center py-5 md:py-2 px-6 md:px-5 border shadow rounded-xl gap-6 md:gap-10 font-light md:flex-row">
@@ -14,7 +18,8 @@ function Searchbar() {
               type="text"
               name="search"
               placeholder="Search job title or keyword"
-              className="w-72 h-8 px-1 focus:outline-none focus:ring-1 focus:ring-gray-200 rounded border-none "
+              className="w-72 h-8 px-1 focus:outline-none focus:ring-0 rounded border-none "
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -30,7 +35,7 @@ function Searchbar() {
                 type="text"
                 name="search"
                 placeholder="Preferred location"
-                className="w-full h-8 px-1 focus:outline-none focus:ring-1 focus:ring-gray-200 border-none rounded"
+                className="w-full h-8 px-1 focus:outline-none focus:ring-0  border-none rounded"
               />
             </div>
           </div>
