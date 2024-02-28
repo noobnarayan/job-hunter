@@ -22,6 +22,7 @@ function MainJobSection() {
   const [loading, setLoading] = useState(null);
   const navigate = useNavigate();
   const [search, setSearch] = useState("");
+  const [selectedLocation, setSelectedLocation] = useState("");
 
   const getJobs = async (filters) => {
     setLoading(true);
@@ -37,12 +38,13 @@ function MainJobSection() {
   };
 
   useEffect(() => {
+    console.log(selectedLocation);
     const debounceTimer = setTimeout(() => {
-      getJobs({ ...filters, search });
+      getJobs({ ...filters, search, location: selectedLocation });
     }, 300);
 
     return () => clearTimeout(debounceTimer);
-  }, [filters, search]);
+  }, [filters, search, selectedLocation]);
 
   const redirectToDetail = (id) => {
     navigate(`/job/${id}`);
@@ -55,7 +57,11 @@ function MainJobSection() {
       </div>
       <div className=" w-full md:w-[70%]">
         <div>
-          <Searchbar setSearch={setSearch} search={search} />
+          <Searchbar
+            setSearch={setSearch}
+            search={search}
+            setSelectedLocation={setSelectedLocation}
+          />
         </div>
         <div>
           <div className="text-gray-500 font-medium my-3 ml-1.5">

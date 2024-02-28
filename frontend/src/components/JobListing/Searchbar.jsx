@@ -1,8 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { contentService } from "../../services/contentService";
 
-function Searchbar({ setSearch }) {
+function Searchbar({ setSearch, setSelectedLocation }) {
+  const [location, setLocation] = useState([]);
+  const [locationQuery, setLocationQuery] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+
   const handleInputChange = (e) => {
     setSearch(e.target.value);
+  };
+
+  const getLocations = async () => {
+    if (locationQuery) {
+      try {
+        const res = await contentService.getJobLocations(locationQuery);
+        setLocation(res);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (isSearching) {
+      const timerId = setTimeout(() => {
+        getLocations();
+      }, 500);
+
+      return () => clearTimeout(timerId);
+    }
+  }, [locationQuery, isSearching]);
+
+  const handleLocationInputChange = (e) => {
+    setLocationQuery(e.target.value);
+    setIsSearching(true);
+  };
+
+  const handleLocationSelection = (value) => {
+    setLocationQuery(value);
+    setLocation([]);
+    setIsSearching(false);
+  };
+
+  const handleFindJob = () => {
+    setSelectedLocation(locationQuery);
   };
 
   return (
@@ -30,18 +71,40 @@ function Searchbar({ setSearch }) {
             <div>
               <i className="fa-solid fa-location-dot"></i>
             </div>
-            <div className="w-full">
+            <div className="w-full relative">
               <input
                 type="text"
                 name="search"
                 placeholder="Preferred location"
-                className="w-full h-8 px-1 focus:outline-none focus:ring-0  border-none rounded"
+                className="w-full h-8 px-1 focus:outline-none focus:ring-0 border-none rounded"
+                onChange={handleLocationInputChange}
+                value={locationQuery}
               />
+              {location.length > 0 && (
+                <div className="absolute left-0 mt-2 w-52 rounded-md shadow-lg bg-white z-10">
+                  <ul className="py-1 text-base leading-6 rounded-md ring-1 ring-black ring-opacity-5 overflow-auto max-h-60">
+                    {location.map((item, index) => {
+                      return (
+                        <li
+                          key={index}
+                          className="text-gray-900 select-none relative py-2 pl-3 pr-9 hover:bg-gray-200 cursor-pointer"
+                          onClick={() => handleLocationSelection(item)}
+                        >
+                          {item}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
 
           <div className="w-full flex items-center md:justify-end">
-            <button className="bg-green-600 text-white font-medium rounded-lg py-2.5 px-7 md:w-8/12 w-full">
+            <button
+              className="bg-green-600 text-white font-medium rounded-lg py-2.5 px-7 md:w-8/12 w-full"
+              onClick={handleFindJob}
+            >
               Find jobs
             </button>
           </div>

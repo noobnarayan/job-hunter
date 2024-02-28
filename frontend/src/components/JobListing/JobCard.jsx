@@ -1,4 +1,5 @@
 import React from "react";
+import Dot from "../Dot";
 
 function JobCard({ job, redirectToDetail }) {
   const {
@@ -34,6 +35,29 @@ function JobCard({ job, redirectToDetail }) {
     timeAgo = diffMonths + " months ago";
   }
 
+  let color, bgColor;
+  switch (type) {
+    case "Full-time":
+      color = "text-orange-500";
+      bgColor = "bg-orange-100";
+      break;
+    case "Part-time":
+      color = "text-yellow-700";
+      bgColor = "bg-yellow-200";
+      break;
+    case "Internship":
+      color = "text-purple-600";
+      bgColor = "bg-purple-200";
+      break;
+    case "Freelance":
+      color = "text-indigo-600";
+      bgColor = "bg-indigo-200";
+      break;
+    default:
+      color = "text-gray-700";
+      bgColor = "bg-gray-200";
+  }
+
   return (
     <div
       className="my-4 hover:cursor-pointer"
@@ -51,14 +75,16 @@ function JobCard({ job, redirectToDetail }) {
               <div className="title">
                 <p className="font-bold">{title}</p>
               </div>
-              <div className="flex flex-col md:flex-row gap-3 text-[.9rem]">
+              <div className="flex flex-col md:flex-row gap-2 text-[.9rem] mt-1">
                 <div className="company">
                   <p className="text-gray-400 font-medium">{companyName}</p>
                 </div>
+                <Dot />
                 <div className="flex gap-3 items-center  md:flex-row">
-                  <div className="tag bg-[#feefe0] py-px px-2.5 rounded-xl ">
-                    <span className="text-orange-500">{type}</span>
+                  <div className={`tag py-px px-2.5 rounded-xl ${bgColor}`}>
+                    <span className={color}>{type}</span>
                   </div>
+                  <Dot />
                   <div className="strippend">
                     <span className="text-gray-400">
                       ${salaryRange.from}-${salaryRange.to} USD

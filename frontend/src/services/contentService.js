@@ -11,6 +11,7 @@ export const contentService = {
   getNonActiveJobListings,
   getAllApplications,
   getShortListedCandidates,
+  getJobLocations,
 };
 
 async function getJobs(filters) {
@@ -25,6 +26,7 @@ async function getJobs(filters) {
     params.append("experience", filters.experience);
     params.append("salaryFrom", filters.salaryRange.from);
     params.append("salaryTo", filters.salaryRange.to);
+    params.append("location", filters.location);
 
     // Append each job type as a separate parameter
     filters.jobTypes.forEach((jobType) => {
@@ -129,6 +131,21 @@ async function getAllApplications() {
 async function getShortListedCandidates() {
   try {
     const res = await axios.get(`${api_url}/company/shortlisted-candidates`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getJobLocations(location) {
+  try {
+    const res = await axios.get(`${api_url}/job-locations`, {
+      params: {
+        search: location,
+      },
       withCredentials: true,
     });
     const jobListings = res.data.data;
