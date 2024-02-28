@@ -110,7 +110,7 @@ const getJobs = asyncHandler(async (req, res) => {
       .sort({ datePosted: -1 })
       .skip(startIndex)
       .limit(limit)
-      .select("-applicants");
+      .select("-applicants -shortlistedCandidates");
 
     // Pagination result
     const pagination = {};
@@ -153,12 +153,10 @@ const getJobById = asyncHandler(async (req, res, next) => {
         path: "employer",
         select: "userProfile.companyLogo  userProfile.companyName",
       })
-      .select("-applicants");
+      .select("-applicants -shortlistedCandidates");
 
-    const numApplicants = await Job.countDocuments({
-      _id: req.params.id,
-      "applicants.0": { $exists: true },
-    });
+    let jobCopy = await Job.findById(req.params.id);
+    let numApplicants = jobCopy.applicants.length;
 
     // Convert the Mongoose document to a plain JavaScript object
     job = job.toObject();
