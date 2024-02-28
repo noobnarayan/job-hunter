@@ -65,7 +65,7 @@ function JobCard({ job, redirectToDetail }) {
     >
       <div className="border p-3.5 shadow rounded-lg">
         {/* Top */}
-        <div className="mb-5 flex flex-col md:flex-row justify-between gap-5 md:gap-1">
+        <div className="mb-2 md:mb-5 flex flex-col md:flex-row justify-between gap-5 md:gap-1">
           {/* right */}
           <div className="flex  gap-3">
             <div className="imgdiv h-11 w-11 rounded-lg overflow-hidden flex justify-center items-center border">
@@ -77,10 +77,15 @@ function JobCard({ job, redirectToDetail }) {
               </div>
               <div className="flex flex-col md:flex-row gap-2 text-[.9rem] mt-1">
                 <div className="company">
-                  <p className="text-gray-400 font-medium">{companyName}</p>
+                  <p className="text-gray-400 font-medium text-sm">
+                    {companyName}
+                  </p>
                 </div>
-                <Dot />
-                <div className="flex gap-3 items-center  md:flex-row">
+                <div className="hidden md:flex justify-center items-center">
+                  <Dot />
+                </div>
+
+                <div className="flex gap-3 items-center  md:flex-row text-xs">
                   <div className={`tag py-px px-2.5 rounded-xl ${bgColor}`}>
                     <span className={color}>{type}</span>
                   </div>
@@ -96,7 +101,7 @@ function JobCard({ job, redirectToDetail }) {
           </div>
           {/* left */}
           <div className="">
-            <div className="flex flex-col text-left md:text-right gap-1">
+            <div className="flex  gap-5 md:flex-col text-left md:text-right md:gap-1 text-xs md:text-base">
               <div className="flex gap-3 justify-start md:justify-center items-center">
                 <i className="fa-solid fa-location-dot"></i>
                 <p className="font-medium">{location}</p>

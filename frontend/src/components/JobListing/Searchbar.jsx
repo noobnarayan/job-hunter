@@ -48,9 +48,9 @@ function Searchbar({ setSearch, setSelectedLocation }) {
 
   return (
     <>
-      <div className="flex flex-col text-gray-400 items-center py-5 md:py-2 px-6 md:px-5 border shadow rounded-xl gap-6 md:gap-10 font-light md:flex-row">
+      <div className="flex flex-col text-gray-400 items-center py-5 md:py-2 px-6 md:px-5 border shadow rounded-xl gap-6 md:gap-10 font-light lg:flex-row">
         {/* first */}
-        <div className="flex items-center justify-center w-full gap-3 border-r-2 border-gray-300 md:border-r md:w-[45%]">
+        <div className="flex items-center lg:justify-center w-full gap-3 lg:border-r-2 border-gray-300  lg:w-[45%] ">
           <div>
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>
@@ -59,15 +59,15 @@ function Searchbar({ setSearch, setSelectedLocation }) {
               type="text"
               name="search"
               placeholder="Search job title or keyword"
-              className="w-72 h-8 px-1 focus:outline-none focus:ring-0 rounded border-none "
+              className="w-full h-8 px-1 focus:outline-none focus:ring-0 rounded border-none "
               onChange={handleInputChange}
             />
           </div>
         </div>
 
         {/* second */}
-        <div className="flex flex-col md:flex-row items-center gap-5 justify-between w-full md:w-[55%] ">
-          <div className="flex justify-center items-center gap-3 w-full">
+        <div className="flex flex-col lg:flex-row items-center gap-5 justify-between w-full lg:w-[55%] ">
+          <div className="flex justify-start lg:justify-center items-center gap-3 w-full">
             <div>
               <i className="fa-solid fa-location-dot"></i>
             </div>
@@ -100,9 +100,9 @@ function Searchbar({ setSearch, setSelectedLocation }) {
             </div>
           </div>
 
-          <div className="w-full flex items-center md:justify-end">
+          <div className="w-full flex items-center lg:justify-end mt-5 lg:mt-0">
             <button
-              className="bg-green-600 text-white font-medium rounded-lg py-2.5 px-7 md:w-8/12 w-full"
+              className="bg-green-600 text-white font-medium rounded-lg py-2.5 px-7 lg:w-8/12 w-full"
               onClick={handleFindJob}
             >
               Find jobs

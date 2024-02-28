@@ -47,7 +47,7 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className=" hidden md:w-1/2 bg-green-500 h-screen md:flex items-center justify-center overflow-hidden">
+      <div className=" hidden md:w-1/2 bg-green-500 md:flex items-center justify-center overflow-hidden">
         <img src={heroImage} className="w-11/12 ml-16 md:pt-44 " />
       </div>
     </div>

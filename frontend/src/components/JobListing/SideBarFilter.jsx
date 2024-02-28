@@ -60,7 +60,7 @@ function SideBarFilter({ filters, setFilters }) {
   };
   return (
     <div>
-      <div className="text-sm">
+      <div className="text-sm ">
         <div className="border-b px-4">
           <div className="flex justify-between py-4 ">
             <span className=" font-bold">Filter</span>
@@ -78,7 +78,7 @@ function SideBarFilter({ filters, setFilters }) {
             <div className="py-4">
               <span className="font-bold">Date Post</span>
             </div>
-            <div className="max-w-sm mx-auto space-y-6 border-b pb-4">
+            <div className=" mx-auto space-y-6 border-b pb-4">
               <Select onChange={(e) => handleDatePostChange(e)}>
                 <SelectItem value="today">Today</SelectItem>
                 <SelectItem value="yesterday">Yesterday</SelectItem>
