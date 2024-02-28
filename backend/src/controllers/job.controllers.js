@@ -334,6 +334,21 @@ const getJobLocations = asyncHandler(async (req, res) => {
   }
 });
 
+const getCompanies = asyncHandler(async (req, res) => {
+  try {
+    const companies = await User.find({ role: "employer" }).select(
+      "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize"
+    );
+
+    res.json(companies);
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `Something went wrong while fetching job locations from MongoDB:: ${error}`
+    );
+  }
+});
+
 export {
   ping,
   authPing,
@@ -344,4 +359,5 @@ export {
   applyForJob,
   saveJob,
   getJobLocations,
+  getCompanies,
 };

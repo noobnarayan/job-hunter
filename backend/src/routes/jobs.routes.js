@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   applyForJob,
+  getCompanies,
   getJobById,
   getJobLocations,
   getJobs,
@@ -25,5 +26,6 @@ router.route("/generate-job-description").post(verifyJWT, sendJobDescription);
 router.route("/apply/:id?").post(verifyJWT, applyForJob);
 router.route("/save/:id?").post(verifyJWT, saveJob);
 router.route("/job-locations").get(getJobLocations);
+router.route("/companies").get(getCompanies);
 
 export default router;
