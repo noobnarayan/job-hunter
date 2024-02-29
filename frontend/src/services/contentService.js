@@ -12,6 +12,7 @@ export const contentService = {
   getAllApplications,
   getShortListedCandidates,
   getJobLocations,
+  getCompanies,
 };
 
 async function getJobs(filters) {
@@ -150,6 +151,15 @@ async function getJobLocations(location) {
     });
     const jobListings = res.data.data;
     return jobListings;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getCompanies() {
+  try {
+    const res = await axios.get(`${api_url}/companies`);
+    return res.data.data;
   } catch (error) {
     throw error;
   }

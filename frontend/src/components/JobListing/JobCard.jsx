@@ -85,14 +85,14 @@ function JobCard({ job, redirectToDetail }) {
                   <Dot />
                 </div>
 
-                <div className="flex gap-3 items-center  md:flex-row text-xs">
+                <div className="flex gap-3 items-center  md:flex-row text-xs md:text-sm">
                   <div className={`tag py-px px-2.5 rounded-xl ${bgColor}`}>
                     <span className={color}>{type}</span>
                   </div>
                   <Dot />
                   <div className="strippend">
                     <span className="text-gray-400">
-                      ${salaryRange.from}-${salaryRange.to} USD
+                      ₹ {salaryRange.from}-₹ {salaryRange.to} INR
                     </span>
                   </div>
                 </div>

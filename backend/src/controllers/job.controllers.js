@@ -201,6 +201,8 @@ const postJob = asyncHandler(async (req, res, next) => {
     const job = new Job({ ...req.body, employer: _id });
     await job.save();
 
+    const company = await User.findById(_id);
+    company.userProfile.jobListings.push(job._id);
     return res
       .status(200)
       .json(new ApiResponse(200, job, "Job posted successfully"));
@@ -340,7 +342,9 @@ const getCompanies = asyncHandler(async (req, res) => {
       "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize"
     );
 
-    res.json(companies);
+    res
+      .status(200)
+      .json(new ApiResponse(200, companies, "Companies fetched successfully"));
   } catch (error) {
     throw new ApiError(
       500,

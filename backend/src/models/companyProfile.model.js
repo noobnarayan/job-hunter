@@ -3,6 +3,7 @@ import { socialProfilesSchema } from "./socialProfiles.schema.js";
 
 const companyProfileSchema = new Schema({
   companyName: { type: String, required: true },
+  doneOnboarding: { type: Boolean, default: false },
   companyDescription: String,
   contactNumber: String,
   address: {

@@ -20,6 +20,7 @@ function JobDetails() {
   useEffect(() => {
     getDetails(id);
   }, []);
+
   return (
     <div className="mt-20 px-10 flex gap-8 lg:gap-14 flex-col md:flex-row">
       {/* Left */}

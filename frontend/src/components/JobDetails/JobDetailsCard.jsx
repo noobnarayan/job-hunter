@@ -57,7 +57,7 @@ function JobDetailsCard({ jobData }) {
                 </span>
                 <span>
                   {salaryRange
-                    ? `$${salaryRange.from} to $${salaryRange.to}`
+                    ? `${salaryRange.from} to ${salaryRange.to}`
                     : "Not Disclosed"}
                 </span>
               </div>

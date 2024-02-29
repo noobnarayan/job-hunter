@@ -13,6 +13,7 @@ function Signup() {
   });
   const updateUser = useUpdateUserData();
 
+  const [userType, setUserType] = useState("jobSeeker");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const resetErrorMessage = () => {
@@ -47,9 +48,10 @@ function Signup() {
     setLoading(true);
     const { name, email, password } = data;
     const userData = {
-      ...data,
-      role: "jobSeeker",
-      userProfile: { name },
+      email,
+      password,
+      role: userType === "employer" ? "employer" : "jobSeeker",
+      userProfile: userType === "employer" ? { companyName: name } : { name },
     };
 
     try {
@@ -59,11 +61,17 @@ function Signup() {
         if (res.status === 200) {
           const userData = await userService.getCurrentUser();
           if (userData) {
+            console.log(userData);
+            if (userData.role === "jobSeeker") {
+              navigate("/user-onboarding");
+            } else {
+              navigate("/company-onboarding");
+            }
+
             updateUser();
           }
         }
         setLoading(false);
-        navigate("/user-onboarding");
       }
     } catch (error) {
       console.log(error);
@@ -102,21 +110,55 @@ function Signup() {
         <div className="sm:w-3/6 sm:h-screen flex items-center justify-center sm:pt-5 sm:pl-5 md:w-3/5 lg:pl-16 lg:pt-5">
           <div className="h-full w-full sm:text-right sm:pr-12 bg-black sm:pt-24 sm:pl-14 text-green-500 sm:rounded-t-lg lg:pt-44">
             <h2 className="py-4 text-xl text-center sm:text-5xl sm:text-right font-bold sm:mb-5 sm:pl-4 xl:text-6xl ">
-              Find the job made for you.
+              {userType === "jobSeeker"
+                ? "Find the job made for you."
+                : userType === "employer" &&
+                  (Math.random() > 0.5
+                    ? "Discover the perfect fit for your team."
+                    : "Unearth the gem your organization needs.")}
             </h2>
+
             <p className="hidden sm:block font-light sm:pl-3 sm:text-lg text-white xl:text-xl xl:pl-16">
-              Browse over 130K jobs at top companies and fast-growing startups.
+              {userType === "jobSeeker"
+                ? "Browse over 130K jobs at top companies and fast-growing startups."
+                : "Browse through a vast pool of talented job seekers."}
             </p>
           </div>
         </div>
 
         <div className="w-full sm:w-3/6 pt-1.5 md:w-2/5">
+          <div className="flex justify-center items-center gap-5 ">
+            <div
+              onClick={() => setUserType("jobSeeker")}
+              className={`rounded-md px-5 py-1 cursor-pointer font-semibold text-gray-600 ${
+                userType === "jobSeeker" ? "bg-black text-white" : "bg-gray-200"
+              }`}
+            >
+              I am a Job Seeker
+            </div>
+            <div
+              onClick={() => setUserType("employer")}
+              className={`rounded-md px-5 py-1 cursor-pointer font-semibold text-gray-600 ${
+                userType === "employer" ? "bg-black text-white" : "bg-gray-200"
+              }`}
+            >
+              I am an Employer
+            </div>
+          </div>
+
           <div className="p-3 sm:p-10 ">
             <h2 className=" text-3xl font-bold ">Create Account</h2>
-            <p className="mt-3">Find your next opportunity!</p>
+            <p className="mt-3">
+              {userType === "jobSeeker"
+                ? "Find your next opportunity!"
+                : "Find the best talents!"}
+            </p>
+
             <form className="mt-3" onSubmit={handleFormSubmission}>
               <div className="flex flex-col">
-                <label className=" font-semibold">Full Name:</label>
+                <label className=" font-semibold">
+                  {userType === "employer" ? "Company Name:" : "Full Name:"}
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -124,7 +166,9 @@ function Signup() {
                   value={formData.name}
                   onChange={handleInputChange}
                   className="rounded h-10 text-base pl-5 mb-3 border-x border-y border-gray-400"
-                  placeholder="enter name"
+                  placeholder={`Enter ${
+                    userType === "employer" ? "company name" : "name"
+                  }`}
                 />
 
                 <label className=" font-semibold">Email Address:</label>

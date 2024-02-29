@@ -53,13 +53,13 @@ function Applications() {
         </div>
       </div>
       <div className="border rounded p-1.5 md:p-5 flex flex-col gap-5">
-        {applicants.map((applicant, index) => (
-          <ApplicantsCard key={index} data={applicant} />
-        ))}
-        {/* <ApplicantsCard />
-        <ApplicantsCard />
-        <ApplicantsCard />
-        <ApplicantsCard isShortlisted={true} /> */}
+        {applicants.length > 0 ? (
+          applicants.map((applicant, index) => (
+            <ApplicantsCard key={index} data={applicant} />
+          ))
+        ) : (
+          <p className="text-center w font-medium">No applicants found.</p>
+        )}
       </div>
     </div>
   );

@@ -41,10 +41,16 @@ function Login() {
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
+          if (userData.userProfile.doneOnboarding) {
+            navigate("/");
+          } else if (userData.role === "jobSeeker") {
+            navigate("/user-onboarding");
+          } else if (userData.role === "employer") {
+            navigate("/company-onboarding");
+          }
           updateUser();
         }
         setLoading(false);
-        navigate("/");
       }
     } catch (error) {
       if (
