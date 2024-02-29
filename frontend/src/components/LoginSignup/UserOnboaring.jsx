@@ -147,7 +147,6 @@ function UserOnboaring() {
     { value: "5", label: "5 years" },
     { value: "6", label: "More than 5 years" },
   ];
-  // TODO: Handle label contents
   return (
     <div className="mt-[3.8rem]  bg-[#ebeff5] flex flex-col items-center ">
       <div>

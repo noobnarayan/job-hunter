@@ -171,6 +171,13 @@ const updateUserProfile = asyncHandler(async (req, res) => {
     "publicProfile",
     "jobPreferences",
     "doneOnboarding",
+    "companyName",
+    "companyDescription",
+    "contactNumber",
+    "address",
+    "companySize",
+    "companyLogo",
+    "companySocialProfiles",
   ];
   const nonValidOperations = [];
   const isValidOperation = updates.every((update) => {

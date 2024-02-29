@@ -41,14 +41,22 @@ function Login() {
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
-          if (userData.userProfile.doneOnboarding) {
-            navigate("/");
-          } else if (userData.role === "jobSeeker") {
-            navigate("/user-onboarding");
-          } else if (userData.role === "employer") {
-            navigate("/company-onboarding");
+          if (userData.role === "jobSeeker") {
+            if (userData.userProfile.doneOnboarding === true) {
+              navigate("/");
+            } else {
+              navigate("/user-onboarding");
+            }
           }
-          updateUser();
+
+          if (userData.role === "employer") {
+            if (userData.userProfile.doneOnboarding === true) {
+              navigate("/dashboard/home");
+            } else {
+              console.log(userData);
+              navigate("/company-onboarding");
+            }
+          }
         }
         setLoading(false);
       }

@@ -8,6 +8,9 @@ import {
 
 import { NavLink, Link } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
+import { useDispatch, useSelector } from "react-redux";
+import { userService } from "../../services/userService";
+import { logout } from "../../store/authSlice";
 
 const sidebarLinks = [
   {
@@ -33,6 +36,20 @@ const sidebarLinks = [
 ];
 
 function DashboardSidebar() {
+  const { userData } = useSelector((store) => store.auth);
+
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    userService
+      .logout()
+      .then(() => {
+        dispatch(logout());
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="sticky top-0 flex h-screen w-full flex-col justify-between border-r border-gray-200 bg-white px-1 py-5 xl:py-12 xl:px-2">
       <div className="ie-logo px-3 py-0 text-center xl:text-left">
@@ -87,15 +104,20 @@ function DashboardSidebar() {
         <UserCircleIcon className="h-12 stroke-gray-700 stroke-1 group-hover:stroke-blue-700" />
         <div className="ie-userDetails">
           <div className="flex justify-between gap-2">
-            <span className="text-base font-semibold text-gray-700">Admin</span>
+            <span className="text-base font-semibold text-gray-700">
+              {userData?.userProfile?.companyName}
+            </span>
             <div className="group flex cursor-pointer items-center gap-1 rounded-full bg-gray-100 px-2 py-1 transition-all hover:bg-gray-50">
-              <span className="text-xs font-medium text-gray-700 group-hover:text-red-700">
+              <span
+                className="text-xs font-medium text-gray-700 group-hover:text-red-700"
+                onClick={handleLogout}
+              >
                 Logout
               </span>
             </div>
           </div>
           <span className="mt-1 block text-sm font-medium text-gray-700">
-            Logged in as Admin
+            Logged in as {userData?.username}
           </span>
         </div>
       </div>
