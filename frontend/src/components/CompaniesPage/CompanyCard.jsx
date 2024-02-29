@@ -2,7 +2,14 @@ import React from "react";
 import Dot from "../../components/Dot";
 
 function CompanyCard({ bgColor, company }) {
-  const { companyName, companyLogo, jobListings, companySize } = company;
+  const {
+    companyName,
+    companyLogo,
+    jobListings,
+    companySize,
+    companySocialProfiles,
+  } = company;
+  console.log(companySocialProfiles);
   return (
     <div className="rounded-xl border border-gray-300 p-1.5">
       <div
@@ -18,15 +25,35 @@ function CompanyCard({ bgColor, company }) {
               <p className="text-xl font-medium text-gray-800">{companyName}</p>
               <span className="text-xs text-gray-500 flex gap-3 items-center ">
                 <i className="fa-solid fa-user-group"></i>
-                <p>1-10 EMPLOYEES</p>
+                <p>
+                  {companySize.from}-{companySize.to} EMPLOYEES
+                </p>
               </span>
             </div>
           </div>
 
           <div className="flex gap-2.5 text-gray-700">
-            <i className="fa-solid fa-globe hover:cursor-pointer text-lg"></i>
-            <i className="fa-brands fa-linkedin hover:cursor-pointer text-lg"></i>
-            <i className="fa-brands fa-square-twitter hover:cursor-pointer text-lg"></i>
+            <a
+              href={companySocialProfiles?.linkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-linkedin hover:cursor-pointer text-lg"></i>
+            </a>
+            <a
+              href={companySocialProfiles?.twitter}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-brands fa-square-twitter hover:cursor-pointer text-lg"></i>
+            </a>
+            <a
+              href={companySocialProfiles?.portfolioWebsite}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa-solid fa-globe hover:cursor-pointer text-lg"></i>
+            </a>
           </div>
         </div>
         <div className="flex flex-col gap-2 my-5">

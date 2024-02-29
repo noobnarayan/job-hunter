@@ -339,7 +339,7 @@ const getJobLocations = asyncHandler(async (req, res) => {
 const getCompanies = asyncHandler(async (req, res) => {
   try {
     const companies = await User.find({ role: "employer" }).select(
-      "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize"
+      "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize userProfile.companySocialProfiles"
     );
 
     res
