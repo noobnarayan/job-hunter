@@ -12,6 +12,7 @@ import JobPosting from "../Pages/JobPosting";
 import ApplicantInformation from "../Pages/ApplicantInformation";
 import UserOnboaring from "../components/LoginSignup/UserOnboaring";
 import CompanyOnboarding from "../components/LoginSignup/CompanyOnboarding";
+import NotFound from "../components/NotFound";
 function AllRoutes() {
   return (
     <Routes>
@@ -27,6 +28,7 @@ function AllRoutes() {
       <Route path="/applicant" element={<ApplicantInformation />} />
       <Route path="/user-onboarding" element={<UserOnboaring />} />
       <Route path="/company-onboarding" element={<CompanyOnboarding />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

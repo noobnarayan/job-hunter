@@ -86,10 +86,18 @@ function CompanyOnboarding() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 py-10 mt-10">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#EBEFF5] py-10 mt-10">
+      <div className="py-5 flex flex-col justify-center items-center gap-5">
+        <h2 className="font-semibold text-5xl text-gray-950 text-center">
+          Complete your profile
+        </h2>
+        <p className="text-lg text-gray-950 text-center">
+          Find the best fit for your organisation among thousands of talents
+        </p>
+      </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-3xl bg-white p-6 rounded-md shadow-md space-y-6"
+        className="w-full max-w-3xl bg-white p-6 rounded-2xl  space-y-6"
       >
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">Company Information</h2>
@@ -101,10 +109,6 @@ function CompanyOnboarding() {
               />
             </div>
             <div className={!showDropdown ? "" : "hidden"}>
-              <label className="font-medium flex gap-2">
-                Select your company
-                <span className="text-gray-500">*</span>
-              </label>
               <div className="flex justify-between items-center my-2.5 p-2 bg-white rounded-md shadow-sm border">
                 <div className="flex items-center ">
                   <img

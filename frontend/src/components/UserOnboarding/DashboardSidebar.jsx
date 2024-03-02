@@ -6,7 +6,7 @@ import {
   ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
 
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import logo from "../assets/media/JobHunter.png";
 import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../services/userService";
@@ -37,13 +37,16 @@ const sidebarLinks = [
 
 function DashboardSidebar() {
   const { userData } = useSelector((store) => store.auth);
+  console.log(userData);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogout = () => {
     userService
       .logout()
       .then(() => {
         dispatch(logout());
+        navigate("/");
       })
       .catch((error) => {
         console.log(error);
@@ -100,8 +103,13 @@ function DashboardSidebar() {
           })}
         </div>
       </div>
-      <div className="ie-user hidden items-center gap-2 px-3 xl:flex">
-        <UserCircleIcon className="h-12 stroke-gray-700 stroke-1 group-hover:stroke-blue-700" />
+      <div className="ie-user hidden items-center gap-3 px-3 xl:flex">
+        <div className="h-10 w-10 rounded-full p-px overflow-hidden border">
+          <img
+            src={userData?.userProfile?.companyLogo}
+            alt={`${userData?.userProfile?.companyName} Logo`}
+          />
+        </div>
         <div className="ie-userDetails">
           <div className="flex justify-between gap-2">
             <span className="text-base font-semibold text-gray-700">

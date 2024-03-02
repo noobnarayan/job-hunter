@@ -45,6 +45,7 @@ function Navbar() {
   };
 
   const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
+
   return (
     <div className="border-b w-full fixed top-0 left-0 font-Nunito z-50">
       <div className="lg:flex items-center justify-between bg-white py-2.5 lg:px-10 px-7">
@@ -93,7 +94,7 @@ function Navbar() {
             );
           })}
 
-          {!status ? (
+          {!status || userData?.userProfile?.doneOnboarding === false ? (
             <div className=" lg:flex ">
               <Link to="/login">
                 <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 lg:ml-7 lg:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 lg:hover:scale-105">

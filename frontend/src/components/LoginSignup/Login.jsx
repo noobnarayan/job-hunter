@@ -41,6 +41,7 @@ function Login() {
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
+          updateUser();
           if (userData.role === "jobSeeker") {
             if (userData.userProfile.doneOnboarding === true) {
               navigate("/");

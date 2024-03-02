@@ -127,7 +127,7 @@ function Signup() {
         </div>
 
         <div className="w-full sm:w-3/6 pt-1.5 md:w-2/5">
-          <div className="flex justify-center items-center gap-5 ">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-5 ">
             <div
               onClick={() => setUserType("jobSeeker")}
               className={`rounded-md px-5 py-1 cursor-pointer font-semibold text-gray-600 ${
