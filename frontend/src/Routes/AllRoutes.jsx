@@ -59,17 +59,17 @@ function AllRoutes() {
       <Route
         path="/user-onboarding"
         element={
-          <PrivateRoutes>
-            <UserOnboaring />
-          </PrivateRoutes>
+          //     <PrivateRoutes>
+          <UserOnboaring />
+          //  </PrivateRoutes>
         }
       />
       <Route
         path="/company-onboarding"
         element={
-          <PrivateRoutes>
-            <CompanyOnboarding />
-          </PrivateRoutes>
+          // <PrivateRoutes>
+          <CompanyOnboarding />
+          // </PrivateRoutes>
         }
       />
       <Route path="*" element={<NotFound />} />

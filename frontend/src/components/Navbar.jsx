@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "./assets/media/JobHunter.png";
 import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../services/userService";
@@ -28,7 +28,9 @@ function Navbar() {
     "https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg"
   );
   useEffect(() => {
-    const profilePicture = userData?.userProfile?.profilePicture;
+    const profilePicture =
+      userData?.userProfile?.profilePicture ||
+      userData?.userProfile?.companyLogo;
     setProfilePicture(profilePicture);
   }, [userData]);
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -43,6 +45,8 @@ function Navbar() {
         console.log(error);
       });
   };
+
+  const navigate = useNavigate();
 
   const activeStyle = "text-green-700 pb-4 border-b-2 border-green-700";
 
@@ -94,7 +98,7 @@ function Navbar() {
             );
           })}
 
-          {!status || userData?.userProfile?.doneOnboarding === false ? (
+          {!status ? (
             <div className=" lg:flex ">
               <Link to="/login">
                 <button className="border border-gray-300 text-black font-bold py-1.5 px-5 rounded-md lg:ml-32 lg:ml-7 lg:shadow xl:ml-36 hover:bg-green-300 hover:border-green-500 duration-500 mr-5 lg:hover:scale-105">
@@ -118,7 +122,13 @@ function Navbar() {
                 <div className="relative shado">
                   <div
                     className="rounded-full h-9 w-9 hover:cursor-pointer overflow-hidden flex justify-center items-center border"
-                    onClick={toggleDropdown}
+                    onClick={() => {
+                      if (userData.role !== "employer") {
+                        toggleDropdown();
+                      } else {
+                        navigate("/dashboard/home");
+                      }
+                    }}
                   >
                     <img src={profilePicture} className="object-cover" />
                   </div>

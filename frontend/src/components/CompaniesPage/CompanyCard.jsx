@@ -9,7 +9,7 @@ function CompanyCard({ bgColor, company }) {
     companySize,
     companySocialProfiles,
   } = company;
-  console.log(companySocialProfiles);
+
   return (
     <div className="rounded-xl border border-gray-300 p-1.5">
       <div
@@ -56,25 +56,27 @@ function CompanyCard({ bgColor, company }) {
             </a>
           </div>
         </div>
-        <div className="flex flex-col gap-2 my-5">
-          <h3 className="text-sm font-medium border-gray-600 border w-32 flex items-center justify-center rounded-md text-gray-800 bg-green-300">
-            Active Listings
-          </h3>
-          {jobListings?.map((listing) => (
-            <div
-              className="bg-gray-100 rounded-xl px-3 py-1.5 flex gap-3 items-center hover:cursor-pointer"
-              key={listing._id}
-            >
-              <span className="text-sm font-medium text-gray-900">
-                Full Stack Developer (Node.js, React, JavaScript)
-              </span>
-              <Dot />
-              <span className="text-xs font-medium text-gray-600">
-                Bengaluru, India | Onsite
-              </span>
-            </div>
-          ))}
-        </div>
+        {jobListings.length > 0 && (
+          <div className="flex flex-col gap-2 my-5">
+            <h3 className="text-sm font-medium border-gray-600 border w-32 flex items-center justify-center rounded-md text-gray-800 bg-green-300">
+              Active Listings
+            </h3>
+            {jobListings?.map((listing, index) => (
+              <div
+                className="bg-gray-100 rounded-xl px-3 py-1.5 flex gap-3 items-center hover:cursor-pointer"
+                key={index}
+              >
+                <span className="text-sm font-medium text-gray-900">
+                  {listing?.title}
+                </span>
+                <Dot />
+                <span className="text-xs font-medium text-gray-600">
+                  {listing?.location}
+                </span>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

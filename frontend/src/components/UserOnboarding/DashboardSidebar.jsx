@@ -1,7 +1,6 @@
 import {
   HomeIcon,
   UserPlusIcon,
-  UserCircleIcon,
   ShieldCheckIcon,
   ChatBubbleBottomCenterIcon,
 } from "@heroicons/react/24/outline";
@@ -11,6 +10,8 @@ import logo from "../assets/media/JobHunter.png";
 import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../../services/userService";
 import { logout } from "../../store/authSlice";
+import useUpdateUserData from "../../hooks/useUpdateUserData";
+import { useEffect } from "react";
 
 const sidebarLinks = [
   {
@@ -36,8 +37,12 @@ const sidebarLinks = [
 ];
 
 function DashboardSidebar() {
+  const updateUser = useUpdateUserData();
   const { userData } = useSelector((store) => store.auth);
-  console.log(userData);
+
+  useEffect(() => {
+    updateUser();
+  }, []);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();

@@ -18,15 +18,15 @@ function CompaniesPage() {
   };
 
   return (
-    <div className="mt-20">
+    <div className="mt-20 px-10">
       <div>
-        <div className="flex gap-5 items-center">
-          <h2>Top companies hiring now</h2>
+        <div className="flex gap-5 items-center mb-5">
+          <h2 className="text-2xl font-medium ">Top companies hiring now</h2>
           <div className="rounded-3xl border shadow-sm py-1 px-3 border-gray-400">
             {companies.length}
           </div>
         </div>
-        <div>
+        <div className="grid grid-cols-2 gap-5">
           {companies?.map((company) => (
             <CompanyCard key={company._id} company={company.userProfile} />
           ))}
