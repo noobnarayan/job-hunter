@@ -4,6 +4,7 @@ import TextArea from "../Common/FormComponents/TextArea";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
+import { useNavigate } from "react-router-dom";
 
 function CompanyOnboarding() {
   const [companyProfile, setCompanyProfile] = useState({
@@ -28,7 +29,7 @@ function CompanyOnboarding() {
     },
   });
   const [showDropdown, setShowDropdown] = useState(true);
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes(".")) {
