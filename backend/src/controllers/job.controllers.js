@@ -344,6 +344,15 @@ const getCompanies = asyncHandler(async (req, res) => {
       "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize userProfile.companySocialProfiles"
     );
 
+    for (let company of companies) {
+      for (let i = 0; i < company.userProfile.jobListings.length; i++) {
+        const job = await Job.findById(
+          company.userProfile.jobListings[i]
+        ).select("title location _id");
+        company.userProfile.jobListings[i] = job;
+      }
+    }
+
     res
       .status(200)
       .json(new ApiResponse(200, companies, "Companies fetched successfully"));
