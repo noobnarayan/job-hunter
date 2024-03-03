@@ -5,9 +5,12 @@ import InputField from "../Common/FormComponents/InputField";
 import Checkbox from "../Common/FormComponents/Checkbox";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function UserOnboaring() {
+  const { status, userData } = useSelector((store) => store.auth);
+
   const initialFormData = {
     location: "",
     primaryRole: "",
@@ -95,6 +98,17 @@ function UserOnboaring() {
       console.log(error);
     }
   };
+
+  if (
+    userData?.role === "jobSeeker" &&
+    userData?.userProfile?.doneOnboarding === true
+  ) {
+    return <Navigate to="/" />;
+  }
+
+  if (userData?.role !== "jobSeeker") {
+    return <Navigate to="/dashboard/home" />;
+  }
 
   const locationOptions = [
     { value: "default", label: "Select Country" },

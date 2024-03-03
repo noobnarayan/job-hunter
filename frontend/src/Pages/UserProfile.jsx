@@ -1,8 +1,15 @@
 import React, { useState } from "react";
 import EditProfile from "../components/UserProfile/EditProfile";
 import UpdateResume from "../components/UserProfile/UpdateResume";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
+  const { status, userData } = useSelector((store) => store.auth);
+
+  if (userData.role === "employer") {
+    return <Navigate to="/" />;
+  }
   const [selectedSection, setSelectedSection] = useState("editProfile");
 
   const switchSection = (section) => {

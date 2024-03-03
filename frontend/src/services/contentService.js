@@ -13,6 +13,7 @@ export const contentService = {
   getShortListedCandidates,
   getJobLocations,
   getCompanies,
+  getSavedJobs,
 };
 
 async function getJobs(filters) {
@@ -160,6 +161,18 @@ async function getCompanies() {
   try {
     const res = await axios.get(`${api_url}/companies`);
     return res.data.data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getSavedJobs() {
+  try {
+    const res = await axios.get(`${api_url}/users/saved-jobs`, {
+      withCredentials: true,
+    });
+    const jobListings = res.data.data;
+    return jobListings;
   } catch (error) {
     throw error;
   }

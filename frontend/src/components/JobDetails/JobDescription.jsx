@@ -12,9 +12,12 @@ function JobDescription({ jobData }) {
 
       <div className="py-2">
         <h3 className="font-medium ">Key Skills</h3>
-        <div className="flex gap-2 mt-2">
-          {skills?.map((skill) => (
-            <span className="text-xs bg-gray-100 text-gray-600 px-1.5 py-px rounded border shadow-sm  font-medium hover:scale-105 translate-x-0 transition-transform hover:cursor-pointer">
+        <div className="flex flex-wrap gap-2 mt-2">
+          {skills?.map((skill, index) => (
+            <span
+              className="text-xs bg-gray-100 text-gray-600 px-1.5 py-px rounded border shadow-sm  font-medium hover:scale-105 translate-x-0 transition-transform hover:cursor-pointer"
+              key={index}
+            >
               {skill}
             </span>
           ))}

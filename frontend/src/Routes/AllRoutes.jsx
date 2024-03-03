@@ -14,6 +14,7 @@ import UserOnboaring from "../components/LoginSignup/UserOnboaring";
 import CompanyOnboarding from "../components/LoginSignup/CompanyOnboarding";
 import NotFound from "../components/NotFound";
 import PrivateRoutes from "./PrivateRoutes";
+import SavedJobs from "../Pages/SavedJobs";
 function AllRoutes() {
   return (
     <Routes>
@@ -56,22 +57,9 @@ function AllRoutes() {
           </PrivateRoutes>
         }
       />
-      <Route
-        path="/user-onboarding"
-        element={
-          //     <PrivateRoutes>
-          <UserOnboaring />
-          //  </PrivateRoutes>
-        }
-      />
-      <Route
-        path="/company-onboarding"
-        element={
-          // <PrivateRoutes>
-          <CompanyOnboarding />
-          // </PrivateRoutes>
-        }
-      />
+      <Route path="/user-onboarding" element={<UserOnboaring />} />
+      <Route path="/company-onboarding" element={<CompanyOnboarding />} />
+      <Route path="/saved-jobs" element={<SavedJobs />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
