@@ -14,6 +14,7 @@ import {
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
+import { getSavedJobs } from "../controllers/job.controllers.js";
 
 const router = Router();
 router.route("/ping").get(ping);
@@ -29,5 +30,6 @@ router
 router.route("/add-skill").post(verifyJWT, addSkill);
 router.route("/remove-skill").post(verifyJWT, removeSkill);
 router.route("/resume").post(verifyJWT, updateResume);
+router.route("/saved-jobs").get(verifyJWT, getSavedJobs);
 
 export default router;

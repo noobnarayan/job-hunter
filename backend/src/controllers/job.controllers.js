@@ -364,6 +364,31 @@ const getCompanies = asyncHandler(async (req, res) => {
   }
 });
 
+const getSavedJobs = asyncHandler(async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id);
+    const savedJobs = user.userProfile.savedJobs;
+
+    for (let i = 0; i < savedJobs.length; i++) {
+      let job = await Job.findById(savedJobs[i])
+        .populate({
+          path: "employer",
+          select: "userProfile.companyLogo  userProfile.companyName",
+        })
+        .select("salaryRange _id title location");
+      savedJobs[i] = job;
+    }
+    res
+      .status(200)
+      .json(new ApiResponse(200, savedJobs, "Saved jobs fetched successfully"));
+  } catch (error) {
+    throw new ApiError(
+      500,
+      `Something went wrong while fetching job locations from MongoDB:: ${error}`
+    );
+  }
+});
+
 export {
   ping,
   authPing,
@@ -375,4 +400,5 @@ export {
   saveJob,
   getJobLocations,
   getCompanies,
+  getSavedJobs,
 };
