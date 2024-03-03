@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userService } from "../services/userService";
-import { login, logout } from "../store/authSlice";
+import { login, logout, setLoadingFalse } from "../store/authSlice";
+
 const useUpdateUserData = () => {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(true);
+  const { isLoading } = useSelector((store) => store.auth);
+  const [loading, setLoading] = useState(false);
 
   const updateUserData = async () => {
+    setLoading(true);
     try {
       const userData = await userService.getCurrentUser();
       if (userData) {
@@ -14,9 +17,11 @@ const useUpdateUserData = () => {
       } else {
         dispatch(logout());
       }
-      setLoading(false);
+      dispatch(setLoadingFalse());
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 

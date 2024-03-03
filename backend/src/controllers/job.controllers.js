@@ -12,7 +12,7 @@ const DOMPurify = createDOMPurify(window);
 
 // Testing endpoints
 const ping = (req, res) => {
-  res.send("Job API is working");
+  res.send({ msg: "API is healthy!" });
 };
 const authPing = (req, res) => {
   res.send("Job Auth is working");

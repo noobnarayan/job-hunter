@@ -7,6 +7,7 @@ import {
   uploadOnCloudinary,
 } from "../utils/cloudinary.service.js";
 import { JobSeekerProfile } from "../models/jobSeekerProfile.model.js";
+import { PRODUCTION_URL } from "../constants.js";
 
 // Testing endpoints
 const ping = (req, res) => {
@@ -20,9 +21,9 @@ const cookieOptions = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+  maxAge: 1000 * 60 * 60 * 24 * 7,
   domain:
-    process.env.NODE_ENV === "production" ? "your-production-url" : "localhost",
+    process.env.NODE_ENV === "production" ? `${PRODUCTION_URL}` : "localhost",
 };
 
 const generateAccessAndRefereshTokens = async (userId) => {

@@ -13,6 +13,7 @@ import ApplicantInformation from "../Pages/ApplicantInformation";
 import UserOnboaring from "../components/LoginSignup/UserOnboaring";
 import CompanyOnboarding from "../components/LoginSignup/CompanyOnboarding";
 import NotFound from "../components/NotFound";
+import PrivateRoutes from "./PrivateRoutes";
 function AllRoutes() {
   return (
     <Routes>
@@ -22,12 +23,55 @@ function AllRoutes() {
       <Route path="/jobs" element={<JobListing />} />
       <Route path="/job/:id" element={<JobDetails />} />
       <Route path="/companies" element={<CompaniesPage />} />
-      <Route path="/dashboard/*" element={<CompanyDashboard />} />
-      <Route path="/profile" element={<UserProfile />} />
-      <Route path="/post-new-job" element={<JobPosting />} />
-      <Route path="/applicant" element={<ApplicantInformation />} />
-      <Route path="/user-onboarding" element={<UserOnboaring />} />
-      <Route path="/company-onboarding" element={<CompanyOnboarding />} />
+
+      <Route
+        path="/dashboard/*"
+        element={
+          <PrivateRoutes>
+            <CompanyDashboard />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <PrivateRoutes>
+            <UserProfile />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/post-new-job"
+        element={
+          <PrivateRoutes>
+            <JobPosting />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/applicant"
+        element={
+          <PrivateRoutes>
+            <ApplicantInformation />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/user-onboarding"
+        element={
+          <PrivateRoutes>
+            <UserOnboaring />
+          </PrivateRoutes>
+        }
+      />
+      <Route
+        path="/company-onboarding"
+        element={
+          <PrivateRoutes>
+            <CompanyOnboarding />
+          </PrivateRoutes>
+        }
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
