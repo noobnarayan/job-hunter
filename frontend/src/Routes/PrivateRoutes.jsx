@@ -12,7 +12,7 @@ function PrivateRoutes({ children }) {
       if (isLoading) {
         dispatch(setLoadingFalse());
       }
-    }, 300);
+    }, 500);
 
     return () => clearTimeout(timeoutId);
   }, [isLoading, dispatch]);

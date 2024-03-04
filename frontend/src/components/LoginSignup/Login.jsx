@@ -41,7 +41,7 @@ function Login() {
       if (res.status === 200) {
         const userData = await userService.getCurrentUser();
         if (userData) {
-          updateUser();
+          await updateUser();
           if (userData.role === "jobSeeker") {
             console.log(userData.role);
             if (userData.userProfile.doneOnboarding === true) {
@@ -52,6 +52,7 @@ function Login() {
           } else if (userData.role === "employer") {
             console.log(userData.role);
             if (userData.userProfile.doneOnboarding === true) {
+              console.log("Sending to dashboard");
               navigate("/dashboard/home");
             } else {
               console.log(userData);
