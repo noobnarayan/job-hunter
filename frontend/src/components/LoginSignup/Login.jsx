@@ -43,14 +43,14 @@ function Login() {
         if (userData) {
           updateUser();
           if (userData.role === "jobSeeker") {
+            console.log(userData.role);
             if (userData.userProfile.doneOnboarding === true) {
               navigate("/");
             } else {
               navigate("/user-onboarding");
             }
-          }
-
-          if (userData.role === "employer") {
+          } else if (userData.role === "employer") {
+            console.log(userData.role);
             if (userData.userProfile.doneOnboarding === true) {
               navigate("/dashboard/home");
             } else {
