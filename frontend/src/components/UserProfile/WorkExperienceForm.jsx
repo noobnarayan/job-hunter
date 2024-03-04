@@ -74,7 +74,7 @@ function WorkExperienceForm({
 
   const handleCancel = () => {
     setShowAddWorkExperience(false);
-    setWorkExperienceFormData(null);
+    setWorkExperienceFormData(initialFormData);
   };
 
   const handleFormSubmit = async (e) => {
@@ -95,6 +95,7 @@ function WorkExperienceForm({
       if (res.status === 200) {
         updateUser();
         setShowAddWorkExperience(false);
+        setWorkExperienceFormData(initialFormData);
       }
     } catch (error) {
       console.log(error);

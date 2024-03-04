@@ -90,7 +90,7 @@ function EducationForm({
 
   const handleCancel = () => {
     setShowAddEducation(false);
-    setEducationFormData(null);
+    setEducationFormData(initialFormData);
   };
 
   const handleFormSubmit = async (e) => {
@@ -111,6 +111,7 @@ function EducationForm({
       if (res.status === 200) {
         updateUser();
         setShowAddEducation(false);
+        setEducationFormData(initialFormData);
       }
     } catch (error) {
       console.log(error);
