@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CheckBoxLabel from "../Common/FormComponents/CheckBoxLabel";
 import SelectInput from "../Common/FormComponents/SelectInput";
 import InputField from "../Common/FormComponents/InputField";
@@ -97,6 +97,18 @@ function UserOnboaring() {
     }
   };
 
+  useEffect(() => {
+    if (formData.notEmployed === true) {
+      setFormData({
+        ...formData,
+        companyName: "",
+        companyLogo: "",
+        companyDomain: "",
+        title: "",
+      });
+    }
+  }, [formData.notEmployed]);
+
   const locationOptions = [
     { value: "default", label: "Select Country" },
     { value: "india", label: "India" },
@@ -148,7 +160,6 @@ function UserOnboaring() {
     { value: "5", label: "5 years" },
     { value: "6", label: "More than 5 years" },
   ];
-  console.log(formData);
   return (
     <div className="mt-[3.8rem]  bg-[#ebeff5] flex flex-col items-center ">
       <div>
