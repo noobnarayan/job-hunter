@@ -37,6 +37,7 @@ function JobPosting() {
     additionalRequirements: [],
     urgent: false,
     numberOfOpenings: 0,
+    primaryRole: "software_engineer",
   });
 
   useEffect(() => {
@@ -63,12 +64,12 @@ function JobPosting() {
   };
 
   const handleSalaryRangeChange = (e) => {
-    const { name, value } = e.target;
+    const { id, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       salaryRange: {
         ...prevData.salaryRange,
-        [name]: parseFloat(value),
+        [id]: parseFloat(value),
       },
     }));
   };
@@ -116,7 +117,7 @@ function JobPosting() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     formData.employer = userData?._id;
-    console.log("Form submitted:", formData);
+    // console.log("Form submitted:", formData);
 
     try {
       const res = await contentService.postNewJob(formData);
@@ -199,7 +200,7 @@ function JobPosting() {
                 label="Type of position"
                 description="Select the type of position you are offering."
                 isRequired={true}
-                id="typeOfPosition"
+                id="type"
                 options={jobTypeOptions}
                 onChange={handleInputChange}
               />
