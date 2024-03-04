@@ -1,8 +1,35 @@
-import React from "react";
-import DashboardAreaChart from "./DashboardAreaChart";
-import DashBoardDonutChart from "./DashBoardDonutChart";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+import {
+  Badge,
+  Card,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeaderCell,
+  TableRow,
+  Button,
+} from "@tremor/react";
+import { contentService } from "../../services/contentService";
+
 function Dashboard() {
+  const [jobData, setJobData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const res = await contentService.getCompanyJobListings();
+      setJobData(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="px-5">
       <div className="flex flex-wrap justify-between px-5 gap-2 my-8">
@@ -12,9 +39,8 @@ function Dashboard() {
           </div>
           <div className="flex flex-col justify-center ">
             <p className="font-semibold text-lg">124</p>
-            <p className="text-xs text-gray-500">Job Postings</p>
+            <p className="text-xs text-gray-500">Job Listing</p>
           </div>
-          <i className="fa-solid fa-angle-right text-2xl text-gray-700"></i>
         </div>
 
         <div className="h-16 w-56 rounded-xl border shadow flex gap-5 items-center justify-center hover:cursor-pointer">
@@ -25,7 +51,6 @@ function Dashboard() {
             <p className="font-semibold text-lg">124</p>
             <p className="text-xs text-gray-500">New Applications</p>
           </div>
-          <i className="fa-solid fa-angle-right text-2xl text-gray-700"></i>
         </div>
         <div className="h-16 w-56 rounded-xl border shadow flex gap-5 items-center justify-center hover:cursor-pointer">
           <div className="rounded-full h-10 w-10 p-2 bg-yellow-400 flex justify-center items-center text-white">
@@ -35,7 +60,6 @@ function Dashboard() {
             <p className="font-semibold text-lg">124</p>
             <p className="text-xs text-gray-500">Closed Jobs</p>
           </div>
-          <i className="fa-solid fa-angle-right text-2xl text-gray-700"></i>
         </div>
 
         <Link to="/dashboard/post-job">
@@ -49,15 +73,40 @@ function Dashboard() {
           </div>
         </Link>
       </div>
-      <div className="flex flex-col md:flex-row  gap-3">
-        <div className="w-full md:w-4/6">
-          <DashboardAreaChart />
-        </div>
-        <div className="w-full md:w-2/6 flex flex-col gap-5 ">
-          <div>
-            <DashBoardDonutChart />
-          </div>
-        </div>
+      <div className="flex flex-col md:flex-row gap-3 px-5">
+        <Card>
+          <h3 className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-semibold text-lg">
+            Job Listings
+          </h3>
+          <Table className="mt-5">
+            <TableHead>
+              <TableRow>
+                <TableHeaderCell>Job Title</TableHeaderCell>
+                <TableHeaderCell>Applications</TableHeaderCell>
+                <TableHeaderCell>Status</TableHeaderCell>
+                <TableHeaderCell>View Job</TableHeaderCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {jobData.map((job, index) => (
+                <TableRow key={index}>
+                  <TableCell>{job.title}</TableCell>
+                  <TableCell>
+                    <TableCell>{job?.applicants.length}</TableCell>
+                  </TableCell>
+                  <TableCell>
+                    <Badge color={job.active === true ? "emerald" : "red"}>
+                      {job.active ? "active" : "inactive"}
+                    </Badge>
+                  </TableCell>
+                  <TableCell>
+                    <Button color="black">View Job</Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
       </div>
     </div>
   );
