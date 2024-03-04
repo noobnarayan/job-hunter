@@ -7,10 +7,10 @@ import SubmissionButton from "../components/Common/Buttons/SubmissionButton";
 import RadioButton from "../components/Common/FormComponents/RadioButton";
 import SkillsSearch from "../components/Common/SkillsSearch";
 import TextEditor from "../components/Common/FormComponents/TextEditor";
-import { contentService } from "../services/contentService";
 import { useSelector } from "react-redux";
 import Dialogbox from "../components/Dialogbox";
 import { useNavigate } from "react-router-dom";
+import { companyService } from "../services/companyService";
 
 function JobPosting() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
@@ -40,6 +40,13 @@ function JobPosting() {
     urgent: false,
     numberOfOpenings: 0,
     primaryRole: "software_engineer",
+  });
+
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    buttonText: "",
   });
 
   useEffect(() => {
@@ -99,29 +106,35 @@ function JobPosting() {
 
     for (let field in formData) {
       if (field !== "description" && field !== "urgent" && !formData[field]) {
-        alert("Please fill all the form details.");
-        console.log(field);
+        setDialog({
+          isOpen: true,
+          title: "Incomplete Form",
+          message:
+            "Please fill all the form details to generate job description.",
+          buttonText: "OK",
+        });
         return;
       }
     }
     setGeneratingDescription(true);
     try {
-      const res = await contentService.generateJobDescription(formData);
+      const res = await companyService.generateJobDescription(formData);
 
       setGeneratingDescription(false);
       setFormData({ ...formData, description: res.data.data });
     } catch (error) {
-      console.log(error);
+      if (error.response.data.includes("Quota exceeded")) {
+        setDialog({
+          isOpen: true,
+          title: "Quota Exceeded",
+          message:
+            "Error: Quota exceeded. You reached the limit for free job description generations. An upgrade to the plan is required to continue using this feature.",
+          buttonText: "OK",
+        });
+      }
       setGeneratingDescription(false);
     }
   };
-
-  const [dialog, setDialog] = useState({
-    isOpen: false,
-    title: "",
-    message: "",
-    buttonText: "",
-  });
 
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -131,7 +144,7 @@ function JobPosting() {
     setSubmitting(true);
 
     try {
-      const res = await contentService.postNewJob(formData);
+      const res = await companyService.postNewJob(formData);
       setDialog({
         isOpen: true,
         title: "Job Posting Successful",

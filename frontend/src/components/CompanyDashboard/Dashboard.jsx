@@ -12,24 +12,36 @@ import {
   TableRow,
   Button,
 } from "@tremor/react";
-import { contentService } from "../../services/contentService";
+import { companyService } from "../../services/companyService";
 
 function Dashboard() {
   const [jobData, setJobData] = useState([]);
+  const [applicants, setApplicants] = useState([]);
 
   useEffect(() => {
     fetchData();
+    fetchApplications();
   }, []);
 
   const fetchData = async () => {
     try {
-      const res = await contentService.getCompanyJobListings();
+      const res = await companyService.getCompanyJobListings();
       setJobData(res);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const fetchApplications = async () => {
+    try {
+      const res = await companyService.getAllApplications();
+      setApplicants(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  console.log(applicants);
   return (
     <div className="px-5">
       <div className="flex flex-wrap justify-between px-5 gap-2 my-8">
@@ -38,7 +50,7 @@ function Dashboard() {
             <i className="fa-solid fa-briefcase"></i>
           </div>
           <div className="flex flex-col justify-center ">
-            <p className="font-semibold text-lg">124</p>
+            <p className="font-semibold text-lg">{jobData.length || 0}</p>
             <p className="text-xs text-gray-500">Job Listing</p>
           </div>
         </div>
@@ -48,7 +60,7 @@ function Dashboard() {
             <i className="fa-solid fa-users"></i>
           </div>
           <div className="flex flex-col justify-center ">
-            <p className="font-semibold text-lg">124</p>
+            <p className="font-semibold text-lg">{applicants.length}</p>
             <p className="text-xs text-gray-500">New Applications</p>
           </div>
         </div>
