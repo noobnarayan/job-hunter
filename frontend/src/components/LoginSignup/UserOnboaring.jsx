@@ -5,12 +5,9 @@ import InputField from "../Common/FormComponents/InputField";
 import Checkbox from "../Common/FormComponents/Checkbox";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function UserOnboaring() {
-  const { status, userData } = useSelector((store) => store.auth);
-
   const initialFormData = {
     location: "",
     primaryRole: "",
@@ -71,18 +68,18 @@ function UserOnboaring() {
       location: formData.location,
       primaryRole: formData.primaryRole,
       socialProfiles: {
-        linkedin: formData.linkedin,
+        linkedin: formData.linkedin || "",
         github: "",
         twitter: "",
-        portfolioWebsite: formData.website,
+        portfolioWebsite: formData.website || "",
       },
       workExperience: [
         {
-          jobTitle: formData.title,
+          jobTitle: formData.title || "",
           company: {
-            name: formData.companyName,
-            logoUrl: formData.companyLogo,
-            domain: formData.companyDomain,
+            name: formData.companyName || "",
+            logoUrl: formData.companyLogo || "",
+            domain: formData.companyDomain || "",
           },
         },
       ],
@@ -91,6 +88,7 @@ function UserOnboaring() {
     };
     try {
       const res = await userService.updateUserProfile(data);
+      console.log(res);
       if (res.status === 200) {
         navigate("/jobs");
       }
@@ -98,17 +96,6 @@ function UserOnboaring() {
       console.log(error);
     }
   };
-
-  if (
-    userData?.role === "jobSeeker" &&
-    userData?.userProfile?.doneOnboarding === true
-  ) {
-    return <Navigate to="/" />;
-  }
-
-  if (userData?.role !== "jobSeeker") {
-    return <Navigate to="/dashboard/home" />;
-  }
 
   const locationOptions = [
     { value: "default", label: "Select Country" },
@@ -161,6 +148,7 @@ function UserOnboaring() {
     { value: "5", label: "5 years" },
     { value: "6", label: "More than 5 years" },
   ];
+  console.log(formData);
   return (
     <div className="mt-[3.8rem]  bg-[#ebeff5] flex flex-col items-center ">
       <div>
@@ -247,13 +235,13 @@ function UserOnboaring() {
                   <InputField
                     label="Title"
                     id="title"
-                    name="title"
                     onChange={handleInputChange}
                     value={formData.title}
-                    isRequired={true}
+                    isRequired={!formData.notEmployed}
                     placeholder="SDE 1"
                     className={"w-full md:w-1/2"}
                   />
+
                   <div>
                     <div className={showDropdown ? "" : "hidden"}>
                       <CompanySearch

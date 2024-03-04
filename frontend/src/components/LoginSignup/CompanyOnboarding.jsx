@@ -4,12 +4,9 @@ import TextArea from "../Common/FormComponents/TextArea";
 import SubmissionButton from "../Common/Buttons/SubmissionButton";
 import CompanySearch from "../Common/CompanySearch";
 import { userService } from "../../services/userService";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function CompanyOnboarding() {
-  const { status, userData } = useSelector((store) => store.auth);
-
   const [companyProfile, setCompanyProfile] = useState({
     companyName: "",
     companyDescription: "",
@@ -89,13 +86,6 @@ function CompanyOnboarding() {
     }));
   };
 
-  if (userData?.role === "employer" && userData?.userProfile?.doneOnboarding) {
-    return <Navigate to="/dashboard/home" />;
-  }
-
-  if (userData?.role !== "employer") {
-    return <Navigate to="/" />;
-  }
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#EBEFF5] py-10 mt-10">
       <div className="py-5 flex flex-col justify-center items-center gap-5">
@@ -115,6 +105,7 @@ function CompanyOnboarding() {
           <div>
             <div className={showDropdown ? "" : "hidden"}>
               <CompanySearch
+                label="Select company"
                 handleDropdown={handleDropdown}
                 width={"w-full "}
               />

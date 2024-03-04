@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import InputField from "./FormComponents/InputField";
 import { externalApiServices } from "../../services/externalApiServices";
 
-const CompanySearch = ({ handleDropdown, width, companyName }) => {
+const CompanySearch = ({ handleDropdown, width, companyName, label }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [companyApiData, setCompanyApiData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -35,12 +35,10 @@ const CompanySearch = ({ handleDropdown, width, companyName }) => {
   return (
     <div>
       <InputField
-        label="Company"
+        label={label || "Company"}
         placeholder="e.g. Google"
-        isRequired={true}
         onChange={handleSearch}
-        id="name"
-        name="name"
+        id="companyName"
         className={width}
         value={searchTerm}
       />

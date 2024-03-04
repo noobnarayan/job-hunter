@@ -35,7 +35,9 @@ function Signup() {
 
       resetErrorMessage();
     } else if (formData.password !== formData.confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage(
+        "The passwords you entered don't match. Please check and try again."
+      );
       resetErrorMessage();
     } else {
       postUserData(formData);

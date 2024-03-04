@@ -11,6 +11,8 @@ export const userService = {
   addSkill,
   removeSkill,
   updateResume,
+  saveJob,
+  applyForJob,
 };
 
 async function login(userData) {
@@ -124,6 +126,28 @@ async function updateResume(resume) {
         withCredentials: true,
       }
     );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function saveJob(id) {
+  try {
+    const res = await axios.post(`${api_url}/save/${id}`, {
+      withCredentials: true,
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function applyForJob(id) {
+  try {
+    const res = await axios.post(`${api_url}/apply/${id}`, {
+      withCredentials: true,
+    });
     return res;
   } catch (error) {
     throw error;

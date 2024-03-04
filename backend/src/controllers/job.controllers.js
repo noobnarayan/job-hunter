@@ -270,6 +270,9 @@ const applyForJob = asyncHandler(async (req, res) => {
     if (!job) {
       throw new ApiError(404, "Job not found in the database");
     }
+    if (job.applicants.includes(_id)) {
+      throw new ApiError(400, "Job has already been applied for");
+    }
     job.applicants.push(_id);
     job.markModified("applicants");
     await job.save();
@@ -293,6 +296,9 @@ const saveJob = asyncHandler(async (req, res) => {
   }
   try {
     const user = await User.findById(_id);
+    if (user.userProfile.savedJobs.includes(jobId)) {
+      throw new ApiError(400, "Job is already saved");
+    }
     user.userProfile.savedJobs.push(jobId);
     user.markModified("userProfile.savedJobs");
     await user.save();

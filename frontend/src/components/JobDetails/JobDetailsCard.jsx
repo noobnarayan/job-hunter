@@ -1,4 +1,5 @@
 import React from "react";
+import { userService } from "../../services/userService";
 
 function JobDetailsCard({ jobData }) {
   const {
@@ -10,6 +11,8 @@ function JobDetailsCard({ jobData }) {
     numberOfOpenings,
     numberOfApplicants,
   } = jobData;
+
+  console.log(jobData._id);
 
   const datePosted = new Date(jobData?.datePosted);
 
@@ -32,6 +35,24 @@ function JobDetailsCard({ jobData }) {
   } else {
     timeAgo = diffMonths + " months ago";
   }
+
+  const saveJob = async () => {
+    try {
+      const res = await userService.saveJob(jobData._id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const applyForJob = async () => {
+    try {
+      const res = await userService.applyForJob(jobData._id);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex flex-col gap-6 border p-4 rounded-3xl shadow">
@@ -92,10 +113,16 @@ function JobDetailsCard({ jobData }) {
           </div>
         </div>
         <div className="flex gap-5">
-          <button className="border border-green-600 h-10 w-20 rounded-3xl text-green-600 font-medium">
+          <button
+            className="border border-green-600 h-10 w-20 rounded-3xl text-green-600 font-medium"
+            onClick={saveJob}
+          >
             Save
           </button>
-          <button className="h-10 w-20 rounded-3xl bg-green-600 text-white font-medium">
+          <button
+            className="h-10 w-20 rounded-3xl bg-green-600 text-white font-medium"
+            onClick={applyForJob}
+          >
             Apply
           </button>
         </div>
