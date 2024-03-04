@@ -50,7 +50,7 @@ function Searchbar({ setSearch, setSelectedLocation }) {
     <>
       <div className="flex flex-col text-gray-400 items-center py-5 md:py-2 px-6 md:px-5 border shadow rounded-xl gap-6 md:gap-10 font-light lg:flex-row">
         {/* first */}
-        <div className="flex items-center lg:justify-center w-full gap-3 lg:border-r-2 border-gray-300  lg:w-[45%] ">
+        <div className="flex items-center  w-full gap-3 lg:border-r-2 border-gray-300  lg:w-[45%] ">
           <div>
             <i className="fa-solid fa-magnifying-glass"></i>
           </div>

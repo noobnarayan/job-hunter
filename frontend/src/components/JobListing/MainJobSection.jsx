@@ -53,7 +53,7 @@ function MainJobSection() {
   return (
     <div className="flex flex-col px-5 md:px-14 lg:px-5 gap-5 lg:flex-row">
       {/* Left */}
-      <div className="border rounded-xl w-full lg:w-[30%] mlg:sticky top-0 lg:h-screen mb-3">
+      <div className="border rounded-xl w-full lg:w-[30%] mlg:sticky top-0 lg:h-screen mb-3 hidden lg:block">
         <SideBarFilter filters={filters} setFilters={setFilters} />
       </div>
 
