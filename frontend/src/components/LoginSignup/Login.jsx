@@ -63,8 +63,9 @@ function Login() {
       }
     } catch (error) {
       if (
-        error.response.status === 401 &&
-        error.response.data.includes("Invalid user credentials")
+        (error.response.status === 401 || 404) &&
+        (error.response.data.includes("Invalid user credentials") ||
+          error.response.data.includes("User not found"))
       ) {
         setErrorMessage("Invalid user credentials");
         resetErrorMessage();
