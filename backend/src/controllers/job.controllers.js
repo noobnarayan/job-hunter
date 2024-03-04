@@ -209,7 +209,10 @@ const postJob = asyncHandler(async (req, res, next) => {
       .status(200)
       .json(new ApiResponse(200, job, "Job posted successfully"));
   } catch (error) {
-    throw new ApiError(500, "An error occurred while creating the job");
+    throw new ApiError(
+      500,
+      `An error occurred while creating the job ${error}`
+    );
   }
 });
 

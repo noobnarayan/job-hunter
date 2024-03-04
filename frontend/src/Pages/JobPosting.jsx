@@ -9,6 +9,8 @@ import SkillsSearch from "../components/Common/SkillsSearch";
 import TextEditor from "../components/Common/FormComponents/TextEditor";
 import { contentService } from "../services/contentService";
 import { useSelector } from "react-redux";
+import Dialogbox from "../components/Dialogbox";
+import { useNavigate } from "react-router-dom";
 
 function JobPosting() {
   const [selectedSkills, setSelectedSkills] = useState(new Map());
@@ -114,17 +116,39 @@ function JobPosting() {
     }
   };
 
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    buttonText: "",
+  });
+
+  const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     formData.employer = userData?._id;
-    // console.log("Form submitted:", formData);
+    setSubmitting(true);
 
     try {
       const res = await contentService.postNewJob(formData);
-      console.log(res);
+      setDialog({
+        isOpen: true,
+        title: "Job Posting Successful",
+        message: "Your job posting has been submitted successfully.",
+        buttonText: "Got it!",
+        onClose: () => navigate("/dashboard/home"),
+      });
     } catch (error) {
       console.log(error);
+      setDialog({
+        isOpen: true,
+        title: "Error Posting Job",
+        message: "There was an error posting the job. Please try again.",
+        buttonText: "Okay",
+      });
     }
+    setSubmitting(false);
   };
 
   const jobTypeOptions = [
@@ -417,6 +441,14 @@ function JobPosting() {
             <SubmissionButton label="Submit" type="submit" className={"py-3"} />
           </form>
         </div>
+        <Dialogbox
+          isOpen={dialog.isOpen}
+          setIsOpen={(isOpen) => setDialog({ ...dialog, isOpen })}
+          title={dialog.title}
+          message={dialog.message}
+          buttonText={dialog.buttonText}
+          onClose={dialog.onClose}
+        />
       </div>
     </div>
   );
