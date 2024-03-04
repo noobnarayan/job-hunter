@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../components/Navbar";
-import TopBanner from "../components/JobListing/TopBanner";
 import MainJobSection from "../components/JobListing/MainJobSection";
+import DisclaimerBanner from "../components/Common/DisclaimerBanner";
 function JobListing() {
   return (
-    <div>
+    <div className="mt-16">
+      <DisclaimerBanner />
       <MainJobSection />
     </div>
   );

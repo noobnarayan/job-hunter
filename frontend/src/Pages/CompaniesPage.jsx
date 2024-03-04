@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CompanyCard from "../components/CompaniesPage/CompanyCard";
 import { contentService } from "../services/contentService";
+import DisclaimerBanner from "../components/Common/DisclaimerBanner";
 
 function CompaniesPage() {
   const [companies, setCompanies] = useState([]);
@@ -18,7 +19,8 @@ function CompaniesPage() {
   };
 
   return (
-    <div className="mt-20 px-10">
+    <div className="mt-16 px-10">
+      <DisclaimerBanner />
       <div>
         <div className="flex gap-5 items-center mb-5">
           <h2 className="text-2xl font-medium ">Top companies hiring now</h2>
