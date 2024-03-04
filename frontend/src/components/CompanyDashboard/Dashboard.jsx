@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   Badge,
@@ -41,7 +41,11 @@ function Dashboard() {
     }
   };
 
-  console.log(applicants);
+  const navigate = useNavigate();
+  const redirectToDetail = (id) => {
+    navigate(`/job/${id}`);
+  };
+
   return (
     <div className="px-5">
       <div className="flex flex-wrap justify-between px-5 gap-2 my-8">
@@ -112,7 +116,12 @@ function Dashboard() {
                     </Badge>
                   </TableCell>
                   <TableCell>
-                    <Button color="black">View Job</Button>
+                    <Button
+                      color="black"
+                      onClick={() => redirectToDetail(job._id)}
+                    >
+                      View Job
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}

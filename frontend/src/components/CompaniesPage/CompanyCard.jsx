@@ -1,5 +1,6 @@
 import React from "react";
 import Dot from "../../components/Dot";
+import { useNavigate } from "react-router-dom";
 
 function CompanyCard({ bgColor, company }) {
   const {
@@ -9,6 +10,11 @@ function CompanyCard({ bgColor, company }) {
     companySize,
     companySocialProfiles,
   } = company;
+
+  const navigate = useNavigate();
+  const redirectToDetail = (id) => {
+    navigate(`/job/${id}`);
+  };
 
   return (
     <div className="rounded-xl border border-gray-300 p-1.5">
@@ -65,6 +71,7 @@ function CompanyCard({ bgColor, company }) {
               <div
                 className="bg-gray-100 rounded-xl px-3 py-1.5 flex gap-3 items-center hover:cursor-pointer"
                 key={index}
+                onClick={() => redirectToDetail(listing._id)}
               >
                 <span className="text-sm font-medium text-gray-900">
                   {listing?.title}
