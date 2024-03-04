@@ -296,9 +296,15 @@ const saveJob = asyncHandler(async (req, res) => {
   }
   try {
     const user = await User.findById(_id);
-    if (user.userProfile.savedJobs.includes(jobId)) {
+    console.log(user.userProfile.savedJobs);
+    if (
+      user.userProfile.savedJobs.some(
+        (job) => job.toString() === jobId.toString()
+      )
+    ) {
       throw new ApiError(400, "Job is already saved");
     }
+
     user.userProfile.savedJobs.push(jobId);
     user.markModified("userProfile.savedJobs");
     await user.save();
@@ -307,7 +313,10 @@ const saveJob = asyncHandler(async (req, res) => {
       .status(200)
       .json(new ApiResponse(200, {}, "Saved the job successfully"));
   } catch (error) {
-    throw new ApiError(500, "An error occurred while saving the job");
+    throw new ApiError(
+      500,
+      `An error occurred while saving the job : Error::${error}`
+    );
   }
 });
 

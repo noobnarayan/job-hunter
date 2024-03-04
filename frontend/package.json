@@ -10,12 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.17",
+    "@headlessui/react": "^1.7.18",
     "@heroicons/react": "^2.1.1",
     "@iconify/react": "^4.1.1",
     "@reduxjs/toolkit": "^2.0.1",
     "@tinymce/tinymce-react": "^4.3.2",
-    "@tremor/react": "^3.12.1",
+    "@tremor/react": "^3.14.1",
     "axios": "^1.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -134,9 +134,13 @@ async function updateResume(resume) {
 
 async function saveJob(id) {
   try {
-    const res = await axios.post(`${api_url}/save/${id}`, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${api_url}/save/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     return res;
   } catch (error) {
     throw error;
@@ -145,9 +149,13 @@ async function saveJob(id) {
 
 async function applyForJob(id) {
   try {
-    const res = await axios.post(`${api_url}/apply/${id}`, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${api_url}/apply/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
     return res;
   } catch (error) {
     throw error;

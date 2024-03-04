@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { userService } from "../../services/userService";
-
+import Dialogbox from "../Dialogbox";
 function JobDetailsCard({ jobData }) {
   const {
     title,
@@ -11,8 +11,6 @@ function JobDetailsCard({ jobData }) {
     numberOfOpenings,
     numberOfApplicants,
   } = jobData;
-
-  console.log(jobData._id);
 
   const datePosted = new Date(jobData?.datePosted);
 
@@ -36,22 +34,81 @@ function JobDetailsCard({ jobData }) {
     timeAgo = diffMonths + " months ago";
   }
 
+  const [dialog, setDialog] = useState({
+    isOpen: false,
+    title: "",
+    message: "",
+    buttonText: "",
+  });
+  const [saving, setSaving] = useState(false);
   const saveJob = async () => {
+    setSaving(true);
     try {
       const res = await userService.saveJob(jobData._id);
-      console.log(res);
+      setDialog({
+        isOpen: true,
+        title: "Job Saved Successfully",
+        message:
+          "The job has been saved successfully. You can view it in your saved jobs.",
+        buttonText: "Got it!",
+      });
     } catch (error) {
       console.log(error);
+
+      if (error.response.data.includes("Job is already saved")) {
+        setDialog({
+          isOpen: true,
+          title: "Job Already Saved",
+          message:
+            "You have already saved this job. Please check your saved jobs.",
+          buttonText: "Okay",
+        });
+      } else {
+        setDialog({
+          isOpen: true,
+          title: "Error Saving Job",
+          message: "There was an error saving the job. Please try again.",
+          buttonText: "Okay",
+        });
+      }
     }
+    setSaving(false);
   };
 
+  const [applying, setApplying] = useState(false);
   const applyForJob = async () => {
+    setApplying(true);
     try {
       const res = await userService.applyForJob(jobData._id);
       console.log(res);
+      setDialog({
+        isOpen: true,
+        title: "Job Application Successful",
+        message:
+          "Your application has been submitted successfully. Your profile has been shared with the recruiter.",
+        buttonText: "Got it!",
+      });
     } catch (error) {
       console.log(error);
+
+      if (error.response.data.includes("Job has already been applied for")) {
+        setDialog({
+          isOpen: true,
+          title: "Job Already Applied",
+          message:
+            "You have already applied for this job. Your profile has been shared with the recruiter.",
+          buttonText: "Okay",
+        });
+      } else {
+        setDialog({
+          isOpen: true,
+          title: "Error Applying for Job",
+          message: "There was an error applying for the job. Please try again.",
+          buttonText: "Okay",
+        });
+      }
     }
+    setApplying(false);
   };
 
   return (
@@ -117,15 +174,22 @@ function JobDetailsCard({ jobData }) {
             className="border border-green-600 h-10 w-20 rounded-3xl text-green-600 font-medium"
             onClick={saveJob}
           >
-            Save
+            {saving ? "Saving.." : "Save"}
           </button>
           <button
             className="h-10 w-20 rounded-3xl bg-green-600 text-white font-medium"
             onClick={applyForJob}
           >
-            Apply
+            {applying ? "Applying.." : "Apply"}
           </button>
         </div>
+        <Dialogbox
+          isOpen={dialog.isOpen}
+          setIsOpen={(isOpen) => setDialog({ ...dialog, isOpen })}
+          title={dialog.title}
+          message={dialog.message}
+          buttonText={dialog.buttonText}
+        />
       </div>
     </div>
   );
