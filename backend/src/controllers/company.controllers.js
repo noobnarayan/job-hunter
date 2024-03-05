@@ -8,55 +8,41 @@ const getAllJobListings = asyncHandler(async (req, res) => {
   if (role !== "employer") {
     throw new ApiError(401, "Unauthorized request, only employers are allowed");
   }
-  try {
-    const jobListings = await Job.find({
-      employer: _id,
-    });
-    if (!jobListings) {
-      throw new ApiError(404, "No job listings found");
-    }
 
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(200, jobListings, "Job listings fetched successfully")
-      );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
-    );
+  const jobListings = await Job.find({
+    employer: _id,
+  });
+  if (!jobListings) {
+    throw new ApiError(404, "No job listings found");
   }
-});
 
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, jobListings, "Job listings fetched successfully")
+    );
+});
 const getActiveJobListings = asyncHandler(async (req, res) => {
   const { _id, role } = req.user;
   if (role !== "employer") {
     throw new ApiError(401, "Unauthorized request, only employers are allowed");
   }
-  try {
-    const jobListings = await Job.find({
-      employer: _id,
-      active: true,
-    });
-    if (!jobListings) {
-      throw new ApiError(404, "No job listings found");
-    }
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          jobListings,
-          "successfully fetched active job listings"
-        )
-      );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
-    );
+  const jobListings = await Job.find({
+    employer: _id,
+    active: true,
+  });
+  if (!jobListings) {
+    throw new ApiError(404, "No job listings found");
   }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        jobListings,
+        "successfully fetched active job listings"
+      )
+    );
 });
 
 const getNonActiveJobListings = asyncHandler(async (req, res) => {
@@ -64,29 +50,22 @@ const getNonActiveJobListings = asyncHandler(async (req, res) => {
   if (role !== "employer") {
     throw new ApiError(401, "Unauthorized request, only employers are allowed");
   }
-  try {
-    const jobListings = await Job.find({
-      employer: _id,
-      active: false,
-    });
-    if (!jobListings) {
-      throw new ApiError(404, "No job listings found");
-    }
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          jobListings,
-          "Succfully fetched non-active job listings"
-        )
-      );
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
-    );
+  const jobListings = await Job.find({
+    employer: _id,
+    active: false,
+  });
+  if (!jobListings) {
+    throw new ApiError(404, "No job listings found");
   }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        jobListings,
+        "Succfully fetched non-active job listings"
+      )
+    );
 });
 
 const getAllApplications = asyncHandler(async (req, res) => {
@@ -94,140 +73,213 @@ const getAllApplications = asyncHandler(async (req, res) => {
   if (role !== "employer") {
     throw new ApiError(401, "Unauthorized request, only employers are allowed");
   }
-  try {
-    const applicants = await Job.aggregate([
-      {
-        $match: {
-          employer: _id,
-        },
+  const applicants = await Job.aggregate([
+    {
+      $match: {
+        employer: _id,
       },
-      {
-        $match: {
-          "applicants.0": { $exists: true },
-        },
+    },
+    {
+      $match: {
+        "applicants.0": { $exists: true },
       },
-      {
-        $unwind: "$applicants",
+    },
+    {
+      $unwind: "$applicants",
+    },
+    {
+      $project: {
+        _id: 1,
+        applicant: "$applicants",
+        job: "$_id",
       },
-      {
-        $project: {
-          _id: 1,
-          applicant: "$applicants",
-          job: "$_id",
-        },
-      },
+    },
+  ]);
+
+  let final = [];
+
+  for (const application of applicants) {
+    const applicantId = application.applicant;
+    const jobId = application.job;
+
+    const applicatProfilePromise = User.findById(applicantId)
+      .select(
+        "_id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume "
+      )
+      .exec();
+    const jobDetailsPromise = Job.findById(jobId).select("_id title").exec();
+
+    const [applicantProfile, jobDetails] = await Promise.all([
+      applicatProfilePromise,
+      jobDetailsPromise,
     ]);
 
-    let final = [];
-
-    for (const application of applicants) {
-      const applicantId = application.applicant;
-      const jobId = application.job;
-
-      try {
-        const applicatProfilePromise = User.findById(applicantId)
-          .select(
-            "_id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume "
-          )
-          .exec();
-        const jobDetailsPromise = Job.findById(jobId)
-          .select("_id title")
-          .exec();
-
-        const [applicantProfile, jobDetails] = await Promise.all([
-          applicatProfilePromise,
-          jobDetailsPromise,
-        ]);
-
-        final.push({ applicantProfile, jobDetails });
-      } catch (error) {
-        console.error("Error fetching user or job details:", error);
-      }
-    }
-
-    if (!final || final.length === 0) {
-      throw new ApiError(404, "No job listings found");
-    }
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, final, "Job listings fetched successfully"));
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
-    );
+    final.push({ applicantProfile, jobDetails });
   }
+
+  if (!final || final.length === 0) {
+    throw new ApiError(404, "No job listings found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, final, "Job listings fetched successfully"));
 });
+
 const getShortListedCandidates = asyncHandler(async (req, res) => {
   const { _id, role } = req.user;
   if (role !== "employer") {
     throw new ApiError(401, "Unauthorized request, only employers are allowed");
   }
-  try {
-    const shortlistedCandidates = await Job.aggregate([
-      {
-        $match: {
-          employer: _id,
-        },
+  const shortlistedCandidates = await Job.aggregate([
+    {
+      $match: {
+        employer: _id,
       },
-      {
-        $match: {
-          "shortlistedCandidates.0": { $exists: true },
-        },
+    },
+    {
+      $match: {
+        "shortlistedCandidates.0": { $exists: true },
       },
-      {
-        $unwind: "$shortlistedCandidates",
+    },
+    {
+      $unwind: "$shortlistedCandidates",
+    },
+    {
+      $project: {
+        _id: 1,
+        applicant: "$shortlistedCandidates",
+        job: "$_id",
       },
-      {
-        $project: {
-          _id: 1,
-          applicant: "$shortlistedCandidates",
-          job: "$_id",
-        },
-      },
+    },
+  ]);
+
+  let final = [];
+
+  for (const application of shortlistedCandidates) {
+    const applicantId = application.applicant;
+    const jobId = application.job;
+
+    const applicatProfilePromise = User.findById(applicantId)
+      .select(
+        "_id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume "
+      )
+      .exec();
+    const jobDetailsPromise = Job.findById(jobId).select("_id title").exec();
+
+    const [applicantProfile, jobDetails] = await Promise.all([
+      applicatProfilePromise,
+      jobDetailsPromise,
     ]);
 
-    let final = [];
-
-    for (const application of shortlistedCandidates) {
-      const applicantId = application.applicant;
-      const jobId = application.job;
-
-      try {
-        const applicatProfilePromise = User.findById(applicantId)
-          .select(
-            "_id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume "
-          )
-          .exec();
-        const jobDetailsPromise = Job.findById(jobId)
-          .select("_id title")
-          .exec();
-
-        const [applicantProfile, jobDetails] = await Promise.all([
-          applicatProfilePromise,
-          jobDetailsPromise,
-        ]);
-
-        final.push({ applicantProfile, jobDetails });
-      } catch (error) {
-        console.error("Error fetching user or job details:", error);
-      }
-    }
-
-    if (!final || final.length === 0) {
-      throw new ApiError(404, "No job listings found");
-    }
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, final, "Job listings fetched successfully"));
-  } catch (error) {
-    throw new ApiError(
-      500,
-      `Something went wrong while fetching the job listings from MongoDB:: Error: ${error}`
-    );
+    final.push({ applicantProfile, jobDetails });
   }
+
+  if (!final || final.length === 0) {
+    throw new ApiError(404, "No job listings found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, final, "Job listings fetched successfully"));
+});
+
+const removeFromApplications = asyncHandler(async (req, res) => {
+  const { _id, role } = req.user;
+  if (role !== "employer") {
+    throw new ApiError(401, "Unauthorized request, only employers are allowed");
+  }
+
+  const { jobId, applicantId } = req.body;
+
+  const job = await Job.findByIdAndUpdate(
+    jobId,
+    {
+      $pull: {
+        applicants: applicantId,
+      },
+    },
+    { new: true }
+  );
+
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Applicant has been successfully removed from the job application."
+      )
+    );
+});
+
+const shortlistCandidate = asyncHandler(async (req, res) => {
+  const { _id, role } = req.user;
+  if (role !== "employer") {
+    throw new ApiError(401, "Unauthorized request, only employers are allowed");
+  }
+  const { jobId, applicantId } = req.body;
+
+  const job = await Job.findByIdAndUpdate(
+    jobId,
+    {
+      $addToSet: {
+        shortlistedCandidates: applicantId,
+      },
+      $pull: {
+        applicants: applicantId,
+      },
+    },
+    { new: true }
+  );
+
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        job,
+        "Applicant has been successfully shortlisted and removed from the job application."
+      )
+    );
+});
+
+const removeFromShortlist = asyncHandler(async (req, res) => {
+  const { _id, role } = req.user;
+  if (role !== "employer") {
+    throw new ApiError(401, "Unauthorized request, only employers are allowed");
+  }
+  const { jobId, applicantId } = req.body;
+
+  const job = await Job.findByIdAndUpdate(
+    jobId,
+    {
+      $pull: {
+        shortlistedCandidates: applicantId,
+      },
+    },
+    { new: true }
+  );
+  if (!job) {
+    throw new ApiError(404, "Job not found");
+  }
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Applicant has been successfully removed from shortlist."
+      )
+    );
 });
 
 export {
@@ -236,4 +288,7 @@ export {
   getActiveJobListings,
   getNonActiveJobListings,
   getShortListedCandidates,
+  removeFromApplications,
+  shortlistCandidate,
+  removeFromShortlist,
 };

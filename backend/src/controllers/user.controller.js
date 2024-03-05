@@ -196,27 +196,21 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       .send({ error: `Invalid updates! ${nonValidOperations.toString()}` });
   }
 
-  try {
-    const userProfileUpdates = {};
-    updates.forEach(
-      (update) =>
-        (userProfileUpdates[`userProfile.${update}`] = req.body[update])
-    );
+  const userProfileUpdates = {};
+  updates.forEach(
+    (update) => (userProfileUpdates[`userProfile.${update}`] = req.body[update])
+  );
 
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      userProfileUpdates,
-      { new: true, runValidators: true }
-    ).select("-password");
+  const user = await User.findByIdAndUpdate(req.user._id, userProfileUpdates, {
+    new: true,
+    runValidators: true,
+  }).select("-password");
 
-    if (!user) {
-      return res.status(404).send();
-    }
-
-    res.send(user);
-  } catch (error) {
-    res.status(400).send(error);
+  if (!user) {
+    return res.status(404).send();
   }
+
+  res.send(user);
 });
 
 const updateProfilePicture = asyncHandler(async (req, res) => {
@@ -292,26 +286,23 @@ const addSkill = asyncHandler(async (req, res) => {
   if (!skill) {
     throw new ApiError(400, "Skill is required");
   }
-  try {
-    const user = await User.findById(req.user._id);
-    user.userProfile.skills.push(skill);
-    user.markModified("userProfile.skills");
-    await user.save();
 
-    const updatedUser = await User.findById(req.user._id);
-    console.log(updatedUser.userProfile.skills);
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(
-          200,
-          updatedUser.userProfile.skills,
-          "Skills updated successfully"
-        )
-      );
-  } catch (error) {
-    throw new ApiError(500, `${error}`);
-  }
+  const user = await User.findById(req.user._id);
+  user.userProfile.skills.push(skill);
+  user.markModified("userProfile.skills");
+  await user.save();
+
+  const updatedUser = await User.findById(req.user._id);
+  console.log(updatedUser.userProfile.skills);
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        updatedUser.userProfile.skills,
+        "Skills updated successfully"
+      )
+    );
 });
 
 const removeSkill = asyncHandler(async (req, res) => {
@@ -324,19 +315,13 @@ const removeSkill = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Skill is required");
   }
 
-  try {
-    const user = await User.findById(req.user._id);
-    user.userProfile.skills = user.userProfile.skills.filter(
-      (s) => s !== skill
-    );
-    user.markModified("userProfile.skills");
-    await user.save();
-    return res
-      .status(200)
-      .json(new ApiResponse(200, {}, "Skills removed successfully"));
-  } catch (error) {
-    throw new ApiError(500, `${error}`);
-  }
+  const user = await User.findById(req.user._id);
+  user.userProfile.skills = user.userProfile.skills.filter((s) => s !== skill);
+  user.markModified("userProfile.skills");
+  await user.save();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Skills removed successfully"));
 });
 
 const updateResume = asyncHandler(async (req, res) => {
@@ -349,17 +334,13 @@ const updateResume = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Resume is required");
   }
 
-  try {
-    const user = await User.findById(req.user._id);
-    user.userProfile.resume = resume;
-    user.markModified("userProfile.resume");
-    await user.save();
-    return res
-      .status(200)
-      .json(new ApiResponse(200, {}, "Resume updated successfully"));
-  } catch (error) {
-    throw new ApiError(500, `${error}`);
-  }
+  const user = await User.findById(req.user._id);
+  user.userProfile.resume = resume;
+  user.markModified("userProfile.resume");
+  await user.save();
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Resume updated successfully"));
 });
 
 export {
