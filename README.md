@@ -85,3 +85,25 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 ![Post Job](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Post%20job.png)
 
 ![User Profile Page](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/job-hunter.noobnarayan.in_user_65e0d7b99d544216cb453002.png)
+
+
+### Update About Section
+
+[Watch Update About Section Video](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Update%20about.mp4)
+
+### Company Search
+
+[Watch Company Search Video](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Company%20Search.mp4)
+
+### University Search
+
+[Watch University Search Video](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/universirty%20search.mp4)
+
+### Skills Search
+
+[Watch Skills Search Video](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/skills%20search.mp4)
+
+### AI Job Description Generator
+
+[Watch AI Job Description Generator Video](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/AI%20Job%20description%20generator..mp4)
+
