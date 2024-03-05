@@ -88,24 +88,24 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ![User Profile Page](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/job-hunter.noobnarayan.in_user_65e0d7b99d544216cb453002.png)
 
-
+## AI Job description generator
 
 https://github.com/noobnarayan/job-hunter/assets/51719413/da0408db-0c20-47e7-a50d-e72f2becb678
 
 
-
+## University search
 
 https://github.com/noobnarayan/job-hunter/assets/51719413/035f09ca-0372-425a-8cb3-974fad2457a6
 
-
+## Skills search
 
 https://github.com/noobnarayan/job-hunter/assets/51719413/b38ca120-0633-4095-8e8b-5e697f8b9de5
 
-
+## Company search
 
 https://github.com/noobnarayan/job-hunter/assets/51719413/83608619-0fbe-49f7-b34d-57334c88266a
 
-
+## Update about
 
 https://github.com/noobnarayan/job-hunter/assets/51719413/6a222608-9573-44f6-b10b-227e4e3ad639
 
