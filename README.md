@@ -25,7 +25,6 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 
 ## Live Demo
 
-- [🚀 Explore Jobhunter](https://job-hunter.noobnarayan.in/)
 
 ## Features
 
@@ -54,5 +53,10 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 Feel free to explore Jobhunter and take your career or hiring process to the next level!
 
 ## Screenshots
-![AI Job description generator](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/AI%20Job%20description%20generator..gif)
+
+![Login](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Login.png)
+
+![Signup](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/signup.png)
+
+![Homepage](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Homepage.gif)
 
