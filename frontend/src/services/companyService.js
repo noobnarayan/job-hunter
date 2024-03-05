@@ -11,6 +11,9 @@ export const companyService = {
   getNonActiveJobListings,
   getAllApplications,
   getShortListedCandidates,
+  shortlistCandidate,
+  removeApplication,
+  removeFromShortlist,
 };
 
 async function getAllJobListings() {
@@ -104,5 +107,55 @@ async function getShortListedCandidates() {
     return candidates;
   } catch (error) {
     throw error;
+  }
+}
+
+async function shortlistCandidate(data) {
+  try {
+    try {
+      const res = await axios.post(
+        `${api_url}/company/shortlist-candidate`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  } catch (error) {}
+}
+
+async function removeApplication(data) {
+  try {
+    try {
+      const res = await axios.post(
+        `${api_url}/company/remove-from-applications`,
+        data,
+        {
+          withCredentials: true,
+        }
+      );
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  } catch (error) {}
+}
+
+async function removeFromShortlist(data) {
+  try {
+    const res = await axios.post(
+      `${api_url}/company/remove-from-shortlisted`,
+      data,
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (err) {
+    throw err;
   }
 }
