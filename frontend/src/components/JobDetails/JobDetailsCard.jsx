@@ -90,7 +90,7 @@ function JobDetailsCard({ jobData }) {
       if (error.response.data.message === "Job has already been applied for") {
         setDialog({
           isOpen: true,
-          title: "Job Already Applied For",
+          title: "Job Already Applied",
           message:
             "You have already applied for this job.  Your profile has been shared with the recruiter.",
           buttonText: "Okay",

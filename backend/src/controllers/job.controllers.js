@@ -342,6 +342,33 @@ const getSavedJobs = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, savedJobs, "Saved jobs fetched successfully"));
 });
 
+const removeSavedJob = asyncHandler(async (req, res) => {
+  const { role, _id } = req.user;
+  const jobId = req.params.id;
+
+  if (role !== "jobSeeker") {
+    throw new ApiError(403, "Only job seekers are authorized to remove a job");
+  }
+  const user = await User.findById(_id);
+  const index = user.userProfile.savedJobs
+    .map((id) => id.toString())
+    .indexOf(jobId.toString());
+
+  if (index === -1) {
+    throw new ApiError(400, "Job is not saved");
+  }
+
+  user.userProfile.savedJobs.splice(index, 1);
+  user.markModified("userProfile.savedJobs");
+  await user.save();
+  return res
+
+    .status(200)
+    .json(
+      new ApiResponse(200, {}, "Successfully removed job from saved jobs list")
+    );
+});
+
 export {
   ping,
   authPing,
@@ -354,4 +381,5 @@ export {
   getJobLocations,
   getCompanies,
   getSavedJobs,
+  removeSavedJob,
 };

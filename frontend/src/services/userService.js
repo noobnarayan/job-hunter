@@ -13,6 +13,7 @@ export const userService = {
   updateResume,
   saveJob,
   applyForJob,
+  removeSavedJob,
 };
 
 async function login(userData) {
@@ -151,6 +152,21 @@ async function applyForJob(id) {
   try {
     const res = await axios.post(
       `${api_url}/apply/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function removeSavedJob(jobId) {
+  try {
+    const res = await axios.post(
+      `${api_url}/remove-saved-job/${jobId}`,
       {},
       {
         withCredentials: true,

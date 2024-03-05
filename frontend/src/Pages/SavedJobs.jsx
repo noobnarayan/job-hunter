@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { contentService } from "../services/contentService";
+import { userService } from "../services/userService";
 import { useNavigate } from "react-router-dom";
 
 function SavedJobs() {
@@ -20,6 +21,16 @@ function SavedJobs() {
 
   const redirectToDetail = (id) => {
     navigate(`/job/${id}`);
+  };
+
+  const removeJob = async (id) => {
+    try {
+      const res = await userService.removeSavedJob(id);
+      console.log(res);
+      fetchData();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -48,7 +59,13 @@ function SavedJobs() {
                   <p className="text-sm text-green-500">{job.salary}</p>
                 </div>
               </div>
-              <button className="bg-black text-white px-3 py-2 rounded self-center md:self-auto">
+              <button
+                className="bg-black text-white px-3 py-2 rounded self-center md:self-auto"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  removeJob(job._id);
+                }}
+              >
                 Remove
               </button>
             </div>
