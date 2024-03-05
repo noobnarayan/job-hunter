@@ -84,3 +84,4 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ![Post Job](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Post%20job.png)
 
+![User Profile Page](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/job-hunter.noobnarayan.in_user_65e0d7b99d544216cb453002.png)
