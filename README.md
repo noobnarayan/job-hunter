@@ -1,6 +1,5 @@
 # Jobhunter - Bridging Careers and Companies
 
-
 ## Table of Contents
 
 1. [About Jobhunter](#about-jobhunter)
@@ -12,37 +11,47 @@
 
 ## About Jobhunter
 
-Welcome to **Jobhunter**, where career aspirations meet corporate opportunities. Jobhunter is more than just a job portal; it's a platform designed to connect talented individuals with their dream jobs while providing employers with a streamlined hiring process.
+Welcome to **Jobhunter**, where career aspirations meet corporate opportunities. Jobhunter is a dynamic platform designed to facilitate seamless connections between talented individuals and prospective employers. Whether you're a job seeker exploring new opportunities or an employer seeking top talent, Jobhunter provides the tools you need to succeed.
 
 ### Specializations
 
-Explore our specialized features catering to both job seekers and employers:
+Jobhunter caters to the needs of both job seekers and employers with specialized features:
 
-1. **Job Seekers:** Discover a vast array of job opportunities, tailored to your skills and preferences. Jobhunter ensures a user-friendly experience to simplify your job search journey.
+1. **Job Seekers:** Explore a diverse range of job listings tailored to your skills and preferences. Jobhunter offers a user-friendly interface to simplify your job search journey.
 
-2. **Employers:** Access a comprehensive dashboard for seamless recruitment. Post jobs, manage applications, and find the perfect candidates efficiently with Jobhunter's employer-centric features.
+2. **Employers:** Gain access to a comprehensive dashboard designed for efficient recruitment. Post jobs, manage applications, and find the perfect candidates effortlessly with Jobhunter's employer-centric features.
+
+3. **AI-Powered Personalized Job Descriptions:** Jobhunter leverages advanced AI technology to generate highly optimized and personalized job descriptions. This feature ensures that job postings are tailored to attract the most suitable candidates, thereby increasing the efficiency of the recruitment process. This is a unique feature that sets Jobhunter apart in the job search market.
 
 ## Live Demo
 
-- [🚀 Explore Jobhunter](https://job-hunter-frontend.vercel.app/)
+- [🚀 Explore Jobhunter](https://job-hunter.noobnarayan.in/)
 
 ## Features
 
-- **Job Search:** Browse through an extensive collection of job listings, filterable by industry, location, and job type.
-- **User Profiles:** Create and manage your professional profile, showcasing your skills and experience to potential employers.
-- **Application Tracking:** Keep track of your job applications, interviews, and offers through an intuitive dashboard.
-- **Employer Dashboard:** Employers enjoy a dedicated space for posting jobs, managing applications, and evaluating candidates.
-- **Resume Upload:** Job seekers can upload and update their resumes, making it easy for employers to find the right match.
-- **Customized Job Alerts:** Stay informed about relevant job openings with personalized job alert notifications.
-- **Secure Communication:** Jobhunter ensures secure communication between job seekers and employers through built-in messaging features.
+- **User Authentication:** Secure login and signup functionality for job seekers and employers.
+- **Job Search and Filtering:** Browse through an extensive collection of job listings with advanced filtering options by industry, location, and job type.
+- **Profile Management:** Job seekers can create and manage their professional profiles, including uploading profile pictures, modifying details, and adding education, work experience, and skills.
+- **Application Tracking:** Keep track of job applications, interviews, and offers through an intuitive dashboard.
+- **Employer Dashboard:** Employers enjoy a dedicated space for posting jobs, managing applications, shortlisting candidates, and generating job descriptions.
+- **AI-powered Job Description Generation:** Utilize OpenAI's API to generate job descriptions, streamlining the posting process for employers.
+- **Image Uploading:** Job seekers can upload profile pictures, enhancing their profiles for better visibility.
+
 
 ## Tech Stack
 
-- **Frontend:** React, Redux, Bootstrap
-- **Backend:** Django, Django Rest Framework
-- **Database:** PostgreSQL
-- **Fetching:** Axios
-- **Authentication:** OAuth2.0, JWT
-- **Deployment:** Heroku for Frontend and Backend, Cloudflare for DNS Management
+- **Frontend:** React, Tailwind CSS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **State Management:** Redux Toolkit
+- **Authentication:** JWT (JSON Web Tokens)
+- **Deployment (Frontend):** Vercel, Cloudflare
+- **Deployment (Backend):** AWS EC2, Nginx, PM2
+- **CI/CD Automation:** GitHub Actions
+- **Image Uploading:** Cloudinary, Multer
+- **AI Integration:** ChatGPT API
 
 Feel free to explore Jobhunter and take your career or hiring process to the next level!
+
+## Screenshots
+
