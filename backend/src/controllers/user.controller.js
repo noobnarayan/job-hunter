@@ -343,6 +343,19 @@ const updateResume = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Resume updated successfully"));
 });
 
+const userPublicProfile = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
+  const user = await User.findById(userId).select(
+    "email _id userProfile.profilePicture userProfile.address userProfile.bio userProfile.location userProfile.yearsOfExperience userProfile.socialProfiles userProfile.workExperience userProfile.education userProfile.skills userProfile.name userProfile.resume"
+  );
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+  return res
+    .status(200)
+    .json(new ApiResponse(200, user, "User profile fetch successful"));
+});
+
 export {
   ping,
   authPing,
@@ -355,4 +368,5 @@ export {
   addSkill,
   removeSkill,
   updateResume,
+  userPublicProfile,
 };

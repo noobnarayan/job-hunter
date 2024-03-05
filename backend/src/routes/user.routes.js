@@ -11,6 +11,7 @@ import {
   updateProfilePicture,
   updateResume,
   updateUserProfile,
+  userPublicProfile,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -31,5 +32,6 @@ router.route("/add-skill").post(verifyJWT, addSkill);
 router.route("/remove-skill").post(verifyJWT, removeSkill);
 router.route("/resume").post(verifyJWT, updateResume);
 router.route("/saved-jobs").get(verifyJWT, getSavedJobs);
+router.route("/public-profile/:id?").get(userPublicProfile);
 
 export default router;

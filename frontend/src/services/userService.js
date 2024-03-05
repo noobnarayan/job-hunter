@@ -14,6 +14,7 @@ export const userService = {
   saveJob,
   applyForJob,
   removeSavedJob,
+  getPublicProfile,
 };
 
 async function login(userData) {
@@ -173,6 +174,16 @@ async function removeSavedJob(jobId) {
       }
     );
     return res;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getPublicProfile(id) {
+  try {
+    const res = await axios.get(`${api_url}/users/public-profile/${id}`);
+    const userData = res.data.data;
+    return userData;
   } catch (error) {
     throw error;
   }

@@ -1,5 +1,6 @@
 import React from "react";
 import { companyService } from "../../services/companyService";
+import { useNavigate } from "react-router-dom";
 
 function ApplicantsCard({ isShortlisted, data, fetchApplications }) {
   const { applicantProfile, jobDetails } = data;
@@ -68,6 +69,12 @@ function ApplicantsCard({ isShortlisted, data, fetchApplications }) {
     }
   };
 
+  const navigate = useNavigate();
+
+  const openPublicProfile = () => {
+    navigate(`/user/${applicantProfile._id}`);
+  };
+
   return (
     <div className="rounded border shadow py-3.5 px-4 flex flex-col gap-4">
       <div className="flex flex-col md:flex-row justify-between">
@@ -113,7 +120,10 @@ function ApplicantsCard({ isShortlisted, data, fetchApplications }) {
           )}
 
           <div className="flex justify-center items-center bg-green-200 py-1 px-1.5 rounded">
-            <span className="text-green-700 text-[0.67rem] lg:text-xs font-semibold hover:cursor-pointer ">
+            <span
+              className="text-green-700 text-[0.67rem] lg:text-xs font-semibold hover:cursor-pointer"
+              onClick={openPublicProfile}
+            >
               View profile 👀
             </span>
           </div>
@@ -167,8 +177,8 @@ function ApplicantsCard({ isShortlisted, data, fetchApplications }) {
           {education?.length > 0 && (
             <>
               <p className="text-gray-500 text-sm my-2">Education</p>
-              {education?.map((edu) => (
-                <div className="text-xs font-medium md:pl-2">
+              {education?.map((edu, index) => (
+                <div className="text-xs font-medium md:pl-2" key={index}>
                   <div className="flex flex-col md:flex-row md:items-center md:gap-3">
                     <p>
                       {edu?.degree}, {edu?.fieldOfStudy}

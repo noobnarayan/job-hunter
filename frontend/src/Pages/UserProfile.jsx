@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditProfile from "../components/UserProfile/EditProfile";
 import UpdateResume from "../components/UserProfile/UpdateResume";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 function UserProfile() {
@@ -14,6 +14,12 @@ function UserProfile() {
 
   const switchSection = (section) => {
     setSelectedSection(section);
+  };
+
+  const navigate = useNavigate();
+
+  const openPublicProfile = () => {
+    navigate(`/user/${userData._id}`);
   };
 
   return (
@@ -46,7 +52,10 @@ function UserProfile() {
             </div>
           </div>
 
-          <div className="text-sm font-medium text-green-500 hover:cursor-pointer ">
+          <div
+            className="text-sm font-medium text-green-500 hover:cursor-pointer"
+            onClick={openPublicProfile}
+          >
             View public profile
           </div>
         </div>
