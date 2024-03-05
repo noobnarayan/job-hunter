@@ -13,7 +13,9 @@ const getAllJobListings = asyncHandler(async (req, res) => {
     employer: _id,
   });
   if (!jobListings) {
-    throw new ApiError(404, "No job listings found");
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "No job listings found"));
   }
 
   return res
@@ -32,7 +34,9 @@ const getActiveJobListings = asyncHandler(async (req, res) => {
     active: true,
   });
   if (!jobListings) {
-    throw new ApiError(404, "No job listings found");
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "No job listings found"));
   }
   return res
     .status(200)
@@ -55,7 +59,9 @@ const getNonActiveJobListings = asyncHandler(async (req, res) => {
     active: false,
   });
   if (!jobListings) {
-    throw new ApiError(404, "No job listings found");
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "No job listings found"));
   }
   return res
     .status(200)
@@ -118,7 +124,9 @@ const getAllApplications = asyncHandler(async (req, res) => {
   }
 
   if (!final || final.length === 0) {
-    throw new ApiError(404, "No job listings found");
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "No job listings found"));
   }
 
   return res
@@ -176,7 +184,9 @@ const getShortListedCandidates = asyncHandler(async (req, res) => {
   }
 
   if (!final || final.length === 0) {
-    throw new ApiError(404, "No job listings found");
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "No job listings found"));
   }
 
   return res
@@ -201,10 +211,6 @@ const removeFromApplications = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-
-  if (!job) {
-    throw new ApiError(404, "Job not found");
-  }
 
   return res
     .status(200)
@@ -237,10 +243,6 @@ const shortlistCandidate = asyncHandler(async (req, res) => {
     { new: true }
   );
 
-  if (!job) {
-    throw new ApiError(404, "Job not found");
-  }
-
   return res
     .status(200)
     .json(
@@ -268,9 +270,7 @@ const removeFromShortlist = asyncHandler(async (req, res) => {
     },
     { new: true }
   );
-  if (!job) {
-    throw new ApiError(404, "Job not found");
-  }
+
   return res
     .status(200)
     .json(
