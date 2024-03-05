@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { userService } from "../../services/userService";
 import Dialogbox from "../Dialogbox";
+import { useSelector } from "react-redux";
 function JobDetailsCard({ jobData }) {
+  const { status, userData } = useSelector((store) => store.auth);
+
   const {
     title,
     salaryRange,
@@ -167,14 +170,38 @@ function JobDetailsCard({ jobData }) {
         </div>
         <div className="flex gap-5">
           <button
-            className="border border-green-600 h-10 w-20 rounded-3xl text-green-600 font-medium"
+            className={`border h-10 w-20 rounded-3xl font-medium ${
+              userData?.userProfile?.role === "jobSeeker"
+                ? "border-green-600 text-green-600"
+                : "border-gray-600 text-gray-600 cursor-not-allowed"
+            }`}
             onClick={saveJob}
+            disabled={userData?.userProfile?.role !== "jobSeeker"}
+            title={
+              !userData
+                ? "Please login to save job"
+                : userData.userProfile.role === "employer"
+                ? ""
+                : "Employers are not allowed to save jobs"
+            }
           >
             {saving ? "Saving.." : "Save"}
           </button>
           <button
-            className="h-10 w-20 rounded-3xl bg-green-600 text-white font-medium"
+            className={`h-10 w-20 rounded-3xl font-medium ${
+              userData?.userProfile?.role === "jobSeeker"
+                ? "bg-green-600 text-white"
+                : "bg-gray-600 text-white cursor-not-allowed"
+            }`}
             onClick={applyForJob}
+            disabled={userData?.userProfile?.role !== "jobSeeker"}
+            title={
+              !userData
+                ? "Please login to apply job"
+                : userData.userProfile.role === "employer"
+                ? ""
+                : "Employers are not allowed to apply"
+            }
           >
             {applying ? "Applying.." : "Apply"}
           </button>
