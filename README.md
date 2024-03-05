@@ -25,7 +25,6 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 
 ## Live Demo
 
-- [🚀 Explore Jobhunter](https://job-hunter.noobnarayan.in/)
 
 ## Features
 
@@ -54,4 +53,34 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 Feel free to explore Jobhunter and take your career or hiring process to the next level!
 
 ## Screenshots
+
+![Homepage](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Homepage.gif)
+
+![Login](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Login.png)
+
+![Signup](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/signup.png)
+
+![User Onboarding](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/User%20Onboarding.png)
+
+![Job Listings](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/job%20listings.png)
+
+![Job Details](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/job%20details.png)
+
+![Saved Jobs](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Saved%20jobs.png)
+
+![Companies Page](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Companies%20page.png)
+
+![About Section](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/about%20section.gif)
+
+![Work Experience](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Work%20Experience.png)
+
+![Add Skills](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Add%20skills.gif)
+
+![Update Social Profiles](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Update%20social%20profiles.gif)
+
+![Company Dashboard](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Company%20Dashboard.png)
+
+![Applicants Page](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Applicants.png)
+
+![Post Job](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Post%20job.png)
 
