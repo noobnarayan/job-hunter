@@ -135,13 +135,17 @@ function Login() {
                   {loading ? "Logging in..." : "Login"}
                 </button>
               </div>
-              <div className="flex items-center justify-center gap-5 my-6">
+
+              {/* Temp Hidden */}
+              <div className="hidden flex items-center justify-center gap-5 my-6">
                 <div className="bg-gray-400 h-px w-1/4"></div>
-                <p className="text-gray-400 text-sm">or Login with Email</p>
+                <p className="text-gray-400 text-sm">or Login with Google</p>
                 <div className="bg-gray-400 h-px w-1/4"></div>
               </div>
             </form>
-            <button className="px-10 items-center justify-center gap-2 flex h-11 rounded-md text-black text-sm w-full border-x border-y border-gray-400">
+
+            {/* Hidden google login button */}
+            <button className="hidden px-10 items-center justify-center gap-2 flex h-11 rounded-md text-black text-sm w-full border-x border-y border-gray-400">
               <img
                 className="w-10 p-1"
                 src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-suite-everything-you-need-know-about-google-newest-0.png"

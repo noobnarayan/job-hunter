@@ -211,7 +211,9 @@ function Signup() {
                 </button>
               </div>
             </form>
-            <div>
+
+            {/* Hidden signup with google */}
+            <div className="hidden">
               <div className="flex items-center justify-center gap-5 my-4">
                 <div className="bg-gray-400 h-px w-1/4"></div>
                 <p className=" text-gray-400 text-sm">or Login with Email</p>
