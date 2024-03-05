@@ -123,7 +123,7 @@ function JobPosting() {
       setGeneratingDescription(false);
       setFormData({ ...formData, description: res.data.data });
     } catch (error) {
-      if (error.response.data.includes("Quota exceeded")) {
+      if (error.response.data.message.includes("Quota exceeded")) {
         setDialog({
           isOpen: true,
           title: "Quota Exceeded",
@@ -131,7 +131,15 @@ function JobPosting() {
             "Error: Quota exceeded. You reached the limit for free job description generations. An upgrade to the plan is required to continue using this feature.",
           buttonText: "OK",
         });
+      } else {
+        setDialog({
+          isOpen: true,
+          title: "Error genetating job description",
+          message: error.response.data.message,
+          buttonText: "OK",
+        });
       }
+
       setGeneratingDescription(false);
     }
   };
@@ -153,11 +161,10 @@ function JobPosting() {
         onClose: () => navigate("/dashboard/home"),
       });
     } catch (error) {
-      console.log(error);
       setDialog({
         isOpen: true,
         title: "Error Posting Job",
-        message: "There was an error posting the job. Please try again.",
+        message: error.response.data.message,
         buttonText: "Okay",
       });
     }

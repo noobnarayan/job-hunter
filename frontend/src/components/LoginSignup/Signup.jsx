@@ -76,14 +76,9 @@ function Signup() {
         setLoading(false);
       }
     } catch (error) {
-      console.log(error);
-      if (
-        error.response.status === 409 &&
-        error.response.data.includes("User already exists")
-      ) {
-        setErrorMessage("User already exists");
-        resetErrorMessage();
-      }
+      setErrorMessage(error.response.data.message);
+      resetErrorMessage();
+    } finally {
       setLoading(false);
     }
   };

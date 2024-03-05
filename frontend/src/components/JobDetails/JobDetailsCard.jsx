@@ -53,9 +53,7 @@ function JobDetailsCard({ jobData }) {
         buttonText: "Got it!",
       });
     } catch (error) {
-      console.log(error);
-
-      if (error.response.data.includes("Job is already saved")) {
+      if (error.response.data.message === "Job is already saved") {
         setDialog({
           isOpen: true,
           title: "Job Already Saved",
@@ -67,7 +65,7 @@ function JobDetailsCard({ jobData }) {
         setDialog({
           isOpen: true,
           title: "Error Saving Job",
-          message: "There was an error saving the job. Please try again.",
+          message: error.response.data.message,
           buttonText: "Okay",
         });
       }
@@ -89,21 +87,19 @@ function JobDetailsCard({ jobData }) {
         buttonText: "Got it!",
       });
     } catch (error) {
-      console.log(error);
-
-      if (error.response.data.includes("Job has already been applied for")) {
+      if (error.response.data.message === "Job has already been applied for") {
         setDialog({
           isOpen: true,
-          title: "Job Already Applied",
+          title: "Job Already Saved",
           message:
-            "You have already applied for this job. Your profile has been shared with the recruiter.",
+            "You have already saved this job. Please check your saved jobs.",
           buttonText: "Okay",
         });
       } else {
         setDialog({
           isOpen: true,
-          title: "Error Applying for Job",
-          message: "There was an error applying for the job. Please try again.",
+          title: "Error Saving Job",
+          message: error.response.data.message,
           buttonText: "Okay",
         });
       }
