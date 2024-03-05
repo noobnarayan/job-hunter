@@ -88,20 +88,36 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ### Update About Section
 
-[Watch Update About Section Video](https://youtu.be/vv2g-goIaJk)
+<video width="640" height="360" controls>
+  <source src="https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Update%20about.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### Company Search
 
-[Watch Company Search Video](https://youtu.be/qGxd0P8J2pE)
+<video width="640" height="360" controls>
+  <source src="https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Company%20Search.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### University Search
 
-[Watch University Search Video](https://youtu.be/GYaJ7d-iiWA)
+<video width="640" height="360" controls>
+  <source src="https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/universirty%20search.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### Skills Search
 
-[Watch Skills Search Video](https://youtu.be/aAZVt-AssL8)
+<video width="640" height="360" controls>
+  <source src="https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/skills%20search.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 ### AI Job Description Generator
 
-[Watch AI Job Description Generator Video](https://youtu.be/AWpXTQ0foUQ)
+<video width="640" height="360" controls>
+  <source src="https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/AI%20Job%20description%20generator..mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
