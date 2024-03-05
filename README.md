@@ -76,3 +76,11 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ![Add Skills](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Add%20skills.gif)
 
+![Update Social Profiles](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Update%20social%20profiles.gif)
+
+![Company Dashboard](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Company%20Dashboard.png)
+
+![Applicants Page](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Applicants.png)
+
+![Post Job](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Post%20job.png)
+
