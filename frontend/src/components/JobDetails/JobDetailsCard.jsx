@@ -171,12 +171,12 @@ function JobDetailsCard({ jobData }) {
         <div className="flex gap-5">
           <button
             className={`border h-10 w-20 rounded-3xl font-medium ${
-              userData?.userProfile?.role === "jobSeeker"
+              userData?.role === "jobSeeker"
                 ? "border-green-600 text-green-600"
                 : "border-gray-600 text-gray-600 cursor-not-allowed"
             }`}
             onClick={saveJob}
-            disabled={userData?.userProfile?.role !== "jobSeeker"}
+            disabled={userData?.role !== "jobSeeker"}
             title={
               !userData
                 ? "Please login to save job"
@@ -189,12 +189,12 @@ function JobDetailsCard({ jobData }) {
           </button>
           <button
             className={`h-10 w-20 rounded-3xl font-medium ${
-              userData?.userProfile?.role === "jobSeeker"
+              userData?.role === "jobSeeker"
                 ? "bg-green-600 text-white"
                 : "bg-gray-600 text-white cursor-not-allowed"
             }`}
             onClick={applyForJob}
-            disabled={userData?.userProfile?.role !== "jobSeeker"}
+            disabled={userData?.role !== "jobSeeker"}
             title={
               !userData
                 ? "Please login to apply job"
