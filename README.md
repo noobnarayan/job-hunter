@@ -54,9 +54,18 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ## Screenshots
 
+![Homepage](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Homepage.gif)
+
 ![Login](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Login.png)
 
 ![Signup](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/signup.png)
 
-![Homepage](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Homepage.gif)
+![User Onboarding](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/User%20Onboarding.png)
 
+![Job Listings](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/job%20listings.png)
+
+![Job Details](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/job%20details.png)
+
+![Saved Jobs](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Saved%20jobs.png)
+
+![Companies Page](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Companies%20page.png)
