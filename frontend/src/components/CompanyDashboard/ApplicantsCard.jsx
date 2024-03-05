@@ -1,6 +1,7 @@
 import React from "react";
+import { companyService } from "../../services/companyService";
 
-function ApplicantsCard({ isShortlisted, data }) {
+function ApplicantsCard({ isShortlisted, data, fetchApplications }) {
   const { applicantProfile, jobDetails } = data;
   const {
     profilePicture,
@@ -27,6 +28,45 @@ function ApplicantsCard({ isShortlisted, data }) {
     const months = endDate.getMonth() - startDate.getMonth();
     return `${years} years ${months} months`;
   }
+
+  const removeApplicant = async () => {
+    try {
+      const res = await companyService.removeApplication({
+        jobId: jobDetails._id,
+        applicantId: applicantProfile._id,
+      });
+      console.log(res);
+      fetchApplications();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const shortlistCandidate = async () => {
+    try {
+      const res = await companyService.shortlistCandidate({
+        jobId: jobDetails._id,
+        applicantId: applicantProfile._id,
+      });
+      console.log(res);
+      fetchApplications();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const removeShortlistedCandidate = async () => {
+    try {
+      const res = await companyService.removeFromShortlist({
+        jobId: jobDetails._id,
+        applicantId: applicantProfile._id,
+      });
+      console.log(res);
+      fetchApplications();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="rounded border shadow py-3.5 px-4 flex flex-col gap-4">
@@ -154,7 +194,10 @@ function ApplicantsCard({ isShortlisted, data }) {
       <div className="flex flex-col md:flex-row gap-3.5 justify-end">
         {isShortlisted ? (
           <>
-            <button className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center">
+            <button
+              className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center"
+              onClick={removeShortlistedCandidate}
+            >
               ❌ Remove from shortlist
             </button>
             <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
@@ -163,10 +206,16 @@ function ApplicantsCard({ isShortlisted, data }) {
           </>
         ) : (
           <>
-            <button className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center">
+            <button
+              className="p-2 px-4 font-medium text-xs rounded-md bg-red-50 text-red-500 hover:bg-red-100 hover:text-red-700 flex items-center justify-center"
+              onClick={removeApplicant}
+            >
               ❌ Not interested
             </button>
-            <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">
+            <button
+              className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center"
+              onClick={shortlistCandidate}
+            >
               🔖 Shortlist
             </button>
             <button className="p-2 px-4 font-medium text-xs rounded-md bg-black text-white hover:bg-gray-800 hover:text-white flex items-center justify-center">

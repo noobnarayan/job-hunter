@@ -56,7 +56,12 @@ function Shortlisted() {
       <div className="border rounded p-1.5 md:p-5 flex flex-col gap-5">
         {shortlistedCandidates.length > 0 ? (
           shortlistedCandidates.map((applicant, index) => (
-            <ApplicantsCard key={index} data={applicant} isShortlisted={true} />
+            <ApplicantsCard
+              key={index}
+              data={applicant}
+              isShortlisted={true}
+              fetchApplications={fetchApplications}
+            />
           ))
         ) : (
           <p className="text-center font-medium">

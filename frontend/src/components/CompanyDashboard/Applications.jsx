@@ -24,6 +24,7 @@ function Applications() {
     setLoading(true);
     try {
       const res = await companyService.getAllApplications();
+      console.log("Called again");
       setApplicants(res);
     } catch (error) {
       console.log(error);
@@ -55,7 +56,11 @@ function Applications() {
       <div className="border rounded p-1.5 md:p-5 flex flex-col gap-5">
         {applicants.length > 0 ? (
           applicants.map((applicant, index) => (
-            <ApplicantsCard key={index} data={applicant} />
+            <ApplicantsCard
+              key={index}
+              data={applicant}
+              fetchApplications={fetchApplications}
+            />
           ))
         ) : (
           <p className="text-center w font-medium">No applicants found.</p>
