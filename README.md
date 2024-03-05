@@ -54,4 +54,5 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 Feel free to explore Jobhunter and take your career or hiring process to the next level!
 
 ## Screenshots
+https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/AI%20Job%20description%20generator..gif
 
