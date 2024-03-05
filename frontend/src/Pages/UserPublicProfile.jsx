@@ -31,7 +31,7 @@ function UserPublicProfile() {
     const months = endDate.getMonth() - startDate.getMonth();
     return `${years} years ${months} months`;
   }
-  console.log(userDetails.userProfile.socialProfiles);
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 mt-[3.5rem]">
       <div className="p-8 bg-white rounded shadow-md w-10/12 mt-7">
@@ -56,27 +56,27 @@ function UserPublicProfile() {
           )}
         </div>
         <span className="flex gap-3 text-gray-800 justify-center my-2 text-lg hover:cursor-pointer">
-          {userDetails.userProfile.socialProfiles.github && (
+          {userDetails?.userProfile?.socialProfiles?.github && (
             <a
-              href={userDetails.userProfile.socialProfiles.github}
+              href={userDetails?.userProfile?.socialProfiles?.github}
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fa-brands fa-square-github"></i>
             </a>
           )}
-          {userDetails.userProfile.socialProfiles.twitter && (
+          {userDetails?.userProfile?.socialProfiles?.twitter && (
             <a
-              href={userDetails.userProfile.socialProfiles.twitter}
+              href={userDetails?.userProfile?.socialProfiles?.twitter}
               target="_blank"
               rel="noopener noreferrer"
             >
               <i className="fa-brands fa-square-x-twitter"></i>
             </a>
           )}
-          {userDetails.userProfile.socialProfiles.portfolioWebsite && (
+          {userDetails?.userProfile?.socialProfiles?.portfolioWebsite && (
             <a
-              href={userDetails.userProfile.socialProfiles.portfolioWebsite}
+              href={userDetails?.userProfile?.socialProfiles?.portfolioWebsite}
               target="_blank"
               rel="noopener noreferrer"
             >
