@@ -70,6 +70,9 @@ Feel free to explore Jobhunter and take your career or hiring process to the nex
 
 ![Companies Page](https://github.com/noobnarayan/job-hunter/blob/main/readme%20media/Companies%20page.png)
 
+<img width="960" alt="update resume" src="https://github.com/noobnarayan/job-hunter/assets/51719413/38b110bf-b929-4f21-9548-38489a54b436">
+
+
 ![About Section](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/about%20section.gif)
 
 ![Work Experience](https://github.com/noobnarayan/job-hunter/raw/main/readme%20media/Work%20Experience.png)
