@@ -48,7 +48,7 @@ Jobhunter caters to the needs of both job seekers and employers with specialized
 - **Deployment (Backend):** AWS EC2, Nginx, PM2
 - **CI/CD Automation:** GitHub Actions
 - **Image Uploading:** Cloudinary, Multer
-- **AI Integration:** ChatGPT API
+- **AI Integration:** OpnAi API
 
 Feel free to explore Jobhunter and take your career or hiring process to the next level!
 
