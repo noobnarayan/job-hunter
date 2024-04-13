@@ -127,9 +127,9 @@ function UserOnboaring() {
     {
       label: "Technical Roles",
       options: [
-        { value: "software_engineer", label: "Software Engineer" },
         { value: "data_scientist", label: "Data Scientist" },
         { value: "system_admin", label: "System Administrator" },
+        { value: "software_engineer", label: "Software Engineer" },
       ],
     },
     {

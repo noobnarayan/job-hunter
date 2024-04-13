@@ -188,6 +188,7 @@ const postJob = asyncHandler(async (req, res, next) => {
 
   const company = await User.findById(_id);
   company.userProfile.jobListings.push(job._id);
+  company.markModified("userProfile.jobListings");
   await company.save();
 
   return res
@@ -306,7 +307,11 @@ const getJobLocations = asyncHandler(async (req, res) => {
 });
 
 const getCompanies = asyncHandler(async (req, res) => {
-  const companies = await User.find({ role: "employer" }).select(
+  const companies = await User.find({
+    role: "employer",
+    "userProfile.doneOnboarding": true,
+    "userProfile.jobListings.0": { $exists: true },
+  }).select(
     "userProfile.companyName userProfile.companyLogo userProfile.jobListings userProfile.companySize userProfile.companySocialProfiles"
   );
 

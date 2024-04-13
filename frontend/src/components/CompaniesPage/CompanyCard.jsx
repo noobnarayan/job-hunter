@@ -17,7 +17,7 @@ function CompanyCard({ bgColor, company }) {
   };
 
   return (
-    <div className="rounded-xl border border-gray-300 p-1.5">
+    <div className="rounded-xl border border-gray-300 p-1.5 ">
       <div
         className="rounded-xl border  p-2"
         style={{ backgroundColor: bgColor }}
@@ -31,9 +31,11 @@ function CompanyCard({ bgColor, company }) {
               <p className="text-xl font-medium text-gray-800">{companyName}</p>
               <span className="text-xs text-gray-500 flex gap-3 items-center ">
                 <i className="fa-solid fa-user-group"></i>
-                <p>
-                  {companySize.from}-{companySize.to} EMPLOYEES
-                </p>
+                {companySize?.from && (
+                  <p>
+                    {companySize.from}-{companySize.to} EMPLOYEES
+                  </p>
+                )}
               </span>
             </div>
           </div>
