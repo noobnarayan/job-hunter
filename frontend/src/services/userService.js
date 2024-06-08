@@ -1,5 +1,4 @@
-import axios from "axios";
-import { api_url } from "../../config";
+import { apiCall } from "./apiBase";
 
 export const userService = {
   login,
@@ -18,173 +17,59 @@ export const userService = {
 };
 
 async function login(userData) {
-  try {
-    const res = await axios.post(`${api_url}/users/login`, userData, {
-      withCredentials: true,
-    });
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", "/users/login", userData);
 }
 
 async function signup(userData) {
-  try {
-    const res = await axios.post(`${api_url}/users/signup`, userData);
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", "/users/signup", userData);
 }
 
 async function updateProfilePicture(file) {
   const formPayload = new FormData();
   formPayload.append("profilePicture", file);
-
-  try {
-    const response = await axios.post(
-      `${api_url}/users/profile-picture`,
-      formPayload,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", "/users/profile-picture", formPayload, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 }
 
 async function logout() {
-  try {
-    await axios.get(`${api_url}/users/logout`, { withCredentials: true });
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("get", "/users/logout");
 }
 
 async function getCurrentUser() {
-  try {
-    const res = await axios.get(`${api_url}/users/profile`, {
-      withCredentials: true,
-    });
-    const userData = res.data.data;
-    return userData;
-  } catch (error) {
-    throw error;
-  }
+  return await apiCall("get", "/users/profile");
 }
 
 async function updateUserProfile(data) {
-  try {
-    const res = await axios.patch(`${api_url}/users/profile/jobseeker`, data, {
-      withCredentials: true,
-    });
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("patch", "/users/profile/jobseeker", data);
 }
 
 async function addSkill(skill) {
-  try {
-    const res = await axios.post(
-      `${api_url}/users/add-skill`,
-      { skill },
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", "/users/add-skill", { skill });
 }
 
 async function removeSkill(skill) {
-  try {
-    const res = await axios.post(
-      `${api_url}/users/remove-skill`,
-      { skill },
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("delete", "/users/remove-skill", { skill });
 }
 
 async function updateResume(resume) {
-  try {
-    const res = await axios.post(
-      `${api_url}/users/resume`,
-      { resume },
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", "/users/resume", { resume });
 }
 
 async function saveJob(id) {
-  try {
-    const res = await axios.post(
-      `${api_url}/save/${id}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", `/save/${id}`);
 }
 
 async function applyForJob(id) {
-  try {
-    const res = await axios.post(
-      `${api_url}/apply/${id}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("post", `/apply/${id}`);
 }
 
 async function removeSavedJob(jobId) {
-  try {
-    const res = await axios.post(
-      `${api_url}/remove-saved-job/${jobId}`,
-      {},
-      {
-        withCredentials: true,
-      }
-    );
-    return res;
-  } catch (error) {
-    throw error;
-  }
+  return apiCall("delete", `/remove-saved-job/${jobId}`);
 }
 
 async function getPublicProfile(id) {
-  try {
-    const res = await axios.get(`${api_url}/users/public-profile/${id}`);
-    const userData = res.data.data;
-    return userData;
-  } catch (error) {
-    throw error;
-  }
+  return await apiCall("get", `/users/public-profile/${id}`);
 }

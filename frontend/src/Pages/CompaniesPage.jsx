@@ -12,7 +12,6 @@ function CompaniesPage() {
   const fetchCompanies = async () => {
     try {
       const res = await contentService.getCompanies();
-      console.log(res);
       setCompanies(res);
     } catch (error) {
       console.log(error);
